@@ -10,43 +10,39 @@
 
     <style>
         :root {
-            --primary: #ff0000;
-            --primary-dark: #cc0000;
-            --bg-dark: #050505;
+            /* CORES PADRÃO (Vermelho BlackDz) */
+            --primary: #ff0000;      /* Principal (Texto/Botões) */
+            --secondary: #050505;    /* Fundo (Background) */
+            --aura: #ff0000;         /* Aura (Brilho/Bordas/Neon) */
+            
             --sidebar-bg: #0a0a0a;
             --card-bg: #111;
             --text-white: #ffffff;
-            --border: rgba(255, 0, 0, 0.5);
             --success: #00ff88;
             --discord: #5865F2;
         }
 
-        /* BLOQUEIO DE SELEÇÃO DE TEXTO CSS */
+        /* BLOQUEIO E RESET */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', sans-serif; outline: none; text-decoration: none; 
             -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+            -webkit-user-select: none; -ms-user-select: none; user-select: none;
         }
         
-        img { pointer-events: none; } /* Impede arrastar imagens */
+        img { pointer-events: none; }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--secondary); /* Usa a cor secundária */
             color: var(--text-white);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
+            height: 100vh; width: 100vw; overflow: hidden; display: flex;
         }
 
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('tela inicial do HTML.png'); 
+            background-image: url('tela inicial do HTML.png'); /* Imagem Padrão */
             background-size: cover; background-position: center;
-            z-index: -2;
+            z-index: -2; transition: background-image 0.5s ease;
         }
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -55,8 +51,7 @@
 
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 150; display: none;
-            backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.8); z-index: 150; display: none; backdrop-filter: blur(3px);
         }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -67,16 +62,18 @@
 
         .sidebar {
             width: 260px; height: 100%;
-            background: var(--sidebar-bg); border-right: 2px solid var(--primary);
+            background: var(--sidebar-bg); 
+            border-right: 2px solid var(--aura); /* AURA NA BORDA */
             display: flex; flex-direction: column; padding: 20px;
-            z-index: 200; box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+            z-index: 200; 
+            box-shadow: 5px 0 20px var(--aura); /* AURA NO SOMBREADO */
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .brand {
             font-size: 24px; font-weight: 800; color: #fff; text-align: center;
             margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px;
-            text-shadow: 0 0 10px var(--primary);
+            text-shadow: 0 0 10px var(--aura); /* AURA NO TEXTO */
         }
         .brand span { color: var(--primary); }
 
@@ -116,8 +113,7 @@
         .search-wrap input {
             width: 100%; background: #000; border: 1px solid #333; padding: 10px 15px 10px 35px;
             border-radius: 20px; color: #fff;
-            user-select: text; /* Permite digitar na busca */
-            -webkit-user-select: text;
+            user-select: text; -webkit-user-select: text;
         }
         .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; }
 
@@ -128,7 +124,11 @@
             cursor: pointer; transition: 0.3s;
             text-align: center; padding: 10px;
         }
-        .card-cat:hover { border-color: var(--primary); transform: translateY(-3px); background: rgba(255,0,0,0.1); }
+        .card-cat:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-3px); 
+            box-shadow: 0 0 15px var(--aura); /* AURA AO PASSAR MOUSE */
+        }
         .card-cat i { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
         .card-cat span { font-weight: 700; font-size: 12px; text-transform: uppercase; }
 
@@ -156,7 +156,7 @@
             color: var(--primary); font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s;
             text-transform: uppercase; font-size: 12px;
         }
-        .btn-buy:hover { background: var(--primary); color: #fff; }
+        .btn-buy:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--aura); }
 
         .modal-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -167,17 +167,19 @@
         .modal-wrapper.active { display: flex; animation: fadeIn 0.2s; }
 
         .modal-content {
-            background: #111; border: 2px solid var(--primary); padding: 30px;
+            background: #111; 
+            border: 2px solid var(--aura); /* AURA NA BORDA DO MODAL */
+            padding: 30px;
             border-radius: 15px; width: 450px; max-width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
-            box-shadow: 0 0 50px rgba(255,0,0,0.3); text-align: left;
+            box-shadow: 0 0 50px var(--aura); /* AURA NO BRILHO DO MODAL */
+            text-align: left;
         }
         .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 20px; color: #666; }
         
         .input-box {
             width: 100%; background: #222; border: 1px solid #444; color: #fff;
             padding: 12px; margin-bottom: 15px; border-radius: 5px;
-            user-select: text; /* Permite digitar */
-            -webkit-user-select: text;
+            user-select: text; -webkit-user-select: text;
         }
         textarea.input-box { height: 100px; resize: none; }
 
@@ -189,6 +191,38 @@
         .checkbox-item:hover { border-color: var(--primary); }
         .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
         .checkbox-item label { cursor: pointer; flex: 1; font-size: 13px; }
+
+        /* ESTILOS DE PERSONALIZAÇÃO */
+        .custom-section-title { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .color-picker-row {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #333;
+        }
+        .color-picker-row label { font-size: 14px; font-weight: 600; color: #ddd; }
+        input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; cursor: pointer; background: none; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid #444; border-radius: 50%; }
+
+        .custom-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .tab-btn {
+            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #666;
+            padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .file-upload-box {
+            border: 2px dashed #444; border-radius: 8px; padding: 20px; text-align: center;
+            cursor: pointer; transition: 0.3s; color: #888; font-size: 12px; position: relative;
+            background: rgba(255,255,255,0.02);
+        }
+        .file-upload-box:hover { border-color: var(--primary); color: #fff; background: rgba(255,0,0,0.1); }
+        .file-upload-box input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        
+        .bg-preview-mini {
+            width: 100%; height: 80px; margin-top: 10px; border-radius: 8px; 
+            background-size: cover; background-position: center; border: 1px solid #333;
+            display: none;
+        }
 
         .cart-drawer {
             position: fixed; top: 0; right: -400px; width: 350px; height: 100%;
@@ -219,13 +253,14 @@
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: var(--primary); border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; font-size: 28px;
-            z-index: 4000; box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            z-index: 4000; 
+            box-shadow: 0 0 20px var(--aura); /* AURA NO BOTAO DO CHAT */
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255,0,0,0.5); }
-            50% { box-shadow: 0 0 30px rgba(255,0,0,0.8); }
+            0%, 100% { box-shadow: 0 0 20px var(--aura); }
+            50% { box-shadow: 0 0 30px var(--aura); }
         }
 
         .chat-box {
@@ -331,7 +366,7 @@
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 
-    <div class="bg-fixed"></div>
+    <div class="bg-fixed" id="main-bg"></div>
     <div class="bg-overlay"></div>
     
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
@@ -369,11 +404,49 @@
     <div id="modal-custom" class="modal-wrapper">
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal('modal-custom')"></i>
-            <h2 style="color:var(--primary); margin-bottom:20px;">PERSONALIZAR</h2>
-            <input type="text" id="color-val" class="input-box" placeholder="Cor (#ff0000)" value="#ff0000">
-            <button onclick="applyColor()" class="btn-buy" style="margin-bottom:15px;">Aplicar Cor</button>
-            <input type="text" id="bg-val" class="input-box" placeholder="URL da Imagem de Fundo">
-            <button onclick="applyBg()" class="btn-buy">Aplicar Fundo</button>
+            <h2 style="color:var(--primary); margin-bottom:20px; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-swatchbook"></i> PERSONALIZAR
+            </h2>
+
+            <div class="custom-section-title">🎨 PALETA DE CORES</div>
+            
+            <div class="color-picker-row">
+                <label>Cor Principal (Texto/Botão)</label>
+                <input type="color" id="picker-primary" value="#ff0000" oninput="updateThemeColor(this.value, 'primary')">
+            </div>
+            
+            <div class="color-picker-row">
+                <label>Cor Secundária (Fundo)</label>
+                <input type="color" id="picker-secondary" value="#050505" oninput="updateThemeColor(this.value, 'secondary')">
+            </div>
+
+            <div class="color-picker-row">
+                <label>Cor da Aura (Brilho/Borda)</label>
+                <input type="color" id="picker-aura" value="#ff0000" oninput="updateThemeColor(this.value, 'aura')">
+            </div>
+
+            <div class="custom-section-title" style="margin-top:20px;">🖼️ PLANO DE FUNDO</div>
+
+            <div class="custom-tabs">
+                <button class="tab-btn active" id="btn-upload" onclick="switchBgTab('upload')">📁 UPLOAD PC</button>
+                <button class="tab-btn" id="btn-url" onclick="switchBgTab('url')">🔗 LINK URL</button>
+            </div>
+
+            <div id="area-upload">
+                <div class="file-upload-box">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:24px; margin-bottom:10px;"></i><br>
+                    Clique para escolher uma imagem<br><b>Qualidade 100% Original</b>
+                    <input type="file" id="bg-file-input" accept="image/*" onchange="handleBgUpload(this)">
+                </div>
+            </div>
+
+            <div id="area-url" class="hidden">
+                <input type="text" id="bg-url-input" class="input-box" placeholder="https://exemplo.com/imagem.jpg" oninput="handleBgUrl(this.value)">
+            </div>
+
+            <div id="bg-preview" class="bg-preview-mini"></div>
+            
+            <button onclick="resetTheme()" class="btn-buy" style="margin-top:20px; border-color:#666; color:#888;">RESETAR PADRÃO</button>
         </div>
     </div>
 
@@ -532,11 +605,7 @@
         const couponsDB = { 'VEMCOMAGENTE': 0.05 };
         const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
 
-        /* IMAGENS CORRIGIDAS:
-           Substituí os links quebrados do Discord por um placeholder genérico de Gamepass.
-           Recomendo que você upe suas fotos no https://imgur.com/upload e troque os links aqui.
-        */
-        const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; // Ícone genérico de Gamepass do Roblox
+        const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
 
         const db = [
             // Streamings
@@ -568,7 +637,7 @@
             { id: 304, name: "Conta 2019 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2019 sem itens" },
             { id: 305, name: "Conta 2020 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2020 sem itens" },
             
-            // Blox Fruits - Gamepass (LINKS CORRIGIDOS PARA PLACEHOLDER)
+            // Blox Fruits - Gamepass
             { id: 400, name: "2x Money", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: dinheiro em dobro" },
             { id: 401, name: "2x Mastery", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: maestria em dobro" },
             { id: 402, name: "Fruit Storage", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: armazene mais frutas" },
@@ -650,7 +719,7 @@
             { id: 1101, name: "Conta Steam com GTA V", price: 18.00, image: "https://cdn.dfg.com.br/itemimages/902913858-contas-steam-gta-v-full-acesso-NA9T.webp", cat: "GTA V", desc: "Conta Steam para baixar e jogar" },
             { id: 1102, name: "Combo Rockstar + Steam", price: 15.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", desc: "Combo com as duas contas" },
             
-            // Dragon Ball Rage (CORRIGIDOS ALGUNS QUEBRADOS)
+            // Dragon Ball Rage
             { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", desc: "Forma personalizada no jogo" },
             { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", desc: "Gamepass de experiência" },
             { id: 1202, name: "2x Drop Chance", price: 25.00, image: genericGamepass, cat: "DB Rage", desc: "Aumenta chance de drops" },
@@ -662,7 +731,7 @@
             { id: 1208, name: "Parasite Form", price: 6.50, image: genericGamepass, cat: "DB Rage", desc: "Forma Parasita" },
             { id: 1209, name: "Savior Form", price: 13.00, image: genericGamepass, cat: "DB Rage", desc: "Forma Salvador" },
             
-            // Cupons (CORRIGIDOS)
+            // Cupons
             { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 10% para sempre" },
             { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 15% para sempre" },
             { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 20% para sempre" },
@@ -682,12 +751,11 @@
             { id: 1604, name: "Gerador de Contas Minecraft", price: 1.99, image: "⛏️", cat: "Tudo por 1,99", desc: "Gerador automático de contas Minecraft" }
         ];
 
-        /* ÍCONES CORRIGIDOS: AGORA USAM A CLASSE INTEIRA (fab para marcas, fas para sólidos) */
         const icons = {
             "streamings": "fas fa-play-circle",
-            "xbox": "fab fa-xbox",  /* Corrigido */
-            "discord": "fab fa-discord", /* Corrigido */
-            "steam": "fab fa-steam", /* Corrigido */
+            "xbox": "fab fa-xbox",
+            "discord": "fab fa-discord",
+            "steam": "fab fa-steam",
             "roblox": "fas fa-square",
             "blox gamepass": "fas fa-dragon",
             "blox perms": "fas fa-gem",
@@ -717,8 +785,116 @@
                 document.getElementById('modal-login').classList.remove('active');
                 updateUserDisplay();
             }
+            loadTheme(); // Carrega o tema salvo
             renderCats();
         };
+
+        /* --- SISTEMA DE PERSONALIZAÇÃO (3 CORES) --- */
+        
+        function updateThemeColor(val, type) {
+            if(type === 'primary') {
+                document.documentElement.style.setProperty('--primary', val);
+            } else if (type === 'secondary') {
+                document.documentElement.style.setProperty('--secondary', val);
+                document.documentElement.style.setProperty('--bg-dark', val); // Compatibilidade
+                document.documentElement.style.setProperty('--sidebar-bg', val);
+            } else if (type === 'aura') {
+                document.documentElement.style.setProperty('--aura', val);
+            }
+            saveTheme();
+        }
+
+        function switchBgTab(tab) {
+            const up = document.getElementById('area-upload');
+            const url = document.getElementById('area-url');
+            const btnUp = document.getElementById('btn-upload');
+            const btnUrl = document.getElementById('btn-url');
+
+            if(tab === 'upload') {
+                up.classList.remove('hidden'); url.classList.add('hidden');
+                btnUp.classList.add('active'); btnUrl.classList.remove('active');
+            } else {
+                up.classList.add('hidden'); url.classList.remove('hidden');
+                btnUp.classList.remove('active'); btnUrl.classList.add('active');
+            }
+        }
+
+        function handleBgUrl(url) {
+            if(!url) return;
+            document.getElementById('main-bg').style.backgroundImage = `url('${url}')`;
+            showPreview(url);
+            saveTheme(url);
+        }
+
+        function handleBgUpload(input) {
+            const file = input.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const result = e.target.result;
+                    document.getElementById('main-bg').style.backgroundImage = `url('${result}')`;
+                    showPreview(result);
+                    try {
+                        localStorage.setItem('blackdz_bg_custom', result);
+                    } catch(err) {
+                        console.log('Imagem muito grande para salvar no cache do navegador');
+                    }
+                }
+                reader.readAsDataURL(file); // Lê sem perder qualidade
+            }
+        }
+
+        function showPreview(src) {
+            const prev = document.getElementById('bg-preview');
+            prev.style.display = 'block';
+            prev.style.backgroundImage = `url('${src}')`;
+        }
+
+        function saveTheme(bgUrl = null) {
+            const theme = {
+                primary: document.getElementById('picker-primary').value,
+                secondary: document.getElementById('picker-secondary').value,
+                aura: document.getElementById('picker-aura').value
+            };
+            localStorage.setItem('blackdz_theme_v2', JSON.stringify(theme));
+            
+            if(bgUrl && bgUrl.startsWith('http')) {
+                localStorage.setItem('blackdz_bg_url', bgUrl);
+                localStorage.removeItem('blackdz_bg_custom'); 
+            }
+        }
+
+        function loadTheme() {
+            const theme = JSON.parse(localStorage.getItem('blackdz_theme_v2'));
+            if(theme) {
+                updateThemeColor(theme.primary, 'primary');
+                updateThemeColor(theme.secondary, 'secondary');
+                updateThemeColor(theme.aura, 'aura');
+                
+                document.getElementById('picker-primary').value = theme.primary;
+                document.getElementById('picker-secondary').value = theme.secondary;
+                document.getElementById('picker-aura').value = theme.aura;
+            }
+
+            const bgCustom = localStorage.getItem('blackdz_bg_custom');
+            const bgUrl = localStorage.getItem('blackdz_bg_url');
+
+            if(bgCustom) {
+                document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
+            } else if (bgUrl) {
+                document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
+                document.getElementById('bg-url-input').value = bgUrl;
+            }
+        }
+
+        function resetTheme() {
+            localStorage.removeItem('blackdz_theme_v2');
+            localStorage.removeItem('blackdz_bg_custom');
+            localStorage.removeItem('blackdz_bg_url');
+            location.reload();
+        }
+
+        /* --- FIM PERSONALIZAÇÃO --- */
 
         document.getElementById('form-login').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -750,7 +926,6 @@
 
         function renderCats() {
             const cats = [...new Set(db.map(i => i.cat))];
-            /* CORREÇÃO AQUI: Agora usa o valor direto do objeto icons, sem forçar 'fas' */
             document.getElementById('container-cats').innerHTML = cats.map(c => `
                 <div class="card-cat" onclick="openCat('${c}')">
                     <i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i>
@@ -851,7 +1026,6 @@
                 alert('Você precisa selecionar exatamente 3 streamings!');
                 return;
             }
-            
             const comboName = `Combo 3 Streamings: ${selectedStreamings.join(', ')}`;
             addToCart(comboName, 25.99);
             closeModal('modal-streaming-combo');
@@ -979,20 +1153,6 @@
             window.open('https://discord.gg/QrPpzPJpZj', '_blank');
         }
 
-        function applyColor() { 
-            const color = document.getElementById('color-val').value;
-            document.documentElement.style.setProperty('--primary', color);
-            document.documentElement.style.setProperty('--border', color);
-            addBotMsg(`✅ Cor aplicada com sucesso! A loja agora está na cor ${color}`);
-        }
-        
-        function applyBg() { 
-            const url = document.getElementById('bg-val').value;
-            if(!url) return alert('Digite uma URL válida!');
-            document.querySelector('.bg-fixed').style.backgroundImage = `url('${url}')`;
-            addBotMsg('✅ Fundo aplicado com sucesso! A imagem de fundo foi alterada.');
-        }
-
         function toggleChat() { 
             document.getElementById('chat-box').classList.toggle('active'); 
         }
@@ -1072,91 +1232,13 @@
                     reply = `🤔 O que você está procurando especificamente? Temos:\n\n• Blox Fruits (contas, permanentes, gamepass)\n• Discord (nitro, decoração, impulsos)\n• Fortnite (VBucks, contas)\n• Valorant (contas ranqueadas)\n• Minecraft, GTA V, Steam...\n• E muito mais!\n\nDigita o que você quer que eu busco pra você! 🎮`;
                 }
             }
-            else if(txt.includes('categoria') || txt.includes('categorias') || txt === 'categorias') {
-                const cats = [...new Set(db.map(i => i.cat))];
-                reply = `📂 Temos ${cats.length} categorias:\n\n${cats.map(c => `• ${c}`).join('\n')}\n\nClique em uma categoria no menu ou me diga qual te interessa!`;
-            }
-            else if(txt.includes('promoç') || txt.includes('desconto') || txt.includes('barato') || txt === 'promoções') {
-                const promo = db.filter(i => i.cat === 'Tudo por 1,99');
-                openCat('Tudo por 1,99');
-                reply = `🔥 OFERTAS IMPERDÍVEIS! Tudo por apenas R$ 1,99:\n\n${promo.map(p => `• ${p.name}`).join('\n')}\n\n⏰ Tempo limitado! Já abri a categoria pra você.`;
-            }
-            else if(txt.includes('cupom') || txt.includes('cupons') || txt === 'cupom') {
-                reply = `🎟️ Temos cupons disponíveis!\n\n✨ Use o código *VEMCOMAGENTE* para ganhar 5% OFF em qualquer compra!\n\n💎 Também vendemos cupons vitalícios:\n• 10% OFF - R$ 30\n• 15% OFF - R$ 50\n• 20% OFF - R$ 80\n• 25% OFF - R$ 100\n\nQuer que eu aplique o cupom VEMCOMAGENTE no seu carrinho?`;
-            }
-            else if(txt.includes('aplica') && txt.includes('cupom')) {
-                document.getElementById('coupon-code').value = 'VEMCOMAGENTE';
-                applyCoupon();
-                reply = `✅ Cupom VEMCOMAGENTE aplicado! Você ganhou 5% de desconto. Adicione produtos ao carrinho pra ver o desconto funcionando! 🎉`;
-            }
-            else if(txt.includes('paga') || txt.includes('pix') || txt.includes('como compra') || txt.includes('discord')) {
-                reply = `💳 *Como Comprar:*\n\n1️⃣ Adicione os produtos no carrinho\n2️⃣ Clique em "Finalizar Compra"\n3️⃣ Escolha pagar via **WhatsApp** ou **Discord**\n\n🚀 Produtos marcados com 🚀 têm entrega AUTOMÁTICA!\n\n💰 Aceitamos apenas PIX.`;
-            }
-            else if(txt.includes('carrinho') || txt.includes('ver carrinho')) {
-                toggleCart();
-                reply = `🛒 Abri o carrinho pra você! ${cart.length > 0 ? `Você tem ${cart.length} item(ns).` : 'Ele está vazio ainda.'}`;
-            }
-            else if(txt.includes('adiciona') || txt.includes('quero comprar')) {
-                reply = `📦 Pra adicionar produtos:\n\n1. Navegue pelas categorias\n2. Clique em "ADICIONAR" no produto\n3. Ele vai direto pro carrinho!\n\nQuer que eu te mostre alguma categoria específica?`;
-            }
-            else if(txt.includes('personaliz') || txt.includes('muda') && (txt.includes('cor') || txt.includes('fundo'))) {
-                if(txt.includes('cor')) {
-                    reply = `🎨 *Personalizar Cores:*\n\n1. Vá em "Personalizar" no menu lateral\n2. Digite uma cor (ex: #00ff00)\n3. Clique em "Aplicar Cor"\n\nQuer que eu abra o painel de personalização?`;
-                } else if(txt.includes('fundo')) {
-                    reply = `🖼️ *Mudar Fundo:*\n\n1. Vá em "Personalizar" no menu\n2. Cole a URL da imagem\n3. Clique em "Aplicar Fundo"\n\nPrecisa de ajuda com isso?`;
-                } else {
-                    openModal('modal-custom');
-                    reply = `✨ Abri o painel de personalização! Você pode mudar as cores e o fundo da loja. Deixe do seu jeito! 🎨`;
-                }
-            }
-            else if(txt.includes('confian') || txt.includes('segur') || txt.includes('golpe') || txt.includes('fake')) {
-                reply = `✅ *BlackDz é 100% Confiável!*\n\n🛡️ Temos:\n• Entrega garantida\n• Suporte 24/7\n• Clientes satisfeitos\n• Reputação comprovada\n\n💬 Se tiver qualquer problema, nosso suporte resolve na hora! Pode confiar. 🤝`;
-            }
-            else if(txt.includes('entrega') || txt.includes('demora') || txt.includes('quanto tempo')) {
-                reply = `⏰ *Tempo de Entrega:*\n\n🚀 Produtos com 🚀 = INSTANTÂNEO (automático)\n⚡ Outros produtos = Até 30 minutos (geralmente mais rápido)\n\n📱 Assim que você pagar, eu te entrego no WhatsApp!\n\nSe eu estiver offline pode demorar um pouquinho, mas sempre entrego! 💯`;
-            }
-            else if(txt.includes('suporte') || txt.includes('ajuda') || txt.includes('problema')) {
-                openModal('modal-support');
-                reply = `🆘 Precisa de ajuda? Abri o formulário de suporte!\n\nOu se preferir, pode chamar direto no WhatsApp que eu respondo rapidinho! 💬`;
-            }
-            else if(txt.includes('blox')) {
-                reply = `🍎 *Blox Fruits:*\n\nTemos 3 categorias:\n\n🎮 **Blox Gamepass** - 2x Money, 2x Mastery, Dark Blade, etc\n💎 **Blox Perms** - Frutas permanentes (Kitsune, Dragon, Dough...)\n👤 **Blox Contas** - Contas prontas V4 Full, level max\n\nQual te interessa? Posso mostrar!`;
-            }
-            else if(txt.includes('ola') || txt.includes('oi') || txt.includes('eae') || txt.includes('olá')) {
-                reply = `Opa, e aí! 👋 Bem-vindo à BlackDz Store!\n\nComo posso te ajudar hoje?\n\n• Ver categorias\n• Buscar produtos\n• Aplicar cupom\n• Tirar dúvidas\n\nÉ só falar! 😎`;
-            }
-            else if(txt.includes('preço') || txt.includes('quanto custa') || txt.includes('valor')) {
-                reply = `💰 Nossos preços variam:\n\n🔥 A partir de R$ 1,99 (promoções)\n💎 Produtos premium até R$ 300\n\n✨ Use o cupom VEMCOMAGENTE pra ganhar 5% OFF!\n\nQue tipo de produto você procura? Posso te mostrar os preços!`;
-            }
-            else if(txt.includes('painel') || txt.includes('seguidores') || txt.includes('likes')) {
-                const item = db.find(i => i.id === 1500);
-                if(item) {
-                    openCat('Painéis');
-                    reply = `🚀 *Painel de Serviços SMM*\n\nCom nosso painel você consegue:\n• Seguidores (Instagram, TikTok, Twitter...)\n• Likes e curtidas\n• Visualizações\n• E muito mais!\n\n💰 Preço: R$ ${item.price.toFixed(2)}\n🚀 Entrega AUTOMÁTICA!\n\nJá abri a categoria pra você!`;
-                }
-            }
-            else if(txt.includes('minecraft') || txt.includes('mine')) {
-                openCat('Minecraft');
-                reply = `⛏️ *Minecraft:*\n\n• Conta Full Access Java + Bedrock - R$ 64,99\n• Gamepass 30 dias - R$ 9,90\n\nQual você prefere? Já abri a categoria!`;
-            }
             else {
-                const suggestions = [
-                    'Quer ver as categorias disponíveis?',
-                    'Procurando algo específico?',
-                    'Posso te ajudar a encontrar produtos!',
-                    'Tem alguma dúvida sobre pagamento?'
-                ];
-                reply = `Hmm, não entendi muito bem... 🤔\n\n${suggestions[Math.floor(Math.random() * suggestions.length)]}\n\n💡 *Dicas do que posso fazer:*\n• Buscar produtos\n• Mostrar categorias\n• Aplicar cupons\n• Ajudar com pagamento\n• Personalizar a loja\n• Tirar dúvidas\n\nÉ só me dizer!`;
+                reply = `Hmm, não entendi muito bem... 🤔\n\nTenta usar o menu ou digitar "Categorias" para ver o que temos!`;
             }
-
             addBotMsg(reply);
         }
 
-        /* SISTEMA ANTI-CÓPIA (HARDCORE MODE) 
-           Isso vai impedir 99% das pessoas de abrirem o console ou copiarem coisas.
-        */
         document.addEventListener('keydown', function(e) {
-            // Bloqueia F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.keyCode === 123 || 
                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
                (e.ctrlKey && e.keyCode === 85)) {
@@ -1165,23 +1247,15 @@
             }
         });
 
-        // Loop de Debugger Infinito (Trava o console se aberto)
         (function() {
             var devtools = function() {};
-            devtools.toString = function() {
-                // Descomente a linha abaixo se quiser travar o navegador de quem inspecionar
-                // debugger; 
-                return '';
-            }
+            devtools.toString = function() { return ''; }
         })();
 
-        // Detectar DevTools Aberto (Método Básico)
         setInterval(function() {
             const start = new Date();
-            // debugger; // Descomente para ativar a proteção agressiva
             const end = new Date();
             if (end - start > 100) {
-                // DevTools detectado
                 document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:20%;">ACESSO NEGADO 🚫<br>Saia do modo inspetor.</h1>';
             }
         }, 1000);
