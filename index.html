@@ -4,50 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🎮𝐁𝐥𝐚𝐜𝐤𝐃𝐳 𝐒𝐭𝐨𝐫𝐞 | +𝟏𝟎𝟎 𝐑𝐞𝐟𝐬🛒</title>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1464105827874111518/1464820592435003576/image.png?ex=6976dbfc&is=69758a7c&hm=32f69f2a5fe0f0134eab255304bf0e025b2f113c352a929ae99c1dd1fb0c32f7&">
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1464105827874111518/1464820592435003576/image.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
+        /* --- ESTILOS DO CHECKOUT --- */
+        .checkout-section { margin-bottom: 20px; }
+        .checkout-label { color: var(--success); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; border-left: 3px solid var(--success); padding-left: 10px; }
+
+        .order-summary-box { background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; font-size: 13px; color: #ccc; }
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .summary-total { margin-top: 10px; font-size: 16px; font-weight: 800; color: var(--success); text-align: right; }
+
+        .pix-box { 
+            background: #000; border: 1px dashed #555; padding: 15px; 
+            text-align: center; border-radius: 8px; margin-top: 10px; 
+            font-family: monospace; font-size: 16px; color: #fff; letter-spacing: 1px;
+            user-select: all; cursor: pointer;
+        }
+        .pix-box:active { color: var(--success); border-color: var(--success); }
+
+        .checkout-options { display: flex; flex-direction: column; gap: 10px; }
+        .checkout-card {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #151515; padding: 15px; border-radius: 10px; border: 1px solid #333;
+            cursor: pointer; transition: 0.3s; text-decoration: none;
+        }
+        .checkout-card:hover { transform: translateX(5px); border-color: var(--primary); }
+        .checkout-card .icon-box { 
+            width: 40px; height: 40px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; 
+        }
+
+        /* Cores específicas dos botões */
+        .btn-whatsapp .icon-box { background: rgba(37, 211, 102, 0.2); color: #25D366; }
+        .btn-whatsapp:hover { border-color: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.2); }
+
+        .btn-discord .icon-box { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
+        .btn-discord:hover { border-color: #5865F2; box-shadow: 0 0 15px rgba(88, 101, 242, 0.2); }
+
+        .copy-area-discord {
+            width: 100%; height: 150px; background: #000; color: #0f0; 
+            font-family: monospace; padding: 10px; border: 1px solid #333; 
+            border-radius: 5px; font-size: 12px; resize: none; margin-bottom: 15px;
+        }
+        
         :root {
-            /* CORES PADRÃO (Vermelho BlackDz) */
-            --primary: #ff0000;      /* Principal (Texto/Botões) */
-            --secondary: #050505;    /* Fundo (Background) */
-            --aura: #ff0000;         /* Aura (Brilho/Bordas/Neon) */
+            /* CORES ORIGINAIS INTACTAS */
+            --primary: #ff0000;      /* Vermelho Sangue */
+            --secondary: #050505;    /* Preto Profundo */
+            --aura: #ff0000;         /* Brilho Neon */
             
             --sidebar-bg: #0a0a0a;
             --card-bg: #111;
             --text-white: #ffffff;
             --success: #00ff88;
-            --discord: #5865F2;
+            --old-price: #666;       /* Cor do preço antigo */
+            --discount-bg: #ffe600;  /* Fundo da tag de desconto */
+            
+            --gold: #FFD700; 
         }
 
-        /* BLOQUEIO E RESET */
+        /* RESET */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', sans-serif; outline: none; text-decoration: none; 
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-tap-highlight-color: transparent; user-select: none;
         }
         
         img { pointer-events: none; }
 
         body {
-            background-color: var(--secondary); /* Usa a cor secundária */
+            background-color: var(--secondary);
             color: var(--text-white);
             height: 100vh; width: 100vw; overflow: hidden; display: flex;
         }
 
+        /* FUNDO ANIMADO */
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('tela inicial do HTML.png'); /* Imagem Padrão */
+            background-image: url('https://wallpapers.com/images/hd/red-and-black-gaming-geometric-shapes-885-x-498-wallpaper-y06a0904q02l6866.jpg'); 
             background-size: cover; background-position: center;
-            z-index: -2; transition: background-image 0.5s ease;
+            z-index: -2; transition: all 0.5s ease;
         }
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); z-index: -1;
+            background: rgba(0, 0, 0, 0.92); z-index: -1; 
         }
 
         .sidebar-overlay {
@@ -61,20 +105,21 @@
 
         h1, h2, h3 { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* SIDEBAR ORIGINAL */
         .sidebar {
             width: 260px; height: 100%;
             background: var(--sidebar-bg); 
-            border-right: 2px solid var(--aura); /* AURA NA BORDA */
+            border-right: 2px solid var(--aura);
             display: flex; flex-direction: column; padding: 20px;
             z-index: 200; 
-            box-shadow: 5px 0 20px var(--aura); /* AURA NO SOMBREADO */
+            box-shadow: 5px 0 20px var(--aura);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .brand {
             font-size: 24px; font-weight: 800; color: #fff; text-align: center;
             margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px;
-            text-shadow: 0 0 10px var(--aura); /* AURA NO TEXTO */
+            text-shadow: 0 0 15px var(--aura);
         }
         .brand span { color: var(--primary); }
 
@@ -84,7 +129,7 @@
         }
         .avatar {
             width: 35px; height: 35px; background: var(--primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; color: #fff;
         }
 
         .menu-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
@@ -93,117 +138,137 @@
             padding: 12px 15px; color: #ccc; cursor: pointer; border-radius: 6px;
             transition: 0.2s; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;
         }
-        .menu-item:hover, .menu-item.active { background: var(--primary); color: #fff; }
-        .menu-item i { width: 20px; text-align: center; }
+        .menu-item:hover, .menu-item.active { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--aura); }
+
+        .menu-item.secret-tab {
+            background: linear-gradient(90deg, #1a1a1a, #000);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-shadow: 0 0 5px var(--gold);
+        }
+        .menu-item.secret-tab:hover, .menu-item.secret-tab.active {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 15px var(--gold);
+            text-shadow: none;
+        }
 
         .content { flex: 1; height: 100%; overflow-y: auto; padding: 25px; position: relative; }
 
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 30px; background: rgba(20,20,20,0.8); padding: 12px 20px;
+            margin-bottom: 30px; background: rgba(20,20,20,0.9); padding: 12px 20px;
             border-radius: 10px; border: 1px solid #333; gap: 15px;
             position: sticky; top: 0; z-index: 90; backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary);
         }
 
-        .mobile-menu-btn {
-            display: none; background: transparent; border: none; 
-            color: #fff; font-size: 22px; cursor: pointer;
-        }
+        .mobile-menu-btn { display: none; background: transparent; border: none; color: #fff; font-size: 22px; cursor: pointer; }
 
         .search-wrap { position: relative; width: 350px; flex: 1; max-width: 500px; }
         .search-wrap input {
             width: 100%; background: #000; border: 1px solid #333; padding: 10px 15px 10px 35px;
-            border-radius: 20px; color: #fff;
-            user-select: text; -webkit-user-select: text;
+            border-radius: 20px; color: #fff; user-select: text; transition: 0.3s;
         }
+        .search-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--aura); }
         .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; }
 
         .grid-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
         .card-cat {
             background: #111; border: 1px solid #333; border-radius: 10px; height: 130px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s;
-            text-align: center; padding: 10px;
+            cursor: pointer; transition: 0.3s; text-align: center; padding: 10px;
         }
         .card-cat:hover { 
-            border-color: var(--primary); 
-            transform: translateY(-3px); 
-            box-shadow: 0 0 15px var(--aura); /* AURA AO PASSAR MOUSE */
+            border-color: var(--primary); transform: translateY(-5px); 
+            box-shadow: 0 0 20px var(--aura); 
         }
         .card-cat i { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
-        .card-cat span { font-weight: 700; font-size: 12px; text-transform: uppercase; }
 
         .grid-prods { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         .card-prod {
             background: #111; border: 1px solid #333; border-radius: 10px; overflow: hidden;
-            display: flex; flex-direction: column; transition: 0.3s;
+            display: flex; flex-direction: column; transition: 0.3s; position: relative;
         }
-        .card-prod:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .card-prod:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.8); }
         
+        .card-prod.highlight { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
+        .card-prod.highlight:hover { box-shadow: 0 0 25px rgba(255, 215, 0, 0.3); transform: translateY(-5px); border-color: var(--gold); }
+        
+        .badge-highlight {
+            position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000;
+            padding: 3px 8px; border-radius: 10px; font-size: 9px; font-weight: 800; z-index: 10;
+            box-shadow: 0 0 10px var(--gold); animation: pulseBadge 1.5s infinite;
+        }
+
+        /* --- NOVO: BADGE DE DESCONTO --- */
+        .badge-discount {
+            position: absolute; top: 10px; left: 10px; background: var(--discount-bg); color: #000;
+            padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; z-index: 10;
+            box-shadow: 0 0 5px rgba(255,230,0,0.5); transform: rotate(-2deg);
+        }
+
+        @keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
         .prod-img {
             height: 140px; background: #080808; display: flex; align-items: center; justify-content: center;
-            overflow: hidden; border-bottom: 1px solid #333;
+            overflow: hidden; border-bottom: 1px solid #333; position: relative;
         }
-        .prod-img img { width: 100%; height: 100%; object-fit: cover; }
+        .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-prod:hover .prod-img img { transform: scale(1.1); }
         .emoji-fallback { font-size: 3.5rem; opacity: 0.7; }
 
         .prod-body { padding: 15px; flex: 1; display: flex; flex-direction: column; }
         .prod-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; min-height: 35px; }
         .prod-desc { font-size: 11px; color: #888; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .prod-price { font-size: 18px; font-weight: 800; color: var(--success); margin-bottom: 10px; }
+        
+        /* --- NOVO: PREÇO ANTIGO E ATUAL --- */
+        .price-container { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 10px; }
+        .price-old { text-decoration: line-through; color: var(--old-price); font-size: 11px; font-weight: 500; }
+        .prod-price { font-size: 18px; font-weight: 800; color: var(--success); }
         
         .btn-buy {
             width: 100%; padding: 10px; background: transparent; border: 1px solid var(--primary);
             color: var(--primary); font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s;
-            text-transform: uppercase; font-size: 12px;
+            text-transform: uppercase; font-size: 12px; letter-spacing: 1px;
         }
-        .btn-buy:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--aura); }
+        .btn-buy:hover { background: var(--primary); color: #fff; box-shadow: 0 0 15px var(--aura); }
 
+        .highlight .btn-buy { border-color: var(--gold); color: var(--gold); }
+        .highlight .btn-buy:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+        /* MODAIS */
         .modal-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999; display: none;
-            align-items: center; justify-content: center; backdrop-filter: blur(5px);
-            padding: 20px;
+            align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px;
         }
         .modal-wrapper.active { display: flex; animation: fadeIn 0.2s; }
 
         .modal-content {
             background: #111; 
-            border: 2px solid var(--aura); /* AURA NA BORDA DO MODAL */
+            border: 2px solid var(--aura); 
             padding: 30px;
-            border-radius: 15px; width: 450px; max-width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
-            box-shadow: 0 0 50px var(--aura); /* AURA NO BRILHO DO MODAL */
-            text-align: left;
+            border-radius: 15px; width: 450px; max-width: 100%; position: relative;
+            box-shadow: 0 0 50px var(--aura); text-align: left;
         }
-        .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 20px; color: #666; }
+        .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 20px; color: #666; transition: 0.2s; }
+        .modal-close:hover { color: var(--primary); }
         
         .input-box {
             width: 100%; background: #222; border: 1px solid #444; color: #fff;
-            padding: 12px; margin-bottom: 15px; border-radius: 5px;
-            user-select: text; -webkit-user-select: text;
+            padding: 12px; margin-bottom: 15px; border-radius: 5px; user-select: text;
         }
         textarea.input-box { height: 100px; resize: none; }
 
-        .checkbox-item {
-            background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 8px;
-            border: 1px solid #333; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .checkbox-item:hover { border-color: var(--primary); }
-        .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
-        .checkbox-item label { cursor: pointer; flex: 1; font-size: 13px; }
-
-        /* ESTILOS DE PERSONALIZAÇÃO */
+        /* ESTILOS PERSONALIZAÇÃO */
         .custom-section-title { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
         .color-picker-row {
             display: flex; align-items: center; justify-content: space-between;
             background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #333;
         }
-        .color-picker-row label { font-size: 14px; font-weight: 600; color: #ddd; }
         input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; cursor: pointer; background: none; }
-        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-        input[type="color"]::-webkit-color-swatch { border: 2px solid #444; border-radius: 50%; }
-
+        
         .custom-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         .tab-btn {
             flex: 1; background: #1a1a1a; border: 1px solid #333; color: #666;
@@ -214,17 +279,12 @@
         .file-upload-box {
             border: 2px dashed #444; border-radius: 8px; padding: 20px; text-align: center;
             cursor: pointer; transition: 0.3s; color: #888; font-size: 12px; position: relative;
-            background: rgba(255,255,255,0.02);
         }
-        .file-upload-box:hover { border-color: var(--primary); color: #fff; background: rgba(255,0,0,0.1); }
+        .file-upload-box:hover { border-color: var(--primary); color: #fff; }
         .file-upload-box input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        
-        .bg-preview-mini {
-            width: 100%; height: 80px; margin-top: 10px; border-radius: 8px; 
-            background-size: cover; background-position: center; border: 1px solid #333;
-            display: none;
-        }
 
+
+        /* CARRINHO DRAWER */
         .cart-drawer {
             position: fixed; top: 0; right: -400px; width: 350px; height: 100%;
             background: #0f0f0f; border-left: 2px solid var(--primary); z-index: 5000;
@@ -233,35 +293,24 @@
         }
         .cart-drawer.active { right: 0; }
 
-        .coupon-area {
-            background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 10px;
-            border: 1px dashed #444;
-        }
+        .coupon-area { background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px dashed #444; }
         .coupon-flex { display: flex; gap: 5px; }
-        .coupon-input { 
-            flex: 1; background: #000; border: 1px solid #333; padding: 5px 10px; 
-            color: #fff; border-radius: 4px; font-size: 12px; text-transform: uppercase;
-            user-select: text; -webkit-user-select: text;
-        }
-        .btn-coupon { 
-            background: #333; color: #fff; border: 1px solid #555; cursor: pointer;
-            padding: 0 10px; border-radius: 4px; font-size: 12px;
-        }
-        .btn-coupon:hover { background: var(--success); border-color: var(--success); color: #000; }
-        .coupon-msg { font-size: 11px; margin-top: 5px; display: block; }
+        .coupon-input { flex: 1; background: #000; border: 1px solid #333; padding: 5px 10px; color: #fff; border-radius: 4px; font-size: 12px; text-transform: uppercase; user-select: text; }
+        .btn-coupon { background: #333; color: #fff; border: 1px solid #555; cursor: pointer; padding: 0 10px; border-radius: 4px; font-size: 12px; }
 
+        /* CHATBOT */
         .chat-trigger {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: var(--primary); border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; font-size: 28px;
             z-index: 4000; 
-            box-shadow: 0 0 20px var(--aura); /* AURA NO BOTAO DO CHAT */
+            box-shadow: 0 0 20px var(--aura);
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px var(--aura); }
-            50% { box-shadow: 0 0 30px var(--aura); }
+            0%, 100% { box-shadow: 0 0 20px var(--aura); transform: scale(1); }
+            50% { box-shadow: 0 0 40px var(--aura); transform: scale(1.05); }
         }
 
         .chat-box {
@@ -276,105 +325,166 @@
             background: var(--primary); padding: 15px; font-weight: bold; 
             display: flex; justify-content: space-between; align-items: center;
             border-top-left-radius: 12px; border-top-right-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .chat-messages {
             flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
-            background: #111;
+            background: #0a0a0a; scroll-behavior: smooth;
         }
         .msg {
             max-width: 85%; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.5;
-            user-select: text; -webkit-user-select: text;
+            user-select: text;
         }
-        .msg.bot { background: #222; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.bot { background: #1a1a1a; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #333; }
         .msg.user { background: var(--primary); align-self: flex-end; border-bottom-right-radius: 2px; color: #fff; }
         
-        .typing-indicator {
-            display: flex; gap: 5px; padding: 10px; background: #222; border-radius: 10px;
-            width: fit-content; align-self: flex-start;
-        }
-        .typing-indicator span {
-            width: 8px; height: 8px; background: #666; border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-
-        .chat-suggestions {
-            display: flex; flex-wrap: wrap; gap: 5px; padding: 10px;
-            background: #0a0a0a; border-top: 1px solid #333;
-        }
-        .suggestion-btn {
-            background: #1a1a1a; border: 1px solid #333; color: #aaa; padding: 6px 12px;
-            border-radius: 15px; font-size: 11px; cursor: pointer; transition: 0.2s;
-        }
-        .suggestion-btn:hover {
-            background: var(--primary); color: #fff; border-color: var(--primary);
-        }
-
         .chat-input-area {
             padding: 10px; background: #1a1a1a; display: flex; gap: 8px;
             border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
         }
         .chat-input {
             flex: 1; background: #000; border: 1px solid #333; padding: 10px; color: #fff;
-            border-radius: 20px; font-size: 12px;
-            user-select: text; -webkit-user-select: text;
+            border-radius: 20px; font-size: 12px; user-select: text;
         }
         .chat-send {
             width: 35px; height: 35px; background: var(--primary); border-radius: 50%;
             border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
 
+        /* DIVISOR DE SUBCATEGORIA */
+        .subcat-divider {
+            grid-column: 1 / -1;
+            margin-top: 30px; margin-bottom: 10px;
+            border-bottom: 1px solid #333; padding-bottom: 5px;
+            font-size: 18px; color: #888; display: flex; align-items: center; gap: 10px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .subcat-divider i { color: var(--primary); }
+
         .hidden { display: none !important; }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @keyframes slideUp { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+        .checkbox-item { background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; gap: 10px; align-items: center; border: 1px solid #333; }
 
         @media (max-width: 768px) {
-            body { position: relative; }
-            .sidebar {
-                position: fixed; top: 0; left: -100%; width: 280px; height: 100%;
-                z-index: 5000; box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            }
+            .sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; z-index: 5000; }
             .sidebar.active { left: 0; }
             .mobile-menu-btn { display: block; }
-            .top-bar { padding: 10px; gap: 10px; }
             .search-wrap { display: none; }
-            .mobile-search-container {
-                display: block !important; margin-bottom: 20px;
-            }
-            .mobile-search-container input {
-                width: 100%; background: #111; border: 1px solid #333; padding: 12px 15px;
-                border-radius: 8px; color: #fff;
-                user-select: text; -webkit-user-select: text;
-            }
+            .mobile-search-container { display: block !important; margin-bottom: 20px; }
+            .mobile-search-container input { width: 100%; background: #111; border: 1px solid #333; padding: 12px 15px; border-radius: 8px; color: #fff; user-select: text; }
             .content { width: 100%; padding: 15px; padding-bottom: 90px; }
             .grid-cats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .grid-prods { grid-template-columns: 1fr; gap: 15px; }
-            .cart-drawer { width: 100%; right: -100%; z-index: 6000; }
-            .chat-box { width: 92%; right: 4%; bottom: 95px; height: 60vh; z-index: 5001; }
-            .chat-trigger { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
-            .modal-content { width: 95%; padding: 20px; }
+            .cart-drawer { width: 100%; right: -100%; }
+            .chat-box { width: 92%; right: 4%; bottom: 95px; height: 60vh; }
         }
-
         .mobile-search-container { display: none; }
-
     </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+    <div id="modal-contact-options" class="modal-wrapper">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-contact-options')"></i>
+            <h2 id="contact-options-title" style="text-align:center; color:var(--primary); margin-bottom:20px;">ESCOLHA O CANAL</h2>
+            
+            <p style="color:#ccc; font-size:13px; text-align:center; margin-bottom:20px;">Por onde deseja enviar sua mensagem?</p>
+
+            <div class="checkout-options">
+                <div class="checkout-card btn-whatsapp" onclick="processContact('whatsapp')">
+                    <div style="display:flex; align-items:center;">
+                        <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
+                        <div>
+                            <div style="font-weight:bold; color:#fff;">WhatsApp</div>
+                            <div style="font-size:11px; color:#888;">Resposta mais rápida</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-card btn-discord" onclick="processContact('discord')">
+                    <div style="display:flex; align-items:center;">
+                        <div class="icon-box"><i class="fab fa-discord"></i></div>
+                        <div>
+                            <div style="font-weight:bold; color:#fff;">Discord</div>
+                            <div style="font-size:11px; color:#888;">Abrir Ticket no Servidor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="bg-fixed" id="main-bg"></div>
     <div class="bg-overlay"></div>
-    
+    <div id="modal-checkout" class="modal-wrapper">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-checkout')"></i>
+            <h2 style="text-align:center; color:var(--primary); margin-bottom:20px; text-transform: uppercase; letter-spacing: 2px;">Finalizar Compra</h2>
+            
+            <div class="checkout-section">
+                <div class="checkout-label">Resumo do Pedido</div>
+                <div class="order-summary-box" id="checkout-items-list">
+                    </div>
+            </div>
+
+            <div class="checkout-section">
+                <div class="checkout-label">Instruções de Pagamento</div>
+                <p style="font-size:12px; color:#888; margin-bottom:5px;">Para finalizar, faça o pagamento via PIX para a chave abaixo:</p>
+                <div class="pix-box" onclick="copyPixKey()" title="Clique para copiar">
+                    22981636278
+                </div>
+                <div style="text-align:center; font-size:10px; color:#666; margin-top:5px;">(Clique na chave para copiar)</div>
+            </div>
+
+            <div class="checkout-section">
+                <div class="checkout-label">Enviar Comprovante</div>
+                <div class="checkout-options">
+                    <div class="checkout-card btn-whatsapp" onclick="sendWhatsapp('cart')">
+                        <div style="display:flex; align-items:center;">
+                            <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
+                            <div>
+                                <div style="font-weight:bold; color:#fff;">WhatsApp</div>
+                                <div style="font-size:11px; color:#888;">Enviar comprovante direto</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color:#555;"></i>
+                    </div>
+
+                    <div class="checkout-card btn-discord" onclick="openDiscordSteps()">
+                        <div style="display:flex; align-items:center;">
+                            <div class="icon-box"><i class="fab fa-discord"></i></div>
+                            <div>
+                                <div style="font-weight:bold; color:#fff;">Discord</div>
+                                <div style="font-size:11px; color:#888;">Abrir Ticket no servidor</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color:#555;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-discord-step" class="modal-wrapper">
+        <div class="modal-content" style="text-align:center;">
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-discord-step')"></i>
+            <h2 style="color:#5865F2; margin-bottom:10px;"><i class="fab fa-discord"></i> PEDIDO DISCORD</h2>
+            <p style="color:#ccc; font-size:13px; margin-bottom:15px;">
+                1. Copie a mensagem abaixo.<br>
+                2. Clique no botão para abrir o Discord.<br>
+                3. Abra um <b>Ticket</b> e cole a mensagem junto com o comprovante.
+            </p>
+            
+            <textarea id="discord-msg-area" class="copy-area-discord" readonly></textarea>
+            
+            <button class="btn-buy" style="background:#5865F2; border-color:#5865F2; color:#fff; padding:15px; font-size:14px;" onclick="copyAndGoDiscord()">
+                <i class="fas fa-copy"></i> COPIAR E ABRIR DISCORD
+            </button>
+        </div>
+    </div>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <div id="modal-login" class="modal-wrapper active">
         <div class="modal-content" style="text-align: center;">
-            <h1 style="color:var(--primary); margin-bottom:10px;">BLACKDZ</h1>
+            <h1 style="color:var(--primary); margin-bottom:10px;">BLACKDZ STORE</h1>
             <p style="color:#888; margin-bottom:20px;">Acesso ao Sistema</p>
             <form id="form-login">
                 <input type="text" id="login-user" class="input-box" placeholder="Nome de Usuário" required>
@@ -383,13 +493,40 @@
             </form>
         </div>
     </div>
-
-    <div id="modal-request" class="modal-wrapper">
+       <div id="modal-custom" class="modal-wrapper">
         <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-request')"></i>
-            <h2 style="color:var(--primary); margin-bottom:15px;">SOLICITAR ITEM</h2>
-            <textarea id="request-msg" class="input-box" placeholder="Ex: Quero uma conta level max..."></textarea>
-            <button onclick="sendWhatsapp('request')" class="btn-buy" style="background:var(--primary); color:#fff;">ENVIAR</button>
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-custom')"></i>
+            <h2 style="color:var(--primary); margin-bottom:20px;">PERSONALIZAR</h2>
+            <div class="custom-section-title">🎨 PALETA DE CORES</div>
+            <div class="color-picker-row">
+                <label>Cor Principal</label>
+                <input type="color" id="picker-primary" value="#ff0000" oninput="updateThemeColor(this.value, 'primary')">
+            </div>
+            <div class="color-picker-row">
+                <label>Cor Fundo</label>
+                <input type="color" id="picker-secondary" value="#050505" oninput="updateThemeColor(this.value, 'secondary')">
+            </div>
+            <div class="color-picker-row">
+                <label>Aura/Brilho</label>
+                <input type="color" id="picker-aura" value="#ff0000" oninput="updateThemeColor(this.value, 'aura')">
+            </div>
+
+            <div class="custom-section-title" style="margin-top:20px;">🖼️ PLANO DE FUNDO</div>
+            <div class="custom-tabs">
+                <button class="tab-btn active" id="btn-upload" onclick="switchBgTab('upload')">📁 UPLOAD</button>
+                <button class="tab-btn" id="btn-url" onclick="switchBgTab('url')">🔗 LINK</button>
+            </div>
+            <div id="area-upload">
+                <div class="file-upload-box">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:24px; margin-bottom:10px;"></i><br>Clique para escolher<br><b>Qualidade Max</b>
+                    <input type="file" id="bg-file-input" accept="image/*" onchange="handleBgUpload(this)">
+                </div>
+            </div>
+            <div id="area-url" class="hidden">
+                <input type="text" id="bg-url-input" class="input-box" placeholder="Cole o link da imagem..." oninput="handleBgUrl(this.value)">
+            </div>
+            
+            <button onclick="resetTheme()" class="btn-buy" style="margin-top:20px; border-color:#666; color:#888;">RESETAR PADRÃO</button>
         </div>
     </div>
 
@@ -397,57 +534,17 @@
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal('modal-support')"></i>
             <h2 style="color:var(--primary); margin-bottom:15px;">SUPORTE</h2>
-            <textarea id="support-msg" class="input-box" placeholder="Descreva seu problema..."></textarea>
-            <button onclick="sendWhatsapp('support')" class="btn-buy" style="background:var(--primary); color:#fff;">ENVIAR</button>
+            <textarea id="support-msg" class="input-box" placeholder="Qual seu problema?"></textarea>
+            <button onclick="openContactOptions('support')" class="btn-buy">AVANÇAR</button>
         </div>
     </div>
 
-    <div id="modal-custom" class="modal-wrapper">
+    <div id="modal-request" class="modal-wrapper">
         <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-custom')"></i>
-            <h2 style="color:var(--primary); margin-bottom:20px; display:flex; align-items:center; gap:10px;">
-                <i class="fas fa-swatchbook"></i> PERSONALIZAR
-            </h2>
-
-            <div class="custom-section-title">🎨 PALETA DE CORES</div>
-            
-            <div class="color-picker-row">
-                <label>Cor Principal (Texto/Botão)</label>
-                <input type="color" id="picker-primary" value="#ff0000" oninput="updateThemeColor(this.value, 'primary')">
-            </div>
-            
-            <div class="color-picker-row">
-                <label>Cor Secundária (Fundo)</label>
-                <input type="color" id="picker-secondary" value="#050505" oninput="updateThemeColor(this.value, 'secondary')">
-            </div>
-
-            <div class="color-picker-row">
-                <label>Cor da Aura (Brilho/Borda)</label>
-                <input type="color" id="picker-aura" value="#ff0000" oninput="updateThemeColor(this.value, 'aura')">
-            </div>
-
-            <div class="custom-section-title" style="margin-top:20px;">🖼️ PLANO DE FUNDO</div>
-
-            <div class="custom-tabs">
-                <button class="tab-btn active" id="btn-upload" onclick="switchBgTab('upload')">📁 UPLOAD PC</button>
-                <button class="tab-btn" id="btn-url" onclick="switchBgTab('url')">🔗 LINK URL</button>
-            </div>
-
-            <div id="area-upload">
-                <div class="file-upload-box">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:24px; margin-bottom:10px;"></i><br>
-                    Clique para escolher uma imagem<br><b>Qualidade 100% Original</b>
-                    <input type="file" id="bg-file-input" accept="image/*" onchange="handleBgUpload(this)">
-                </div>
-            </div>
-
-            <div id="area-url" class="hidden">
-                <input type="text" id="bg-url-input" class="input-box" placeholder="https://exemplo.com/imagem.jpg" oninput="handleBgUrl(this.value)">
-            </div>
-
-            <div id="bg-preview" class="bg-preview-mini"></div>
-            
-            <button onclick="resetTheme()" class="btn-buy" style="margin-top:20px; border-color:#666; color:#888;">RESETAR PADRÃO</button>
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-request')"></i>
+            <h2 style="color:var(--primary); margin-bottom:15px;">SOLICITAR ITEM</h2>
+            <textarea id="request-msg" class="input-box" placeholder="O que você procura?"></textarea>
+            <button onclick="openContactOptions('request')" class="btn-buy">AVANÇAR</button>
         </div>
     </div>
 
@@ -455,37 +552,8 @@
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal('modal-streaming-combo')"></i>
             <h2 style="color:var(--primary); margin-bottom:15px;">ESCOLHA 3 STREAMINGS</h2>
-            <p style="font-size:12px; color:#888; margin-bottom:15px;">Selecione exatamente 3 opções:</p>
             <div id="streaming-options"></div>
-            <button onclick="confirmStreamingCombo()" class="btn-buy" style="background:var(--primary); color:#fff; margin-top:10px;">CONFIRMAR SELEÇÃO</button>
-        </div>
-    </div>
-
-    <div id="modal-discord" class="modal-wrapper">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-discord')"></i>
-            <h2 style="color:var(--discord); margin-bottom:15px;"><i class="fab fa-discord"></i> PAGAMENTO VIA DISCORD</h2>
-            
-            <div style="background:#1a1a1a; padding:15px; border-radius:8px; margin-bottom:15px; border-left:3px solid var(--discord);">
-                <p style="font-size:13px; color:#fff; line-height:1.6;">
-                    1. Clique em <b>COPIAR MENSAGEM</b> abaixo.<br>
-                    2. Clique em <b>ABRIR DISCORD</b> para entrar no servidor.<br>
-                    3. No servidor, vá na aba <b>atendimento</b>.<br>
-                    4. Abra um <b>Ticket</b> e cole a mensagem copiada.
-                </p>
-            </div>
-
-            <p style="font-size:12px; color:#888; margin-bottom:5px;">Sua mensagem de pedido:</p>
-            <textarea id="discord-order-msg" class="input-box" readonly style="height:120px; font-size:11px; color:#0f0;"></textarea>
-            
-            <div style="display:flex; gap:10px;">
-                <button onclick="copyDiscordMsg()" class="btn-buy" style="background:#333; color:#fff; border-color:#555; flex:1;">
-                    <i class="fas fa-copy"></i> COPIAR MENSAGEM
-                </button>
-                <button onclick="goToDiscord()" class="btn-buy" style="background:var(--discord); color:#fff; border-color:var(--discord); flex:1;">
-                    <i class="fab fa-discord"></i> ABRIR DISCORD
-                </button>
-            </div>
+            <button onclick="confirmStreamingCombo()" class="btn-buy" style="margin-top:10px;">CONFIRMAR</button>
         </div>
     </div>
 
@@ -495,11 +563,16 @@
             <div class="avatar" id="avatar-letter">?</div>
             <div>
                 <div style="font-size:14px; font-weight:bold;" id="user-display">Visitante</div>
-                <div style="font-size:11px; color:#0f0;">Online</div>
+                <div style="font-size:11px; color:var(--success);">Online</div>
             </div>
         </div>
         <div class="menu-list">
             <div class="menu-item active" onclick="nav('home'); toggleSidebar()"><i class="fas fa-home"></i> Início</div>
+            
+            <div class="menu-item secret-tab hidden" id="btn-secret" onclick="openSecretTab(); toggleSidebar()">
+                <i class="fas fa-key"></i> ACESSO LIMITADO
+            </div>
+
             <div class="menu-item" onclick="openModal('modal-request'); toggleSidebar()"><i class="fas fa-box-open"></i> Pedir Item</div>
             <div class="menu-item" onclick="toggleCart(); toggleSidebar()"><i class="fas fa-shopping-cart"></i> Carrinho <span id="badge-cart" style="margin-left:auto; background:#fff; color:#000; padding:2px 6px; border-radius:10px; font-size:10px;">0</span></div>
             <div class="menu-item" onclick="openModal('modal-custom'); toggleSidebar()"><i class="fas fa-paint-brush"></i> Personalizar</div>
@@ -510,18 +583,12 @@
 
     <div class="content">
         <div class="top-bar">
-            <button class="mobile-menu-btn" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
-            </button>
-
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
             <div class="search-wrap">
                 <i class="fas fa-search"></i>
                 <input type="text" id="search-input-desktop" placeholder="Pesquisar..." onkeyup="doSearch(this.value)">
             </div>
-            
-            <button class="btn-buy" style="width:auto; padding:8px 15px;" onclick="toggleCart()">
-                <i class="fas fa-shopping-bag"></i>
-            </button>
+            <button class="btn-buy" style="width:auto; padding:8px 15px;" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i></button>
         </div>
 
         <div class="mobile-search-container">
@@ -533,8 +600,14 @@
             <div class="grid-cats" id="container-cats"></div>
         </div>
 
+        <div id="view-secret" class="hidden">
+            <h2 style="border-left:5px solid var(--gold); padding-left:15px; margin-bottom:10px; font-size:22px; color: var(--gold);">ACESSO LIMITADO</h2>
+            <p style="color:#888; margin-bottom:20px; font-size:13px;">Acesso restrito. Produtos exclusivos e métodos limitados.</p>
+            <div class="grid-cats" id="container-secret-cats"></div>
+        </div>
+
         <div id="view-prods" class="hidden">
-            <button class="btn-buy" style="width:auto; margin-bottom:20px; padding:8px 15px;" onclick="nav('home')"><i class="fas fa-arrow-left"></i> VOLTAR</button>
+            <button class="btn-buy" style="width:auto; margin-bottom:20px; padding:8px 15px;" onclick="navBack()"><i class="fas fa-arrow-left"></i> VOLTAR</button>
             <h2 id="cat-title" style="border-left:5px solid var(--primary); padding-left:15px; margin-bottom:20px; font-size:22px;">...</h2>
             <div class="grid-prods" id="container-prods"></div>
         </div>
@@ -545,92 +618,90 @@
             <h2>CARRINHO</h2>
             <i class="fas fa-times" style="cursor:pointer; font-size:24px;" onclick="toggleCart()"></i>
         </div>
-        
         <div id="cart-list" style="flex:1; overflow-y:auto;"></div>
-
         <div class="coupon-area">
-            <div style="font-size:12px; color:#aaa; margin-bottom:5px;">Possui Cupom?</div>
             <div class="coupon-flex">
-                <input type="text" id="coupon-code" class="coupon-input" placeholder="CÓDIGO">
-                <button onclick="applyCoupon()" class="btn-coupon">APLICAR</button>
+                <input type="text" id="coupon-code" class="coupon-input" placeholder="CUPOM">
+                <button onclick="applyCoupon()" class="btn-coupon">USAR</button>
             </div>
-            <span id="coupon-feedback" class="coupon-msg"></span>
+            <span id="coupon-feedback" style="font-size:11px; margin-top:5px; display:block;"></span>
         </div>
-
         <div style="border-top:1px solid #333; padding-top:20px;">
-            <div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-bottom:5px;">
-                <span>Subtotal:</span> <span id="cart-subtotal">R$ 0,00</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--success); margin-bottom:15px;">
-                <span>Desconto:</span> <span id="cart-discount">- R$ 0,00</span>
-            </div>
             <div style="display:flex; justify-content:space-between; font-size:20px; font-weight:bold; margin-bottom:15px;">
                 <span>TOTAL:</span> <span id="cart-total" style="color:#fff;">R$ 0,00</span>
             </div>
-            
-            <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
-                <button class="btn-buy" style="background:#25D366; color:#fff; border-color:#25D366; padding:12px;" onclick="sendWhatsapp('cart')">
-                    <i class="fab fa-whatsapp"></i> PAGAR NO WHATSAPP
-                </button>
-                
-                <button class="btn-buy" style="background:var(--discord); color:#fff; border-color:var(--discord); padding:12px;" onclick="openDiscordCheckout()">
-                    <i class="fab fa-discord"></i> PAGAR NO DISCORD
-                </button>
-            </div>
+            <button class="btn-buy" style="background:#25D366; color:#000; border-color:#25D366; padding:12px;" onclick="openCheckout()">
+                <i class="fas fa-check-circle"></i> FINALIZAR COMPRA
+            </button>
         </div>
     </div>
 
     <div class="chat-trigger" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     <div class="chat-box" id="chat-box">
         <div class="chat-header">
-            <span>🤖 Assistente BlackDz AI</span> 
+            <span>🧠 BlackDz AI</span> 
             <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer;"></i>
         </div>
         <div id="chat-messages" class="chat-messages">
-            <div class="msg bot">Olá! Sou o assistente virtual da BlackDz 👋<br><br>Posso te ajudar com:<br>• Encontrar produtos<br>• Aplicar cupons<br>• Fazer pagamento<br>• Personalizar a loja<br>• E muito mais!<br><br>Como posso te ajudar?</div>
-        </div>
-        <div class="chat-suggestions">
-            <div class="suggestion-btn" onclick="quickAction('categorias')">📂 Ver Categorias</div>
-            <div class="suggestion-btn" onclick="quickAction('promoções')">🔥 Promoções</div>
-            <div class="suggestion-btn" onclick="quickAction('pagamento')">💳 Como Pagar</div>
-            <div class="suggestion-btn" onclick="quickAction('cupom')">🎟️ Cupons</div>
+            <div class="msg bot"> Sou a IA da BlackDz Store. 🤖<Salve!br><br>estou em desenvolvimento, nao garato que consiga te ajudar mais, me fale sua duvida!</div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChat(event)">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Digite aqui..." onkeypress="handleChat(event)">
             <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        const couponsDB = { 'VEMCOMAGENTE': 0.05 };
-        const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
+        /* --- CONFIGURAÇÃO --- */
+        const EXIBIR_ABA_SECRETA = true; // Define se o Acesso Limitado aparece
+        /* ------------------- */
 
+        const couponsDB = {'VEMCOMAGENTE': 0.05,};
+        const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
         const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
 
+        // BD ATUALIZADO
         const db = [
-            // Streamings
             { id: 1, name: "Crunchyroll + Canva (30 dias)", price: 5.00, image: "https://i.imgur.com/BJ6YqTs.png", cat: "Streamings", desc: "Contas compartilhadas do Crunchyroll e Canva Premium por 30 dias" },
             { id: 2, name: "Monte seu Combo 3 Streamings", price: 25.99, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Escolha 3 serviços: Netflix, Prime Video, HBO Max, Globo Play, Crunchyroll, YouTube Premium, Paramount+ ou +18", special: "streaming-combo" },
             { id: 3, name: "Pacote Completo Streamings", price: 35.00, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
-            
-            // Xbox
             { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
             { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
             { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://media.pocketgamer.biz/images/106201/74080/game-pass_s470.jpg", cat: "Xbox", desc: "Key de gamepass para PC" },
             
-            // Discord
+            // --- KEYS RANDOM (DENTRO DA CATEGORIA JOGOS AGORA) ---
+            { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
+            { id: 201, name: "[KEY] Steam Key Ferro", price: 5.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
+            { id: 202, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
+            { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
+            { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
+            { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
+            { id: 206, name: "[KEY] Pacote 10x Steam Key", price: 45.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote com 10 Keys aleatórias para farmar cartas ou jogos." },
+            { id: 207, name: "[KEY] Pacote 50x Monster Key", price: 80.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote Monster com 50 Keys Steam." },
+
+            // --- JOGOS ADICIONADOS ---
+            { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Elden Ring." },
+            { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com GoW Ragnarok." },
+            { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f1e18b27a6d80.png", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Spider-Man 2." },
+            { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline TLOU Part I." },
+            { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", desc: "O jogo do macaco! Conta Offline." },
+            { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline MK1." },
+            { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline Hogwarts Legacy." },
+            { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", desc: "Versão Premium Edition." },
+            { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", desc: "Edição Lendária completa." },
+            { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", desc: "Remake aclamado. Conta Offline." },
+            { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", desc: "Versão atualizada. Conta Offline." },
+            { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", desc: "Ultimate Edition. Conta Offline." },
+            { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", desc: "Modo história e online (depende da conta)." },
+            { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", desc: "Jogo do ano. Conta Offline." },
+            { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", desc: "Corrida mundo aberto. Conta Offline." },
+            { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", desc: "Obra prima da FromSoftware." },
+            
+            // --- OUTRAS CATEGORIAS ---
             { id: 101, name: "Discord Nitro - 3 Meses", price: 24.90, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnUI2MbssmzNYR2ZlQRFWJqtFetlhfD6aFzQ&s", cat: "Discord", desc: "Nitro Trimestral para quem não teve nos últimos 12 meses" },
             { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://cdn.prod.website-files.com/5f9072399b2640f14d6a2bf4/66fc75572317e763f2ea3632_image2.png", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
             { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://cdn.ggmax.com.br/images/837165d38baa511cbdfc8d361385135f.sm.jpg", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
             
-            // Steam
-            { id: 201, name: "Steam KEY Aleatória (Max R$150)", price: 9.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Steam", desc: "Key aleatória de jogos de 1 a 150 reais" },
-            { id: 202, name: "Compre 1 Ganhe 7 Jogos", price: 29.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Steam", desc: "Compre 1 e ganhe +6 jogos de brinde" },
-            { id: 203, name: "10x Steam KEY Aleatória", price: 39.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Steam", desc: "Pacote com 10 Keys aleatórias" },
-            { id: 204, name: "50x Steam KEY Aleatória", price: 70.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Steam", desc: "Pacote Monster com 50 Keys Steam" },
-            
-            // Roblox Contas
             { id: 300, name: "Conta 2014 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2014 sem itens" },
             { id: 301, name: "Conta 2015 VAZIA", price: 7.80, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2015 sem itens" },
             { id: 302, name: "Conta 2016 VAZIA", price: 5.72, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2016 sem itens" },
@@ -638,57 +709,55 @@
             { id: 304, name: "Conta 2019 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2019 sem itens" },
             { id: 305, name: "Conta 2020 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2020 sem itens" },
             
-            // Blox Fruits - Gamepass
-            { id: 400, name: "2x Money", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: dinheiro em dobro" },
-            { id: 401, name: "2x Mastery", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: maestria em dobro" },
-            { id: 402, name: "Fruit Storage", price: 25.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Gamepass: armazene mais frutas" },
-            { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: genericGamepass, cat: "Blox Gamepass", desc: "Espada Lendária Dark Blade" },
-            { id: 404, name: "Fruit Notifier", price: 110.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Notificador de frutas no mapa" },
-            { id: 405, name: "2x Fast Boat", price: 22.90, image: genericGamepass, cat: "Blox Gamepass", desc: "Fast Boat ou Chance de Drop" },
-            { id: 406, name: "Haki Lendário", price: 18.00, image: genericGamepass, cat: "Blox Gamepass", desc: "Cores lendárias de Haki" },
+            // --- BLOX FRUITS (UNIFICADO) ---
+            { id: 400, name: "2x Money", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: dinheiro em dobro" },
+            { id: 401, name: "2x Mastery", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: maestria em dobro" },
+            { id: 402, name: "Fruit Storage", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: armazene mais frutas" },
+            { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Espada Lendária Dark Blade" },
+            { id: 404, name: "Fruit Notifier", price: 110.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Notificador de frutas no mapa" },
+            { id: 405, name: "2x Fast Boat", price: 22.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Fast Boat ou Chance de Drop" },
+            { id: 406, name: "Haki Lendário", price: 18.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Cores lendárias de Haki" },
             
-            // Blox Fruits - Permanentes
-            { id: 500, name: "KITSUNE PERMANENTE", price: 159.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/9d/Kitsune.png", cat: "Blox Perms", desc: "Fruta Kitsune para sempre" },
-            { id: 501, name: "DRAGON PERMANENTE", price: 176.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/8a/Dragon.png", cat: "Blox Perms", desc: "Fruta Dragon para sempre" },
-            { id: 502, name: "CONTROL PERMANENTE", price: 154.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/f3/Control.png", cat: "Blox Perms", desc: "Fruta Control permanente" },
-            { id: 503, name: "TIGER PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Perms", desc: "Fruta Tiger permanente" },
-            { id: 504, name: "PAIN PERMANENTE", price: 86.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/d/d6/Paw.png", cat: "Blox Perms", desc: "Fruta Pain permanente" },
-            { id: 505, name: "LIGHTNING PERMANENTE", price: 85.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/70/Rumble.png", cat: "Blox Perms", desc: "Fruta Lightning permanente" },
-            { id: 506, name: "YETI PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/89/Mammoth.png", cat: "Blox Perms", desc: "Fruta Yeti permanente" },
-            { id: 507, name: "GAS PERMANENTE", price: 91.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/e/e7/Gas.png", cat: "Blox Perms", desc: "Fruta Gas permanente" },
-            { id: 508, name: "GRAVITY PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/c6/Gravity.png", cat: "Blox Perms", desc: "Fruta Gravity permanente" },
-            { id: 509, name: "CREATION PERMANENTE", price: 80.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Perms", desc: "Fruta Creation permanente" },
-            { id: 510, name: "FALCON PERMANENTE", price: 45.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/51/Phoenix.png", cat: "Blox Perms", desc: "Fruta Falcon permanente" },
-            { id: 511, name: "DOUGH PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Perms", desc: "Fruta Dough (Massa) permanente" },
-            { id: 512, name: "PORTAL PERMANENTE", price: 76.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/5c/Portal.png", cat: "Blox Perms", desc: "Fruta Portal permanente" },
-            { id: 513, name: "BUDDHA PERMANENTE", price: 75.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/92/Buddha.png", cat: "Blox Perms", desc: "Fruta Buddha permanente" },
-            { id: 514, name: "VENOM PERMANENTE", price: 95.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a6/Venom.png", cat: "Blox Perms", desc: "Fruta Venom permanente" },
-            { id: 515, name: "LIGHT PERMANENTE", price: 54.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/10/Light.png", cat: "Blox Perms", desc: "Fruta Light permanente" },
-            { id: 516, name: "ICE PERMANENTE", price: 35.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/2/2e/Ice.png", cat: "Blox Perms", desc: "Fruta Ice permanente" },
-            { id: 517, name: "MAGMA PERMANENTE", price: 53.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/b/b7/Magma.png", cat: "Blox Perms", desc: "Fruta Magma permanente" },
-            { id: 518, name: "T-REX PERMANENTE", price: 86.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Perms", desc: "Fruta T-Rex permanente" },
-            { id: 519, name: "SPIRIT PERMANENTE", price: 91.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/3/3f/Soul.png", cat: "Blox Perms", desc: "Fruta Spirit permanente" },
+            { id: 500, name: "KITSUNE PERMANENTE", price: 159.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/9d/Kitsune.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Kitsune para sempre" },
+            { id: 501, name: "DRAGON PERMANENTE", price: 176.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/8a/Dragon.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dragon para sempre" },
+            { id: 502, name: "CONTROL PERMANENTE", price: 154.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/f3/Control.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Control permanente" },
+            { id: 503, name: "TIGER PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Tiger permanente" },
+            { id: 504, name: "PAIN PERMANENTE", price: 86.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/d/d6/Paw.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Pain permanente" },
+            { id: 505, name: "LIGHTNING PERMANENTE", price: 85.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/70/Rumble.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Lightning permanente" },
+            { id: 506, name: "YETI PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/89/Mammoth.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Yeti permanente" },
+            { id: 507, name: "GAS PERMANENTE", price: 91.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/e/e7/Gas.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gas permanente" },
+            { id: 508, name: "GRAVITY PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/c6/Gravity.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gravity permanente" },
+            { id: 509, name: "CREATION PERMANENTE", price: 80.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Creation permanente" },
+            { id: 510, name: "FALCON PERMANENTE", price: 45.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/51/Phoenix.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Falcon permanente" },
+            { id: 511, name: "DOUGH PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dough (Massa) permanente" },
+            { id: 512, name: "PORTAL PERMANENTE", price: 76.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/5c/Portal.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Portal permanente" },
+            { id: 513, name: "BUDDHA PERMANENTE", price: 75.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/92/Buddha.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Buddha permanente" },
+            { id: 514, name: "VENOM PERMANENTE", price: 95.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a6/Venom.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Venom permanente" },
+            { id: 515, name: "LIGHT PERMANENTE", price: 54.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/10/Light.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Light permanente" },
+            { id: 516, name: "ICE PERMANENTE", price: 35.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/2/2e/Ice.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Ice permanente" },
+            { id: 517, name: "MAGMA PERMANENTE", price: 53.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/b/b7/Magma.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Magma permanente" },
+            { id: 518, name: "T-REX PERMANENTE", price: 86.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta T-Rex permanente" },
+            { id: 519, name: "SPIRIT PERMANENTE", price: 91.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/3/3f/Soul.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Spirit permanente" },
             
-            // Blox Fruits - Contas
-            { id: 600, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Contas", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
-            { id: 601, name: "CONTA V4 MINK FULL", price: 52.32, image: "💤", cat: "Blox Contas", desc: "V4 Mink, CDK, God Human e Level Max" },
-            { id: 602, name: "CONTA V4 CYBORG FULL", price: 56.99, image: "🤖", cat: "Blox Contas", desc: "V4 Cyborg, CDK, God Human e Level Max" },
-            { id: 603, name: "CONTA V4 DRACO + CDK", price: 75.65, image: "🐉", cat: "Blox Contas", desc: "V4 Draco, CDK, Soul Guitar e God Human" },
-            { id: 604, name: "CONTA V4 GHOUL + SG", price: 31.99, image: "👻", cat: "Blox Contas", desc: "V4 Ghoul, CDK, Soul Guitar e God Human" },
-            { id: 605, name: "CONTA V4 SKY FULL", price: 30.00, image: "👼", cat: "Blox Contas", desc: "V4 Sky, CDK, God Human e Level Max" },
-            { id: 606, name: "CONTA V4 FISCH FULL", price: 56.99, image: "🟠", cat: "Blox Contas", desc: "V4 Fisch, CDK, God Human e Level Max" },
-            { id: 607, name: "CONTA 7 V4 FULL + CDK", price: 105.00, image: "👑", cat: "Blox Contas", desc: "7 Raças V4, CDK, SG, GDH" },
-            { id: 608, name: "CONTA MAMUTE + GDH", price: 16.00, image: "🐘", cat: "Blox Contas", desc: "Mamute, God Human e Lvl 2750" },
-            { id: 609, name: "CONTA KITSUNE INV", price: 39.32, image: "🦊", cat: "Blox Contas", desc: "Kitsune Invencível" },
-            { id: 610, name: "CONTA T-REX INV + GDH", price: 16.00, image: "🦖", cat: "Blox Contas", desc: "T-Rex Invencível, God Human e Level Max" },
-            { id: 611, name: "CONTA DOUGH INV + GDH", price: 9.80, image: "🥖", cat: "Blox Contas", desc: "Dough Invencível, God Human e Lvl 2750" },
-            { id: 612, name: "CONTA GAS INV + GDH", price: 19.00, image: "💨", cat: "Blox Contas", desc: "Gas Invencível, God Human e Lvl 2750" },
-            { id: 613, name: "CONTA TIGER INV", price: 37.00, image: "🐅", cat: "Blox Contas", desc: "Tiger Invencível" },
-            { id: 614, name: "CONTA PORTAL + GDH", price: 15.00, image: "🌀", cat: "Blox Contas", desc: "Portal e God Human" },
-            { id: 615, name: "CONTA CONTROL INV + GDH", price: 37.00, image: "🎮", cat: "Blox Contas", desc: "Control Invencível e God Human" },
-            { id: 616, name: "CONTA GRAVITY + GDH", price: 16.00, image: "🌌", cat: "Blox Contas", desc: "Gravity e God Human" },
+            { id: 600, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", sub: "account", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
+            { id: 601, name: "CONTA V4 MINK FULL", price: 52.32, image: "💤", cat: "Blox Fruits", sub: "account", desc: "V4 Mink, CDK, God Human e Level Max" },
+            { id: 602, name: "CONTA V4 CYBORG FULL", price: 56.99, image: "🤖", cat: "Blox Fruits", sub: "account", desc: "V4 Cyborg, CDK, God Human e Level Max" },
+            { id: 603, name: "CONTA V4 DRACO + CDK", price: 75.65, image: "🐉", cat: "Blox Fruits", sub: "account", desc: "V4 Draco, CDK, Soul Guitar e God Human" },
+            { id: 604, name: "CONTA V4 GHOUL + SG", price: 31.99, image: "👻", cat: "Blox Fruits", sub: "account", desc: "V4 Ghoul, CDK, Soul Guitar e God Human" },
+            { id: 605, name: "CONTA V4 SKY FULL", price: 30.00, image: "👼", cat: "Blox Fruits", sub: "account", desc: "V4 Sky, CDK, God Human e Level Max" },
+            { id: 606, name: "CONTA V4 FISCH FULL", price: 56.99, image: "🟠", cat: "Blox Fruits", sub: "account", desc: "V4 Fisch, CDK, God Human e Level Max" },
+            { id: 607, name: "CONTA 7 V4 FULL + CDK", price: 105.00, image: "👑", cat: "Blox Fruits", sub: "account", desc: "7 Raças V4, CDK, SG, GDH" },
+            { id: 608, name: "CONTA MAMUTE + GDH", price: 16.00, image: "🐘", cat: "Blox Fruits", sub: "account", desc: "Mamute, God Human e Lvl 2750" },
+            { id: 609, name: "CONTA KITSUNE INV", price: 39.32, image: "🦊", cat: "Blox Fruits", sub: "account", desc: "Kitsune Invencível" },
+            { id: 610, name: "CONTA T-REX INV + GDH", price: 16.00, image: "🦖", cat: "Blox Fruits", sub: "account", desc: "T-Rex Invencível, God Human e Level Max" },
+            { id: 611, name: "CONTA DOUGH INV + GDH", price: 9.80, image: "🥖", cat: "Blox Fruits", sub: "account", desc: "Dough Invencível, God Human e Lvl 2750" },
+            { id: 612, name: "CONTA GAS INV + GDH", price: 19.00, image: "💨", cat: "Blox Fruits", sub: "account", desc: "Gas Invencível, God Human e Lvl 2750" },
+            { id: 613, name: "CONTA TIGER INV", price: 37.00, image: "🐅", cat: "Blox Fruits", sub: "account", desc: "Tiger Invencível" },
+            { id: 614, name: "CONTA PORTAL + GDH", price: 15.00, image: "🌀", cat: "Blox Fruits", sub: "account", desc: "Portal e God Human" },
+            { id: 615, name: "CONTA CONTROL INV + GDH", price: 37.00, image: "🎮", cat: "Blox Fruits", sub: "account", desc: "Control Invencível e God Human" },
+            { id: 616, name: "CONTA GRAVITY + GDH", price: 16.00, image: "🌌", cat: "Blox Fruits", sub: "account", desc: "Gravity e God Human" },
+
             
-            // Scripts
             { id: 700, name: "Script Custom Master DBC", price: 30.00, image: "👑", cat: "Scripts", desc: "Para Dragon Block C [1.7.10]. Cria NPC de Formas" },
             { id: 701, name: "Script TP Bank", price: 25.00, image: "🏦", cat: "Scripts", desc: "Sistema de Banco de Teleporte completo" },
             { id: 702, name: "Script Armaduras Custom", price: 15.00, image: "🛡️", cat: "Scripts", desc: "Equipa roupa ao transformar" },
@@ -696,7 +765,6 @@
             { id: 704, name: "Script Custom Races/Effects", price: 30.00, image: "🌀", cat: "Scripts", desc: "NPC que vende raça/efeito Bio-android ou Android" },
             { id: 705, name: "Script Animação de KI", price: 15.00, image: "💥", cat: "Scripts", desc: "Animação de carregar KI ao apertar 'C'" },
             
-            // Fortnite
             { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
             { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
             { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 iniciais + 5000 mensais com clube" },
@@ -705,80 +773,78 @@
             { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Indiana Jones e outras skins" },
             { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Ice Spice e outras skins" },
             
-            // Valorant
             { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", desc: "Conta Bronze aleatória" },
             { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", desc: "Conta Diamante aleatória" },
             { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", desc: "Conta Ascendente aleatória" },
             { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", desc: "Upada à mão, com dados de criação" },
             { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", desc: "Conta Nível 1 com Range feito" },
             
-            // Minecraft
             { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
             { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Acesso via Gamepass PC" },
             
-            // GTA V
             { id: 1100, name: "Conta Rockstar (FiveM Ready)", price: 5.00, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", desc: "Licenciada para FiveM" },
             { id: 1101, name: "Conta Steam com GTA V", price: 18.00, image: "https://cdn.dfg.com.br/itemimages/902913858-contas-steam-gta-v-full-acesso-NA9T.webp", cat: "GTA V", desc: "Conta Steam para baixar e jogar" },
             { id: 1102, name: "Combo Rockstar + Steam", price: 15.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", desc: "Combo com as duas contas" },
             
-            // Dragon Ball Rage
             { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", desc: "Forma personalizada no jogo" },
             { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", desc: "Gamepass de experiência" },
-            { id: 1202, name: "2x Drop Chance", price: 25.00, image: genericGamepass, cat: "DB Rage", desc: "Aumenta chance de drops" },
+            { id: 1202, name: "2x Drop Chance", price: 25.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Aumenta chance de drops" },
             { id: 1203, name: "Limit Breaker", price: 23.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/4/45/LimitBreaker.png", cat: "DB Rage", desc: "Quebre os limites do personagem" },
             { id: 1204, name: "Dragon Radar", price: 22.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/5/50/DragonRadar.png", cat: "DB Rage", desc: "Radar de esferas" },
-            { id: 1205, name: "2x Zeni", price: 16.90, image: genericGamepass, cat: "DB Rage", desc: "Multiplicador de dinheiro" },
+            { id: 1205, name: "2x Zeni", price: 16.90, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Multiplicador de dinheiro" },
             { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", desc: "Mude a cor do seu Ki" },
             { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", desc: "Transformação Omega" },
-            { id: 1208, name: "Parasite Form", price: 6.50, image: genericGamepass, cat: "DB Rage", desc: "Forma Parasita" },
-            { id: 1209, name: "Savior Form", price: 13.00, image: genericGamepass, cat: "DB Rage", desc: "Forma Salvador" },
-            
-            // Cupons
+            { id: 1208, name: "Parasite Form", price: 6.50, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Parasita" },
+            { id: 1209, name: "Savior Form", price: 13.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Salvador" },
             { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 10% para sempre" },
             { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 15% para sempre" },
             { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 20% para sempre" },
             { id: 1303, name: "Cupom 25% OFF Vitalício", price: 100.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 25% para sempre" },
             
-            // Jogos
-            { id: 1400, name: "All Games Steam", price: 19.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", desc: "Te ensinamos como ter qualquer jogo na Steam gratuitamente" },
+            { id: 1400, name: "All Games Steam", price: 59.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", desc: "Te ensinamos como ter qualquer jogo na Steam!" },
+            { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Fornecedores", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
             
-            // Painéis
-            { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Painéis", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
             
-            // TUDO POR 1,99
-            { id: 1600, name: "Método Like FF +1k", price: 1.99, image: "❤️", cat: "Tudo por 1,99", desc: "Método para conseguir +1000 likes no Free Fire" },
-            { id: 1601, name: "Método IA Cria Cursos", price: 1.99, image: "🎓", cat: "Tudo por 1,99", desc: "IA que cria cursos profissionais automaticamente" },
-            { id: 1602, name: "Gerador de Spotify", price: 1.99, image: "🎵", cat: "Tudo por 1,99", desc: "Gerador automático de contas Spotify Premium" },
-            { id: 1603, name: "Gerador Nitro Discord", price: 1.99, image: "💎", cat: "Tudo por 1,99", desc: "Gerador automático de Nitro Discord" },
-            { id: 1604, name: "Gerador de Contas Minecraft", price: 1.99, image: "⛏️", cat: "Tudo por 1,99", desc: "Gerador automático de contas Minecraft" }
+            // --- CATEGORIA TUDO POR 5,90 ---
+            { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", desc: "Aprenda a ter todos os canais liberados" },
+            { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", desc: "Como criar e monetizar vídeos Brainrot" },
+            { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", desc: "Tenha internet em qualquer lugar" },
+            { id: 1603, name: "Método Passe FF Barato", price: 5.90, image: "🎟️", cat: "Tudo por 5,90", desc: "Pegue o passe do Free Fire pagando pouco" },
+            { id: 1604, name: "Método Diamantes FF", price: 5.90, image: "💎", cat: "Tudo por 5,90", desc: "Consiga diamantes com desconto ou free" },
+            { id: 1605, name: "Método Renda Extra", price: 5.90, image: "💰", cat: "Tudo por 5,90", desc: "Dicas fáceis para levantar dinheiro rápido" },
+            { id: 1606, name: "Método Gift Card", price: 5.90, image: "💳", cat: "Tudo por 5,90", desc: "Como conseguir Gift Cards promocionais" },
+            { id: 1607, name: "Método Like FF +1k", price: 5.90, image: "❤️", cat: "Tudo por 5,90", desc: "Método para conseguir +1000 likes no Free Fire" },
+
+            // --- CATEGORIA FORNECEDORES ---
+            { id: 2001, name: "Fornecedor Robux (Barato)", price: 9.90, image: "💵", cat: "Fornecedores", desc: "Contato direto para comprar Robux a preço de banana" },
+            { id: 2002, name: "Fornecedor Xit/Paineis FF", price: 10.90, image: "🎯", cat: "Fornecedores", desc: "Os melhores painéis e regedits para Free Fire" },
+            { id: 2003, name: "Fornecedor Brainrots", price: 10.90, image: "🧟", cat: "Fornecedores", desc: "Clips prontos de Brainrot para postar" },
+            { id: 2004, name: "PACK SUPREMO FORNECEDORES", price: 20.00, image: "👑", cat: "Fornecedores", desc: "Lista completa com mais de 50 fornecedores de tudo!", special: "highlight" },
+
+            // --- CATEGORIA CURSOS ---
+            { id: 2101, name: "Curso Java Script", price: 19.90, image: "📜", cat: "Cursos", desc: "Do zero ao avançado em JS. Crie sites e scripts." },
+            { id: 2102, name: "Curso de Inglês Rápido", price: 15.00, image: "🇺🇸", cat: "Cursos", desc: "Aprenda a falar o básico do ingles." },
+            { id: 2103, name: "Curso Python Master", price: 16.90, image: "🐍", cat: "Cursos", desc: "Automação e criação de bots com Python." },
+            { id: 2104, name: "PACK 1K DE CURSOS", price: 49.90, image: "📚", cat: "Cursos", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
         ];
 
         const icons = {
-            "streamings": "fas fa-play-circle",
-            "xbox": "fab fa-xbox",
-            "discord": "fab fa-discord",
-            "steam": "fab fa-steam",
-            "roblox": "fas fa-square",
-            "blox gamepass": "fas fa-dragon",
-            "blox perms": "fas fa-gem",
-            "blox contas": "fas fa-user-ninja",
+            "streamings": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
+            "jogos": "fab fa-steam", "roblox": "fas fa-square", "blox fruits": "fas fa-dragon",
             "scripts": "fas fa-code",
-            "fortnite": "fas fa-crosshairs",
-            "valorant": "fas fa-bullseye",
-            "minecraft": "fas fa-cube",
-            "gta v": "fas fa-car",
-            "db rage": "fas fa-fire",
-            "cupons": "fas fa-ticket-alt",
-            "jogos": "fas fa-gamepad",
-            "painéis": "fas fa-rocket",
-            "tudo por 1,99": "fas fa-fire-alt"
+            "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
+            "gta v": "fas fa-car", "db rage": "fas fa-fire", "cupons": "fas fa-ticket-alt",
+            "painéis": "fas fa-rocket", 
+            "tudo por 5,90": "fas fa-fire-alt", 
+            "fornecedores": "fas fa-truck-loading", 
+            "cursos": "fas fa-graduation-cap"
         };
 
         let cart = [];
         let user = null;
         let activeDiscount = 0;
-        let activeCouponCode = "";
         let selectedStreamings = [];
+        let secretCats = ['Tudo por 5,90', 'Fornecedores', 'Cursos'];
 
         window.onload = () => {
             const saved = localStorage.getItem('blackdz_user');
@@ -787,25 +853,369 @@
                 document.getElementById('modal-login').classList.remove('active');
                 updateUserDisplay();
             }
-            loadTheme(); // Carrega o tema salvo
+            loadTheme();
+            
+            if(!EXIBIR_ABA_SECRETA) {
+                document.getElementById('btn-secret').classList.add('hidden');
+            } else {
+                document.getElementById('btn-secret').classList.remove('hidden');
+            }
+            
             renderCats();
         };
 
-        /* --- SISTEMA DE PERSONALIZAÇÃO (3 CORES) --- */
-        
-        function updateThemeColor(val, type) {
-            if(type === 'primary') {
-                document.documentElement.style.setProperty('--primary', val);
-            } else if (type === 'secondary') {
-                document.documentElement.style.setProperty('--secondary', val);
-                document.documentElement.style.setProperty('--bg-dark', val); // Compatibilidade
-                document.documentElement.style.setProperty('--sidebar-bg', val);
-            } else if (type === 'aura') {
-                document.documentElement.style.setProperty('--aura', val);
+        // --- SISTEMA DE NAVEGAÇÃO ---
+        function nav(loc) {
+            if(loc === 'home') {
+                document.getElementById('view-home').classList.remove('hidden');
+                document.getElementById('view-secret').classList.add('hidden');
+                document.getElementById('view-prods').classList.add('hidden');
+                document.getElementById('search-input-desktop').value = '';
+                
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                document.querySelector('.menu-item:first-child').classList.add('active');
             }
-            saveTheme();
         }
 
+        function navBack() {
+            const currentCatTitle = document.getElementById('cat-title').innerText;
+            const isSecret = secretCats.some(c => c.toUpperCase() === currentCatTitle);
+            
+            if(isSecret) openSecretTab();
+            else nav('home');
+        }
+
+        function openSecretTab() {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-secret').classList.remove('hidden');
+            document.getElementById('view-prods').classList.add('hidden');
+            
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            document.getElementById('btn-secret').classList.add('active');
+        }
+
+        function renderCats() {
+            const allCats = [...new Set(db.map(i => i.cat))];
+            
+            const homeCats = allCats.filter(c => !secretCats.includes(c));
+            const exclusiveCats = allCats.filter(c => secretCats.includes(c));
+
+            document.getElementById('container-cats').innerHTML = homeCats.map(c => `
+                <div class="card-cat" onclick="openCat('${c}')">
+                    <i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i>
+                    <span>${c}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('container-secret-cats').innerHTML = exclusiveCats.map(c => `
+                <div class="card-cat" style="border-color:var(--gold);" onclick="openCat('${c}')">
+                    <i class="${icons[c.toLowerCase()] || 'fas fa-lock'}" style="color:var(--gold);"></i>
+                    <span style="color:var(--gold); font-weight:bold;">${c}</span>
+                </div>
+            `).join('');
+        }
+
+        function openCat(catName) {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-secret').classList.add('hidden');
+            document.getElementById('view-prods').classList.remove('hidden');
+            document.getElementById('cat-title').innerText = catName.toUpperCase();
+            
+            const title = document.getElementById('cat-title');
+            if (secretCats.includes(catName)) {
+                title.style.borderLeftColor = "var(--gold)";
+                title.style.color = "var(--gold)";
+            } else {
+                title.style.borderLeftColor = "var(--primary)";
+                title.style.color = "#fff";
+            }
+
+            const items = db.filter(i => i.cat === catName);
+            renderProducts(items, catName);
+        }
+
+        function renderProducts(items, catName) {
+            const container = document.getElementById('container-prods');
+            container.innerHTML = '';
+
+            // Lógica de SUBCATEGORIAS
+            if (catName === 'Jogos') {
+                const keys = items.filter(i => i.sub === 'key');
+                const games = items.filter(i => i.sub === 'game');
+                
+                if (keys.length > 0) {
+                    container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>`;
+                    container.innerHTML += generateProductHTML(keys);
+                }
+                if (games.length > 0) {
+                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-gamepad"></i> JOGOS PC (OFFLINE/CONTA)</div>`;
+                    container.innerHTML += generateProductHTML(games);
+                }
+            } 
+            // NOVA LÓGICA BLOX FRUITS
+            else if (catName === 'Blox Fruits') {
+                const perms = items.filter(i => i.sub === 'perm');
+                const gamepasses = items.filter(i => i.sub === 'gamepass');
+                const accounts = items.filter(i => i.sub === 'account');
+
+                if (perms.length > 0) {
+                    container.innerHTML += `<div class="subcat-divider"><i class="fas fa-gem"></i> FRUTAS PERMANENTES</div>`;
+                    container.innerHTML += generateProductHTML(perms);
+                }
+                if (gamepasses.length > 0) {
+                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-scroll"></i> GAMEPASS & ITENS</div>`;
+                    container.innerHTML += generateProductHTML(gamepasses);
+                }
+                if (accounts.length > 0) {
+                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-user-ninja"></i> CONTAS UPADAS</div>`;
+                    container.innerHTML += generateProductHTML(accounts);
+                }
+            }
+            else {
+                // Render Normal
+                container.innerHTML = generateProductHTML(items);
+            }
+        }
+
+        function generateProductHTML(items) {
+            return items.map(p => {
+                const isHighlight = p.special === 'highlight';
+                const highlightClass = isHighlight ? 'highlight' : '';
+                const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
+                
+                // LÓGICA DO FAKE DISCOUNT
+                // Calcula um preço antigo falso (ex: +40% ou +80%)
+                const oldPrice = (p.price * 1.6).toFixed(2);
+                const discountPercent = Math.round(((oldPrice - p.price) / oldPrice) * 100);
+                
+                const btnText = p.special === 'streaming-combo' ? 'ESCOLHER' : 'ADICIONAR';
+                const btnClick = p.special === 'streaming-combo' ? 
+                    `openStreamingCombo()` : 
+                    `addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price})`;
+                
+                return `
+                <div class="card-prod ${highlightClass}" onclick="${btnClick}">
+                    ${badge}
+                    <div class="badge-discount">-${discountPercent}%</div>
+                    <div class="prod-img">
+                        ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div class="emoji-fallback">${p.image}</div>`}
+                    </div>
+                    <div class="prod-body">
+                        <div class="prod-title">${p.name}</div>
+                        <div class="prod-desc">${p.desc}</div>
+                        
+                        <div class="price-container">
+                            <span class="price-old">R$ ${oldPrice}</span>
+                            <span class="prod-price">R$ ${p.price.toFixed(2)}</span>
+                        </div>
+                        
+                        <button class="btn-buy" onclick="event.stopPropagation(); ${btnClick}">${btnText}</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function doSearch(val) {
+            if(!val) return nav('home');
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-secret').classList.add('hidden');
+            document.getElementById('view-prods').classList.remove('hidden');
+            document.getElementById('cat-title').innerText = "BUSCA";
+            const items = db.filter(i => i.name.toLowerCase().includes(val.toLowerCase()) || i.cat.toLowerCase().includes(val.toLowerCase()));
+            
+            // Renderiza busca normal sem divisao de subcategoria
+            document.getElementById('container-prods').innerHTML = generateProductHTML(items);
+        }
+
+        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
+        
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateCartUI();
+            const drawer = document.getElementById('cart-drawer');
+            if(!drawer.classList.contains('active')) drawer.classList.add('active');
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('coupon-code').value.toUpperCase();
+            const feedback = document.getElementById('coupon-feedback');
+            if (couponsDB[code]) {
+                activeDiscount = couponsDB[code];
+                feedback.innerText = `✅ Desconto de ${(activeDiscount*100)}% aplicado!`;
+                feedback.style.color = "var(--success)";
+                updateCartUI();
+            } else {
+                feedback.innerText = "❌ Cupom inválido.";
+                feedback.style.color = "red";
+            }
+        }
+
+        /* --- CÓDIGO NOVO DO CHECKOUT (COLE NO FINAL DO SCRIPT) --- */
+    
+    // Sobrescreve a função antiga para atualizar o botão "Pagar Agora" corretamente
+    function updateCartUI() {
+        document.getElementById('badge-cart').innerText = cart.length;
+        const div = document.getElementById('cart-list');
+        if(cart.length === 0) div.innerHTML = "<p style='text-align:center;color:#666;margin-top:20px'>Carrinho Vazio</p>";
+        else {
+            div.innerHTML = cart.map((item, i) => `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+                    <div style="width:80%;">
+                        <div style="font-weight:bold; font-size:12px; color:#fff;">${item.name}</div>
+                        <div style="color:#aaa; font-size:11px;">R$ ${item.price.toFixed(2)}</div>
+                    </div>
+                    <i class="fas fa-trash" style="color:#ff4444; cursor:pointer;" onclick="cart.splice(${i},1); updateCartUI()"></i>
+                </div>`).join('');
+        }
+        const total = cart.reduce((a,b) => a + b.price, 0) * (1 - activeDiscount);
+        document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
+        
+        // --- A MÁGICA ACONTECE AQUI: Muda o botão para abrir o novo menu ---
+        const btnArea = document.querySelector('.cart-drawer .btn-buy'); 
+        if(btnArea) {
+            btnArea.setAttribute('onclick', 'openCheckout()'); // Agora chama o novo menu
+            btnArea.innerHTML = '<i class="fas fa-check-circle"></i> FINALIZAR COMPRA';
+        }
+    }
+
+    // Abre o novo Modal de Checkout
+    function openCheckout() {
+        if(cart.length === 0) return alert("Seu carrinho está vazio!");
+        if(!user) return alert("Faça login para continuar!");
+
+        toggleCart(); // Esconde a barra lateral
+        
+        const listDiv = document.getElementById('checkout-items-list');
+        let itemsHtml = '';
+        let subtotal = 0;
+
+        cart.forEach(i => {
+            itemsHtml += `
+                <div class="summary-item">
+                    <span>${i.name}</span>
+                    <span>R$ ${i.price.toFixed(2)}</span>
+                </div>`;
+            subtotal += i.price;
+        });
+
+        const total = subtotal * (1 - activeDiscount);
+        const discountText = activeDiscount > 0 ? `<div style="color:var(--gold); font-size:12px; text-align:right;">Desconto: ${(activeDiscount*100)}% OFF</div>` : '';
+
+        itemsHtml += `
+            ${discountText}
+            <div class="summary-total">Total: R$ ${total.toFixed(2)}</div>
+        `;
+
+        listDiv.innerHTML = itemsHtml;
+        openModal('modal-checkout');
+    }
+
+    // Copia o PIX
+    function copyPixKey() {
+        const key = "22981636278";
+        navigator.clipboard.writeText(key).then(() => alert("Chave PIX copiada!"));
+    }
+
+    // Prepara a mensagem para o Discord
+    function openDiscordSteps() {
+        closeModal('modal-checkout');
+        
+        const total = document.getElementById('cart-total').innerText;
+        const date = new Date().toLocaleString('pt-BR');
+        let itemsList = cart.map(i => `• ${i.name} (R$ ${i.price.toFixed(2)})`).join('\n');
+        let cupomInfo = activeDiscount > 0 ? "SIM" : "NÃO";
+
+        // Cria o texto bonitinho
+        const msg = 
+`🛒 **NOVO PEDIDO - BLACKDZ STORE**
+━━━━━━━━━━━━━━━━━━━━━━
+👤 **Cliente:** ${user}
+📅 **Data:** ${date}
+━━━━━━━━━━━━━━━━━━━━━━
+📦 **ITENS:**
+${itemsList}
+
+🎟️ **Cupom:** ${cupomInfo}
+💰 **VALOR TOTAL:** ${total}
+━━━━━━━━━━━━━━━━━━━━━━
+✅ *Pagamento PIX realizado. Comprovante em anexo.*`;
+
+        document.getElementById('discord-msg-area').value = msg;
+        openModal('modal-discord-step');
+    }
+
+    // Copia e vai pro link do Discord
+    function copyAndGoDiscord() {
+        const textArea = document.getElementById('discord-msg-area');
+        textArea.select();
+        document.execCommand('copy');
+        
+        // IMPORTANTE: TROQUE O LINK ABAIXO PELO SEU CONVITE DO DISCORD
+        window.open('https://discord.gg/QrPpzPJpZj', '_blank'); 
+    }
+    
+    function openStreamingCombo() {
+            const div = document.getElementById('streaming-options');
+            selectedStreamings = [];
+            div.innerHTML = streamingOptions.map((s, i) => `
+                <div class="checkbox-item">
+                    <input type="checkbox" value="${s}" onchange="toggleStreaming(this)">
+                    <label>${s}</label>
+                </div>
+            `).join('');
+            openModal('modal-streaming-combo');
+        }
+
+        function toggleStreaming(cb) {
+            if(cb.checked) {
+                if(selectedStreamings.length >= 3) { cb.checked = false; alert('Apenas 3 opções!'); return; }
+                selectedStreamings.push(cb.value);
+            } else {
+                selectedStreamings = selectedStreamings.filter(x => x !== cb.value);
+            }
+        }
+
+        function confirmStreamingCombo() {
+            if(selectedStreamings.length !== 3) { alert('Escolha 3 itens!'); return; }
+            addToCart(`Combo: ${selectedStreamings.join(', ')}`, 25.99);
+            closeModal('modal-streaming-combo');
+        }
+
+        function sendWhatsapp(type) {
+            if(!user) return alert("Faça login primeiro!");
+            let msg = "";
+            if(type === 'cart') {
+                if(cart.length === 0) return alert("Carrinho vazio!");
+                msg = `*PEDIDO DE ${user.toUpperCase()}*\n\n` + cart.map(i => `🛒 ${i.name} - R$${i.price.toFixed(2)}`).join('\n') + `\n\n💰 *TOTAL: ${document.getElementById('cart-total').innerText}*`;
+            } else {
+                msg = document.getElementById(type === 'request' ? 'request-msg' : 'support-msg').value;
+            }
+            window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        document.getElementById('form-login').addEventListener('submit', (e) => {
+            e.preventDefault();
+            user = document.getElementById('login-user').value;
+            localStorage.setItem('blackdz_user', user);
+            document.getElementById('modal-login').classList.remove('active');
+            updateUserDisplay();
+        });
+
+        function updateUserDisplay() {
+            document.getElementById('user-display').innerText = user;
+            document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase();
+        }
+        function logout() { localStorage.removeItem('blackdz_user'); location.reload(); }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+
+        function updateThemeColor(val, type) {
+            document.documentElement.style.setProperty(`--${type}`, val);
+            saveTheme();
+        }
+        
         function switchBgTab(tab) {
             const up = document.getElementById('area-upload');
             const url = document.getElementById('area-url');
@@ -824,7 +1234,6 @@
         function handleBgUrl(url) {
             if(!url) return;
             document.getElementById('main-bg').style.backgroundImage = `url('${url}')`;
-            showPreview(url);
             saveTheme(url);
         }
 
@@ -835,21 +1244,10 @@
                 reader.onload = function(e) {
                     const result = e.target.result;
                     document.getElementById('main-bg').style.backgroundImage = `url('${result}')`;
-                    showPreview(result);
-                    try {
-                        localStorage.setItem('blackdz_bg_custom', result);
-                    } catch(err) {
-                        console.log('Imagem muito grande para salvar no cache do navegador');
-                    }
+                    try { localStorage.setItem('blackdz_bg_custom', result); } catch(err) {}
                 }
-                reader.readAsDataURL(file); // Lê sem perder qualidade
+                reader.readAsDataURL(file);
             }
-        }
-
-        function showPreview(src) {
-            const prev = document.getElementById('bg-preview');
-            prev.style.display = 'block';
-            prev.style.backgroundImage = `url('${src}')`;
         }
 
         function saveTheme(bgUrl = null) {
@@ -858,414 +1256,178 @@
                 secondary: document.getElementById('picker-secondary').value,
                 aura: document.getElementById('picker-aura').value
             };
-            localStorage.setItem('blackdz_theme_v2', JSON.stringify(theme));
-            
-            if(bgUrl && bgUrl.startsWith('http')) {
-                localStorage.setItem('blackdz_bg_url', bgUrl);
-                localStorage.removeItem('blackdz_bg_custom'); 
-            }
+            localStorage.setItem('blackdz_theme', JSON.stringify(theme));
+            if(bgUrl) localStorage.setItem('blackdz_bg_url', bgUrl);
         }
 
         function loadTheme() {
-            const theme = JSON.parse(localStorage.getItem('blackdz_theme_v2'));
+            const theme = JSON.parse(localStorage.getItem('blackdz_theme'));
             if(theme) {
                 updateThemeColor(theme.primary, 'primary');
                 updateThemeColor(theme.secondary, 'secondary');
                 updateThemeColor(theme.aura, 'aura');
-                
                 document.getElementById('picker-primary').value = theme.primary;
                 document.getElementById('picker-secondary').value = theme.secondary;
                 document.getElementById('picker-aura').value = theme.aura;
             }
-
             const bgCustom = localStorage.getItem('blackdz_bg_custom');
             const bgUrl = localStorage.getItem('blackdz_bg_url');
-
-            if(bgCustom) {
-                document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
-            } else if (bgUrl) {
-                document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
-                document.getElementById('bg-url-input').value = bgUrl;
-            }
+            if(bgCustom) document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
+            else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
         }
+        function resetTheme() { localStorage.removeItem('blackdz_theme'); location.reload(); }
 
-        function resetTheme() {
-            localStorage.removeItem('blackdz_theme_v2');
-            localStorage.removeItem('blackdz_bg_custom');
-            localStorage.removeItem('blackdz_bg_url');
-            location.reload();
-        }
-
-        /* --- FIM PERSONALIZAÇÃO --- */
-
-        document.getElementById('form-login').addEventListener('submit', (e) => {
-            e.preventDefault();
-            user = document.getElementById('login-user').value;
-            localStorage.setItem('blackdz_user', user);
-            document.getElementById('modal-login').classList.remove('active');
-            updateUserDisplay();
-        });
-
-        function updateUserDisplay() {
-            document.getElementById('user-display').innerText = user;
-            document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase();
-        }
-
-        function logout() {
-            localStorage.removeItem('blackdz_user');
-            location.reload();
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            const overlay = document.querySelector('.sidebar-overlay');
-            if(document.getElementById('sidebar').classList.contains('active')) {
-                overlay.style.display = 'block';
-            } else {
-                overlay.style.display = 'none';
-            }
-        }
-
-        function renderCats() {
-            const cats = [...new Set(db.map(i => i.cat))];
-            document.getElementById('container-cats').innerHTML = cats.map(c => `
-                <div class="card-cat" onclick="openCat('${c}')">
-                    <i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i>
-                    <span>${c}</span>
-                </div>
-            `).join('');
-        }
-
-        function openCat(catName) {
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-prods').classList.remove('hidden');
-            document.getElementById('cat-title').innerText = catName.toUpperCase();
-            
-            const items = db.filter(i => i.cat === catName);
-            renderProducts(items);
-        }
-
-        function renderProducts(items) {
-            document.getElementById('container-prods').innerHTML = items.map(p => {
-                const btnText = p.special === 'streaming-combo' ? 'ESCOLHER' : 'ADICIONAR';
-                const btnClick = p.special === 'streaming-combo' ? 
-                    `openStreamingCombo()` : 
-                    `addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price}, ${p.auto || false})`;
-                
-                return `
-                <div class="card-prod">
-                    <div class="prod-img">
-                        ${p.image.includes('http') ? `<img src="${p.image}">` : `<div class="emoji-fallback">${p.image}</div>`}
-                    </div>
-                    <div class="prod-body">
-                        <div class="prod-title">${p.name}</div>
-                        <div class="prod-desc">${p.desc}</div>
-                        <div class="prod-price">R$ ${p.price.toFixed(2)}</div>
-                        <button class="btn-buy" onclick="${btnClick}">${btnText}</button>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function nav(loc) {
-            if(loc === 'home') {
-                document.getElementById('view-home').classList.remove('hidden');
-                document.getElementById('view-prods').classList.add('hidden');
-                document.getElementById('search-input-desktop').value = '';
-                document.getElementById('search-input-mobile').value = '';
-            }
-        }
-
-        function doSearch(val) {
-            if(!val) return nav('home');
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-prods').classList.remove('hidden');
-            document.getElementById('cat-title').innerText = "BUSCA";
-            const items = db.filter(i => 
-                i.name.toLowerCase().includes(val.toLowerCase()) || 
-                i.cat.toLowerCase().includes(val.toLowerCase()) ||
-                i.desc.toLowerCase().includes(val.toLowerCase())
-            );
-            
-            if(items.length === 0) {
-                document.getElementById('container-prods').innerHTML = "<p style='color:#666; width:100%; text-align:center; padding:20px;'>Nenhum item encontrado.</p>";
-                return;
-            }
-
-            renderProducts(items);
-        }
-
-        function openStreamingCombo() {
-            const modal = document.getElementById('modal-streaming-combo');
-            const optionsDiv = document.getElementById('streaming-options');
-            selectedStreamings = [];
-            
-            optionsDiv.innerHTML = streamingOptions.map((s, i) => `
-                <div class="checkbox-item">
-                    <input type="checkbox" id="stream-${i}" value="${s}" onchange="toggleStreaming(this)">
-                    <label for="stream-${i}">${s}</label>
-                </div>
-            `).join('');
-            
-            openModal('modal-streaming-combo');
-        }
-
-        function toggleStreaming(checkbox) {
-            if(checkbox.checked) {
-                if(selectedStreamings.length >= 3) {
-                    checkbox.checked = false;
-                    alert('Selecione apenas 3 opções!');
-                    return;
-                }
-                selectedStreamings.push(checkbox.value);
-            } else {
-                selectedStreamings = selectedStreamings.filter(s => s !== checkbox.value);
-            }
-        }
-
-        function confirmStreamingCombo() {
-            if(selectedStreamings.length !== 3) {
-                alert('Você precisa selecionar exatamente 3 streamings!');
-                return;
-            }
-            const comboName = `Combo 3 Streamings: ${selectedStreamings.join(', ')}`;
-            addToCart(comboName, 25.99);
-            closeModal('modal-streaming-combo');
-        }
-
-        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
-        
-        function addToCart(name, price, auto = false) {
-            if(auto) {
-                alert(`🚀 Produto com ENTREGA AUTOMÁTICA!\n\nApós a confirmação do pagamento, você receberá o acesso instantaneamente no WhatsApp.`);
-            }
-            cart.push({name, price, auto});
-            updateCartUI();
-            const drawer = document.getElementById('cart-drawer');
-            if(!drawer.classList.contains('active')) drawer.classList.add('active');
-        }
-
-        function applyCoupon() {
-            const code = document.getElementById('coupon-code').value.toUpperCase();
-            const msg = document.getElementById('coupon-feedback');
-            
-            if (couponsDB[code]) {
-                activeDiscount = couponsDB[code];
-                activeCouponCode = code;
-                msg.style.color = "var(--success)";
-                msg.innerText = `✅ Cupom ${code} aplicado! ${(activeDiscount*100)}% de desconto`;
-                updateCartUI();
-            } else {
-                activeDiscount = 0;
-                activeCouponCode = "";
-                msg.style.color = "red";
-                msg.innerText = "❌ Cupom inválido.";
-                updateCartUI();
-            }
-        }
-
-        function updateCartUI() {
-            document.getElementById('badge-cart').innerText = cart.length;
-            const div = document.getElementById('cart-list');
-            
-            if(cart.length === 0) div.innerHTML = "<p style='text-align:center;color:#666;margin-top:20px'>Carrinho vazio.</p>";
-            else {
-                div.innerHTML = cart.map((item, i) => `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
-                        <div style="overflow:hidden; max-width: 85%;">
-                            <div style="font-weight:bold; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.name} ${item.auto ? '🚀' : ''}</div>
-                            <div style="color:#aaa;">R$ ${item.price.toFixed(2)}</div>
-                        </div>
-                        <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="cart.splice(${i},1); updateCartUI()"></i>
-                    </div>`).join('');
-            }
-
-            const subtotal = cart.reduce((a,b) => a + b.price, 0);
-            const discountVal = subtotal * activeDiscount;
-            const total = subtotal - discountVal;
-
-            document.getElementById('cart-subtotal').innerText = `R$ ${subtotal.toFixed(2)}`;
-            document.getElementById('cart-discount').innerText = `- R$ ${discountVal.toFixed(2)}`;
-            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
-        }
-
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        function generateOrderMessage() {
-            if(cart.length === 0) return null;
-            const sub = document.getElementById('cart-subtotal').innerText;
-            const disc = document.getElementById('cart-discount').innerText;
-            const tot = document.getElementById('cart-total').innerText;
-            
-            const counts = {};
-            cart.forEach(x => { counts[x.name] = (counts[x.name] || 0) + 1; });
-            
-            const itemsStr = Object.keys(counts).map(k => {
-                const item = cart.find(c => c.name === k);
-                const autoTag = item && item.auto ? ' 🚀[AUTO]' : '';
-                return `🛒 (${counts[k]}x) ${k}${autoTag}`;
-            }).join('\n');
-
-            return `*🔥 NOVO PEDIDO DE ${user ? user.toUpperCase() : 'VISITANTE'}*\n\n` + 
-                   itemsStr + 
-                   `\n\n💰 Subtotal: ${sub}\n✨ Desconto: ${disc} ${activeCouponCode ? `(${activeCouponCode})` : ''}\n*💎 TOTAL: ${tot}*`;
-        }
-
-        function sendWhatsapp(type) {
-            if(!user) return alert("Faça login primeiro!");
-            let msg = "";
-            
-            if(type === 'request') {
-                const txt = document.getElementById('request-msg').value;
-                if(!txt) return alert("Digite algo!");
-                msg = `Olá! Sou *${user}* e quero solicitar:\n\n"${txt}"`;
-            } else if (type === 'support') {
-                const txt = document.getElementById('support-msg').value;
-                if(!txt) return alert("Digite algo!");
-                msg = `Olá Suporte! Sou *${user}* e preciso de ajuda:\n\n"${txt}"`;
-            } else if (type === 'cart') {
-                msg = generateOrderMessage();
-                if(!msg) return alert("Carrinho vazio!");
-                msg += `\n\n⏳ Aguardo chave PIX!`;
-            }
-
-            window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(msg)}`, '_blank');
-            if(type !== 'cart') closeModal(type === 'request' ? 'modal-request' : 'modal-support');
-        }
-
-        function openDiscordCheckout() {
-            if(!user) return alert("Faça login primeiro!");
-            const msg = generateOrderMessage();
-            if(!msg) return alert("Carrinho vazio!");
-            document.getElementById('discord-order-msg').value = msg + "\n\n⏳ Aguardo instruções de pagamento no Ticket!";
-            openModal('modal-discord');
-        }
-
-        function copyDiscordMsg() {
-            const txt = document.getElementById('discord-order-msg');
-            txt.select();
-            txt.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(txt.value).then(() => {
-                alert("Mensagem copiada! Agora abra o Discord e cole no ticket.");
-            });
-        }
-
-        function goToDiscord() {
-            window.open('https://discord.gg/QrPpzPJpZj', '_blank');
-        }
-
-        function toggleChat() { 
-            document.getElementById('chat-box').classList.toggle('active'); 
-        }
-
-        function handleChat(e) {
-            if(e.key === 'Enter') sendChatMessage();
-        }
+        /* --- BLACKDZ AI ULTIMATE (HIPER INTELIGENTE) --- */
+        function toggleChat() { document.getElementById('chat-box').classList.toggle('active'); }
+        function handleChat(e) { if(e.key === 'Enter') sendChatMessage(); }
 
         function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const txt = input.value.trim();
             if(!txt) return;
-
-            addUserMsg(txt);
-            input.value = '';
-
-            showTyping();
-            setTimeout(() => {
-                hideTyping();
-                botLogic(txt);
-            }, 800 + Math.random() * 1200);
-        }
-
-        function addUserMsg(txt) {
+            
             const area = document.getElementById('chat-messages');
             area.innerHTML += `<div class="msg user">${txt}</div>`;
             area.scrollTop = area.scrollHeight;
-        }
+            input.value = '';
 
-        function addBotMsg(txt) {
-            const area = document.getElementById('chat-messages');
-            area.innerHTML += `<div class="msg bot">${txt}</div>`;
-            area.scrollTop = area.scrollHeight;
-        }
-
-        function showTyping() {
-            const area = document.getElementById('chat-messages');
             area.innerHTML += `<div class="typing-indicator" id="typing"><span></span><span></span><span></span></div>`;
             area.scrollTop = area.scrollHeight;
+
+            setTimeout(() => {
+                const t = document.getElementById('typing'); if(t) t.remove();
+                processAiResponse(txt);
+            }, 600 + Math.random() * 500);
         }
 
-        function hideTyping() {
-            const typing = document.getElementById('typing');
-            if(typing) typing.remove();
-        }
+        function processAiResponse(rawText) {
+            const area = document.getElementById('chat-messages');
+            let text = rawText.toLowerCase()
+                .replace(/inv\b/g, "inventario")
+                .replace(/perm\b/g, "permanente")
+                .replace(/acc\b/g, "conta")
+                .replace(/qm\b/g, "quem")
+                .replace(/vc\b/g, "voce");
 
-        function quickAction(action) {
-            const input = document.getElementById('chat-input');
-            input.value = action;
-            sendChatMessage();
-        }
+            let response = "";
+            let foundProducts = [];
 
-        function botLogic(txt) {
-            txt = txt.toLowerCase().trim();
-            let reply = "";
-
-            if(txt.includes('busca') || txt.includes('procura') || txt.includes('encontra') || txt.includes('quero')) {
-                const keywords = ['blox', 'discord', 'fortnite', 'valorant', 'minecraft', 'steam', 'xbox', 'streaming', 'nitro', 'cupom', 'painel', 'script'];
-                const found = keywords.find(k => txt.includes(k));
-                
-                if(found) {
-                    const items = db.filter(i => 
-                        i.name.toLowerCase().includes(found) || 
-                        i.cat.toLowerCase().includes(found) ||
-                        i.desc.toLowerCase().includes(found)
-                    );
-                    
-                    if(items.length > 0) {
-                        const cat = items[0].cat;
-                        openCat(cat);
-                        nav('prods');
-                        reply = `🔍 Encontrei ${items.length} produto(s) relacionado(s) a "${found}"! Já abri a categoria *${cat}* pra você. Dá uma olhada! 👀`;
-                    } else {
-                        reply = `😅 Não encontrei nada com "${found}". Tenta digitar o nome de outra categoria ou produto!`;
-                    }
-                } else {
-                    reply = `🤔 O que você está procurando especificamente? Temos:\n\n• Blox Fruits (contas, permanentes, gamepass)\n• Discord (nitro, decoração, impulsos)\n• Fortnite (VBucks, contas)\n• Valorant (contas ranqueadas)\n• Minecraft, GTA V, Steam...\n• E muito mais!\n\nDigita o que você quer que eu busco pra você! 🎮`;
+            // BUSCA INTELIGENTE NOS PRODUTOS
+            db.forEach(p => {
+                const pName = p.name.toLowerCase();
+                const pCat = p.cat.toLowerCase();
+                // Verifica se o texto contem o nome exato ou parte da categoria
+                if(text.includes(pName) || text.includes(pCat)) {
+                    foundProducts.push(p);
                 }
+                else if (text.includes("valorant") && pCat.includes("valorant")) {
+                    if(!foundProducts.includes(p)) foundProducts.push(p);
+                }
+                else if (text.includes("minecraft") && pCat.includes("minecraft")) {
+                    if(!foundProducts.includes(p)) foundProducts.push(p);
+                }
+            });
+
+            // --- LÓGICA DE DECISÃO ---
+            
+            if (foundProducts.length > 0) {
+                const p = foundProducts[Math.floor(Math.random() * Math.min(3, foundProducts.length))];
+                response = `Encontrei algo que você pode gostar! O <b>${p.name}</b> está por <b>R$ ${p.price.toFixed(2)}</b>. 🔥`;
+                response += `<div class="product-preview-chat" onclick="addToCart('${p.name}', ${p.price})">
+                    ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div style="font-size:24px;">${p.image}</div>`}
+                    <div style="flex:1;">
+                        <div style="font-size:12px; font-weight:bold; color:#fff;">${p.name}</div>
+                        <div style="font-size:11px; color:var(--success);">R$ ${p.price.toFixed(2)}</div>
+                    </div>
+                    <i class="fas fa-cart-plus" style="color:#666;"></i>
+                </div>`;
+            } 
+            else if (text.includes("como comprar") || text.includes("como pagar")) {
+                response = "É fácil! Adicione o que quiser no carrinho 🛒, clique em 'Pagar Agora' e você será redirecionado para o WhatsApp do vendedor para finalizar com PIX ou Cartão.";
+            }
+            else if (text.includes("pix") || text.includes("cartao") || text.includes("boleto")) {
+                response = "Aceitamos principalmente **PIX** (entrega imediata) e Cartão. Fale com o suporte se precisar de outra forma!";
+            }
+            else if (text.includes("confiavel") || text.includes("golpe") || text.includes("seguro")) {
+                response = "100% confiável! A **BlackDz Store** preza pela segurança. Temos centenas de clientes satisfeitos e garantia em todas as contas.";
+            }
+            else if (text.includes("suporte") || text.includes("ajuda") || text.includes("atendimento")) {
+                response = "Precisa de ajuda humana? Clique no botão **Suporte** no menu lateral e mande sua mensagem direto pro nosso WhatsApp!";
+            }
+            else if (text.includes("quem e voce") || text.includes("dono")) {
+                response = "Eu sou a **BlackDz AI**, a mente digital por trás da loja. O Boss (BlackDz) me criou para te ajudar a encontrar as melhores ofertas! 🚀";
+            }
+            else if (text.includes("oi") || text.includes("ola") || text.includes("eai") || text.includes("salve")) {
+                response = "Salve! ✌️ Tudo tranquilo? Se precisar de conta, nitro ou método, só pedir.";
+            }
+            else if (text.includes("curso") || text.includes("fornecedor") || text.includes("metodo")) {
+                response = "Esses itens exclusivos (Cursos, Fornecedores, Métodos) ficam no nosso **Acesso Limitado**! Procure o botão com o cadeado 🔐 no menu.";
             }
             else {
-                reply = `Hmm, não entendi muito bem... 🤔\n\nTenta usar o menu ou digitar "Categorias" para ver o que temos!`;
+                response = "Hmm, não entendi muito bem. Tenta ser mais específico!";
             }
-            addBotMsg(reply);
+
+            area.innerHTML += `<div class="msg bot">${response}</div>`;
+            area.scrollTop = area.scrollHeight;
         }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 123 || 
-               (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
-               (e.ctrlKey && e.keyCode === 85)) {
-                e.preventDefault();
-                return false;
-            }
-        });
+    /* --- SISTEMA DE SUPORTE E PEDIDOS (WHATSAPP/DISCORD) --- */
 
-        (function() {
-            var devtools = function() {};
-            devtools.toString = function() { return ''; }
-        })();
+    let currentContactType = ''; // Guarda se é 'support' ou 'request'
 
-        setInterval(function() {
-            const start = new Date();
-            const end = new Date();
-            if (end - start > 100) {
-                document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:20%;">ACESSO NEGADO 🚫<br>Saia do modo inspetor.</h1>';
-            }
-        }, 1000);
+    // 1. Abre a janela de escolha (Zap ou Discord)
+    function openContactOptions(type) {
+        // Verifica se o usuário escreveu algo antes de abrir
+        const msg = document.getElementById(type === 'request' ? 'request-msg' : 'support-msg').value;
+        if(!msg.trim()) return alert("Por favor, escreva sua mensagem primeiro!");
 
+        currentContactType = type;
+        
+        // Muda o título do modal dependendo do tipo
+        const title = type === 'request' ? 'ENVIAR SOLICITAÇÃO' : 'ENVIAR SUPORTE';
+        document.getElementById('contact-options-title').innerText = title;
+
+        // Fecha o modal anterior e abre o de escolha
+        closeModal(type === 'request' ? 'modal-request' : 'modal-support');
+        openModal('modal-contact-options');
+    }
+
+    // 2. Processa a escolha do usuário
+    function processContact(channel) {
+        const inputId = currentContactType === 'request' ? 'request-msg' : 'support-msg';
+        const userMsg = document.getElementById(inputId).value;
+        const date = new Date().toLocaleString('pt-BR');
+
+        // Se escolher WhatsApp
+        if (channel === 'whatsapp') {
+            const prefix = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ PEDIDO DE SUPORTE';
+            const text = `*${prefix}*\n\n👤 *Cliente:* ${user || 'Visitante'}\n📝 *Mensagem:* ${userMsg}`;
+            window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(text)}`, '_blank');
+            closeModal('modal-contact-options');
+        } 
+        
+        // Se escolher Discord
+        else if (channel === 'discord') {
+            let discordTitle = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ TICKET DE SUPORTE';
+            
+            // Monta a mensagem bonitinha pro Discord
+            const formattedMsg = 
+`**${discordTitle} - BLACKDZ STORE**
+━━━━━━━━━━━━━━━━━━━━━━
+👤 **Usuário:** ${user || 'Visitante'}
+📅 **Data:** ${date}
+━━━━━━━━━━━━━━━━━━━━━━
+📝 **MENSAGEM DO CLIENTE:**
+"${userMsg}"
+━━━━━━━━━━━━━━━━━━━━━━
+*Copie esta mensagem e cole no canal de tickets.*`;
+
+            // Usa o mesmo modal de copiar do checkout (reaproveitando código)
+            document.getElementById('discord-msg-area').value = formattedMsg;
+            closeModal('modal-contact-options');
+            openModal('modal-discord-step');
+        }
+    }
     </script>
 </body>
 </html>
-
-
-
-
