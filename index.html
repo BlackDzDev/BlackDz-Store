@@ -1429,5 +1429,71 @@ ${itemsList}
         }
     }
     </script>
+    <script>
+    /**
+     * SISTEMA DE PROTEÇÃO ANTI-CÓPIA E ANTI-DEVTOOLS
+     * BlackDz Store Security
+     */
+
+    // 1. Desabilitar Botão Direito
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // 2. Desabilitar Teclas de Atalho (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+    document.onkeydown = function(e) {
+        // F12
+        if(event.keyCode == 123) {
+            return false;
+        }
+        // Ctrl+Shift+I (DevTools)
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+Shift+J (Console)
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+Shift+C (Inspect Element)
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+U (Ver Fonte)
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+S (Salvar)
+        if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
+            return false;
+        }
+    }
+
+    // 3. Bloqueio de Seleção e Arraste
+    document.onselectstart = function() { return false; } // IE/Chrome
+    document.onmousedown = function() { return false; }   // Outros
+
+    // 4. Detecção de DevTools (O "Travador")
+    // Se o usuário abrir o console, isso causará uma pausa forçada constante
+    (function() {
+        const detectDevTools = function() {
+            const start = new Date();
+            debugger; // Aqui é onde a mágica acontece. Se o DevTools abrir, o script para aqui.
+            const end = new Date();
+            if (end - start > 100) {
+                // DevTools detectado - Redirecionar ou travar ou apenas alertar
+                document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:20%;">ACESSO NEGADO 🚫</h1>';
+            }
+        };
+        
+        // Executa a verificação repetidamente
+        setInterval(detectDevTools, 500);
+    })();
+
+    // 5. Detectar mudança de tamanho da janela (comum ao abrir DevTools acoplado)
+    window.onresize = function() {
+        if ((window.outerHeight - window.innerHeight) > 200 || (window.outerWidth - window.innerWidth) > 200) {
+            // Pode ser um sinal de DevTools aberto
+            console.clear(); 
+        }
+    }
+</script>
 </body>
 </html>
