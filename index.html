@@ -556,6 +556,22 @@
             <button onclick="confirmStreamingCombo()" class="btn-buy" style="margin-top:10px;">CONFIRMAR</button>
         </div>
     </div>
+    <div id="modal-streaming-select" class="modal-wrapper">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-streaming-select')"></i>
+            <h2 style="color:var(--primary); margin-bottom:10px;">MONTE SEU PACOTE</h2>
+            <p style="color:#888; font-size:12px; margin-bottom:15px;">Marque quantos quiser. O preço será somado.</p>
+            
+            <div id="alacarte-options"></div>
+            
+            <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:bold;">TOTAL:</span>
+                <span id="alacarte-total" style="color:var(--success); font-size:18px; font-weight:800;">R$ 0.00</span>
+            </div>
+
+            <button onclick="confirmStreamingSelect()" class="btn-buy" style="margin-top:15px; background:var(--primary); color:#fff;">ADICIONAR AO CARRINHO</button>
+        </div>
+    </div>
 
     <div class="sidebar" id="sidebar">
         <div class="brand">BlackDz<span>Store</span></div>
@@ -651,408 +667,404 @@
         </div>
     </div>
 
-    <script>
-        /* --- CONFIGURAÇÃO --- */
-        const EXIBIR_ABA_SECRETA = true; // Define se o Acesso Limitado aparece
-        /* ------------------- */
+<script>
+    /* --- CONFIGURAÇÃO --- */
+    const EXIBIR_ABA_SECRETA = true; 
 
-        const couponsDB = {'VEMCOMAGENTE': 0.05,};
-        const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
-        const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
+    const couponsDB = {'VEMCOMAGENTE': 0.05,};
+    const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
+    const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
 
-        // BD ATUALIZADO
-        const db = [
-            { id: 1, name: "Escolha algum streaming", price: 0.00, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Escolha o Streaming que voce quiser!" },
-            { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Escolha 3 serviços: Netflix, Prime Video, HBO Max, Globo Play, Crunchyroll, YouTube Premium, Paramount+ ou +18", special: "streaming-combo" },
-            { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
-            { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
-            { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
-            { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://media.pocketgamer.biz/images/106201/74080/game-pass_s470.jpg", cat: "Xbox", desc: "Key de gamepass para PC" },,
-            
-            // --- KEYS RANDOM (DENTRO DA CATEGORIA JOGOS AGORA) ---
-            { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
-            { id: 201, name: "[KEY] Steam Key Ferro", price: 5.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
-            { id: 202, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
-            { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
-            { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
-            { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
-            { id: 206, name: "[KEY] Pacote 10x Steam Key", price: 45.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote com 10 Keys aleatórias para farmar cartas ou jogos." },
-            { id: 207, name: "[KEY] Pacote 50x Monster Key", price: 80.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote Monster com 50 Keys Steam." },
+    /* --- LÓGICA DO STREAMING A LA CARTE (ID 1) --- */
+    const alacarteDB = [
+        { name: 'Crunchyroll', price: 3.90 },
+        { name: 'Disney+', price: 4.90 },
+        { name: 'HBO Max', price: 4.90 },
+        { name: 'Prime Video', price: 4.50 },
+        { name: 'Paramount+', price: 4.50 },
+        { name: '+18 (Privacy)', price: 5.20 }
+    ];
 
-            // --- JOGOS ADICIONADOS ---
-            { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Elden Ring." },
-            { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com GoW Ragnarok." },
-            { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f1e18b27a6d80.png", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Spider-Man 2." },
-            { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline TLOU Part I." },
-            { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", desc: "O jogo do macaco! Conta Offline." },
-            { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline MK1." },
-            { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline Hogwarts Legacy." },
-            { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", desc: "Versão Premium Edition." },
-            { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", desc: "Edição Lendária completa." },
-            { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", desc: "Remake aclamado. Conta Offline." },
-            { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", desc: "Versão atualizada. Conta Offline." },
-            { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", desc: "Ultimate Edition. Conta Offline." },
-            { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", desc: "Modo história e online (depende da conta)." },
-            { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", desc: "Jogo do ano. Conta Offline." },
-            { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", desc: "Corrida mundo aberto. Conta Offline." },
-            { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", desc: "Obra prima da FromSoftware." },
-            
-            // --- OUTRAS CATEGORIAS ---
-            { id: 101, name: "Discord Nitro - 3 Meses", price: 24.90, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnUI2MbssmzNYR2ZlQRFWJqtFetlhfD6aFzQ&s", cat: "Discord", desc: "Nitro Trimestral para quem não teve nos últimos 12 meses" },
-            { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://cdn.prod.website-files.com/5f9072399b2640f14d6a2bf4/66fc75572317e763f2ea3632_image2.png", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
-            { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://cdn.ggmax.com.br/images/837165d38baa511cbdfc8d361385135f.sm.jpg", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
-            
-            { id: 300, name: "Conta 2014 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2014 sem itens" },
-            { id: 301, name: "Conta 2015 VAZIA", price: 7.80, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2015 sem itens" },
-            { id: 302, name: "Conta 2016 VAZIA", price: 5.72, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2016 sem itens" },
-            { id: 303, name: "Conta 2017 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2017 sem itens" },
-            { id: 304, name: "Conta 2019 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2019 sem itens" },
-            { id: 305, name: "Conta 2020 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2020 sem itens" },
-            
-            // --- BLOX FRUITS (UNIFICADO) ---
-            { id: 400, name: "2x Money", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: dinheiro em dobro" },
-            { id: 401, name: "2x Mastery", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: maestria em dobro" },
-            { id: 402, name: "Fruit Storage", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: armazene mais frutas" },
-            { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Espada Lendária Dark Blade" },
-            { id: 404, name: "Fruit Notifier", price: 110.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Notificador de frutas no mapa" },
-            { id: 405, name: "2x Fast Boat", price: 22.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Fast Boat ou Chance de Drop" },
-            { id: 406, name: "Haki Lendário", price: 18.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Cores lendárias de Haki" },
-            
-            { id: 500, name: "KITSUNE PERMANENTE", price: 159.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/9d/Kitsune.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Kitsune para sempre" },
-            { id: 501, name: "DRAGON PERMANENTE", price: 176.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/8a/Dragon.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dragon para sempre" },
-            { id: 502, name: "CONTROL PERMANENTE", price: 154.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/f3/Control.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Control permanente" },
-            { id: 503, name: "TIGER PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Tiger permanente" },
-            { id: 504, name: "PAIN PERMANENTE", price: 86.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/d/d6/Paw.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Pain permanente" },
-            { id: 505, name: "LIGHTNING PERMANENTE", price: 85.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/70/Rumble.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Lightning permanente" },
-            { id: 506, name: "YETI PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/89/Mammoth.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Yeti permanente" },
-            { id: 507, name: "GAS PERMANENTE", price: 91.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/e/e7/Gas.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gas permanente" },
-            { id: 508, name: "GRAVITY PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/c6/Gravity.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gravity permanente" },
-            { id: 509, name: "CREATION PERMANENTE", price: 80.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Creation permanente" },
-            { id: 510, name: "FALCON PERMANENTE", price: 45.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/51/Phoenix.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Falcon permanente" },
-            { id: 511, name: "DOUGH PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dough (Massa) permanente" },
-            { id: 512, name: "PORTAL PERMANENTE", price: 76.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/5c/Portal.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Portal permanente" },
-            { id: 513, name: "BUDDHA PERMANENTE", price: 75.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/92/Buddha.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Buddha permanente" },
-            { id: 514, name: "VENOM PERMANENTE", price: 95.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a6/Venom.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Venom permanente" },
-            { id: 515, name: "LIGHT PERMANENTE", price: 54.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/10/Light.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Light permanente" },
-            { id: 516, name: "ICE PERMANENTE", price: 35.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/2/2e/Ice.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Ice permanente" },
-            { id: 517, name: "MAGMA PERMANENTE", price: 53.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/b/b7/Magma.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Magma permanente" },
-            { id: 518, name: "T-REX PERMANENTE", price: 86.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta T-Rex permanente" },
-            { id: 519, name: "SPIRIT PERMANENTE", price: 91.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/3/3f/Soul.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Spirit permanente" },
-            
-            { id: 600, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", sub: "account", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
-            { id: 601, name: "CONTA V4 MINK FULL", price: 52.32, image: "💤", cat: "Blox Fruits", sub: "account", desc: "V4 Mink, CDK, God Human e Level Max" },
-            { id: 602, name: "CONTA V4 CYBORG FULL", price: 56.99, image: "🤖", cat: "Blox Fruits", sub: "account", desc: "V4 Cyborg, CDK, God Human e Level Max" },
-            { id: 603, name: "CONTA V4 DRACO + CDK", price: 75.65, image: "🐉", cat: "Blox Fruits", sub: "account", desc: "V4 Draco, CDK, Soul Guitar e God Human" },
-            { id: 604, name: "CONTA V4 GHOUL + SG", price: 31.99, image: "👻", cat: "Blox Fruits", sub: "account", desc: "V4 Ghoul, CDK, Soul Guitar e God Human" },
-            { id: 605, name: "CONTA V4 SKY FULL", price: 30.00, image: "👼", cat: "Blox Fruits", sub: "account", desc: "V4 Sky, CDK, God Human e Level Max" },
-            { id: 606, name: "CONTA V4 FISCH FULL", price: 56.99, image: "🟠", cat: "Blox Fruits", sub: "account", desc: "V4 Fisch, CDK, God Human e Level Max" },
-            { id: 607, name: "CONTA 7 V4 FULL + CDK", price: 105.00, image: "👑", cat: "Blox Fruits", sub: "account", desc: "7 Raças V4, CDK, SG, GDH" },
-            { id: 608, name: "CONTA MAMUTE + GDH", price: 16.00, image: "🐘", cat: "Blox Fruits", sub: "account", desc: "Mamute, God Human e Lvl 2750" },
-            { id: 609, name: "CONTA KITSUNE INV", price: 39.32, image: "🦊", cat: "Blox Fruits", sub: "account", desc: "Kitsune Invencível" },
-            { id: 610, name: "CONTA T-REX INV + GDH", price: 16.00, image: "🦖", cat: "Blox Fruits", sub: "account", desc: "T-Rex Invencível, God Human e Level Max" },
-            { id: 611, name: "CONTA DOUGH INV + GDH", price: 9.80, image: "🥖", cat: "Blox Fruits", sub: "account", desc: "Dough Invencível, God Human e Lvl 2750" },
-            { id: 612, name: "CONTA GAS INV + GDH", price: 19.00, image: "💨", cat: "Blox Fruits", sub: "account", desc: "Gas Invencível, God Human e Lvl 2750" },
-            { id: 613, name: "CONTA TIGER INV", price: 37.00, image: "🐅", cat: "Blox Fruits", sub: "account", desc: "Tiger Invencível" },
-            { id: 614, name: "CONTA PORTAL + GDH", price: 15.00, image: "🌀", cat: "Blox Fruits", sub: "account", desc: "Portal e God Human" },
-            { id: 615, name: "CONTA CONTROL INV + GDH", price: 37.00, image: "🎮", cat: "Blox Fruits", sub: "account", desc: "Control Invencível e God Human" },
-            { id: 616, name: "CONTA GRAVITY + GDH", price: 16.00, image: "🌌", cat: "Blox Fruits", sub: "account", desc: "Gravity e God Human" },
+    // BD COMPLETO E CORRIGIDO
+    const db = [
+        { 
+            id: 1, 
+            name: "Monte seu Pacote", 
+            price: "0.00", 
+            image: "https://i.imgur.com/A4MdKTS.jpg", 
+            cat: "Streamings", 
+            desc: "Escolha quais serviços você quer e pague por unidade!", 
+            special: "streaming-select" 
+        },
+        { id: 2, name: "Monte seu Combo 3 Streamings", price: 13.99, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
+        { id: 3, name: "Pacote Completo Streamings", price: 23.90, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
+        { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
+        { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
+        { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://media.pocketgamer.biz/images/106201/74080/game-pass_s470.jpg", cat: "Xbox", desc: "Key de gamepass para PC" },
+        
+        { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
+        { id: 201, name: "[KEY] Steam Key Ferro", price: 5.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
+        { id: 202, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
+        { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
+        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
+        { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
+        { id: 206, name: "[KEY] Pacote 10x Steam Key", price: 45.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote com 10 Keys aleatórias para farmar cartas ou jogos." },
+        { id: 207, name: "[KEY] Pacote 50x Monster Key", price: 80.00, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Pacote Monster com 50 Keys Steam." },
 
-            
-            { id: 700, name: "Script Custom Master DBC", price: 30.00, image: "👑", cat: "Scripts", desc: "Para Dragon Block C [1.7.10]. Cria NPC de Formas" },
-            { id: 701, name: "Script TP Bank", price: 25.00, image: "🏦", cat: "Scripts", desc: "Sistema de Banco de Teleporte completo" },
-            { id: 702, name: "Script Armaduras Custom", price: 15.00, image: "🛡️", cat: "Scripts", desc: "Equipa roupa ao transformar" },
-            { id: 703, name: "Script de Teleportes", price: 14.99, image: "📍", cat: "Scripts", desc: "Teleporte para vários locais no DBC" },
-            { id: 704, name: "Script Custom Races/Effects", price: 30.00, image: "🌀", cat: "Scripts", desc: "NPC que vende raça/efeito Bio-android ou Android" },
-            { id: 705, name: "Script Animação de KI", price: 15.00, image: "💥", cat: "Scripts", desc: "Animação de carregar KI ao apertar 'C'" },
-            
-            { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
-            { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
-            { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 iniciais + 5000 mensais com clube" },
-            { id: 803, name: "Conta 13.500 VBucks", price: 279.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta com 13.500 Vbucks" },
-            { id: 804, name: "Conta Skin Gatalina", price: 5.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta simples com skin Gatalina" },
-            { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Indiana Jones e outras skins" },
-            { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Ice Spice e outras skins" },
-            
-            { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", desc: "Conta Bronze aleatória" },
-            { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", desc: "Conta Diamante aleatória" },
-            { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", desc: "Conta Ascendente aleatória" },
-            { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", desc: "Upada à mão, com dados de criação" },
-            { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", desc: "Conta Nível 1 com Range feito" },
-            
-            { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
-            { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Acesso via Gamepass PC" },
-            
-            { id: 1100, name: "Conta Rockstar (FiveM Ready)", price: 5.00, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", desc: "Licenciada para FiveM" },
-            { id: 1101, name: "Conta Steam com GTA V", price: 18.00, image: "https://cdn.dfg.com.br/itemimages/902913858-contas-steam-gta-v-full-acesso-NA9T.webp", cat: "GTA V", desc: "Conta Steam para baixar e jogar" },
-            { id: 1102, name: "Combo Rockstar + Steam", price: 15.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", desc: "Combo com as duas contas" },
-            
-            { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", desc: "Forma personalizada no jogo" },
-            { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", desc: "Gamepass de experiência" },
-            { id: 1202, name: "2x Drop Chance", price: 25.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Aumenta chance de drops" },
-            { id: 1203, name: "Limit Breaker", price: 23.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/4/45/LimitBreaker.png", cat: "DB Rage", desc: "Quebre os limites do personagem" },
-            { id: 1204, name: "Dragon Radar", price: 22.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/5/50/DragonRadar.png", cat: "DB Rage", desc: "Radar de esferas" },
-            { id: 1205, name: "2x Zeni", price: 16.90, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Multiplicador de dinheiro" },
-            { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", desc: "Mude a cor do seu Ki" },
-            { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", desc: "Transformação Omega" },
-            { id: 1208, name: "Parasite Form", price: 6.50, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Parasita" },
-            { id: 1209, name: "Savior Form", price: 13.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Salvador" },
-            { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 10% para sempre" },
-            { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 15% para sempre" },
-            { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 20% para sempre" },
-            { id: 1303, name: "Cupom 25% OFF Vitalício", price: 100.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 25% para sempre" },
-            
-            { id: 1400, name: "All Games Steam", price: 59.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", desc: "Te ensinamos como ter qualquer jogo na Steam!" },
-            { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Fornecedores", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
-            
-            
-            // --- CATEGORIA TUDO POR 5,90 ---
-            { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", desc: "Aprenda a ter todos os canais liberados" },
-            { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", desc: "Como criar e monetizar vídeos Brainrot" },
-            { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", desc: "Tenha internet em qualquer lugar" },
-            { id: 1603, name: "Método Passe FF Barato", price: 5.90, image: "🎟️", cat: "Tudo por 5,90", desc: "Pegue o passe do Free Fire pagando pouco" },
-            { id: 1604, name: "Método Diamantes FF", price: 5.90, image: "💎", cat: "Tudo por 5,90", desc: "Consiga diamantes com desconto ou free" },
-            { id: 1605, name: "Método Renda Extra", price: 5.90, image: "💰", cat: "Tudo por 5,90", desc: "Dicas fáceis para levantar dinheiro rápido" },
-            { id: 1606, name: "Método Gift Card", price: 5.90, image: "💳", cat: "Tudo por 5,90", desc: "Como conseguir Gift Cards promocionais" },
-            { id: 1607, name: "Método Like FF +1k", price: 5.90, image: "❤️", cat: "Tudo por 5,90", desc: "Método para conseguir +1000 likes no Free Fire" },
+        { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Elden Ring." },
+        { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com GoW Ragnarok." },
+        { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f1e18b27a6d80.png", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Spider-Man 2." },
+        { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline TLOU Part I." },
+        { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", desc: "O jogo do macaco! Conta Offline." },
+        { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline MK1." },
+        { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline Hogwarts Legacy." },
+        { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", desc: "Versão Premium Edition." },
+        { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", desc: "Edição Lendária completa." },
+        { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", desc: "Remake aclamado. Conta Offline." },
+        { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", desc: "Versão atualizada. Conta Offline." },
+        { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", desc: "Ultimate Edition. Conta Offline." },
+        { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", desc: "Modo história e online (depende da conta)." },
+        { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", desc: "Jogo do ano. Conta Offline." },
+        { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", desc: "Corrida mundo aberto. Conta Offline." },
+        { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", desc: "Obra prima da FromSoftware." },
 
-            // --- CATEGORIA FORNECEDORES ---
-            { id: 2001, name: "Fornecedor Robux (Barato)", price: 9.90, image: "💵", cat: "Fornecedores", desc: "Contato direto para comprar Robux a preço de banana" },
-            { id: 2002, name: "Fornecedor Xit/Paineis FF", price: 10.90, image: "🎯", cat: "Fornecedores", desc: "Os melhores painéis e regedits para Free Fire" },
-            { id: 2003, name: "Fornecedor Brainrots", price: 10.90, image: "🧟", cat: "Fornecedores", desc: "Clips prontos de Brainrot para postar" },
-            { id: 2004, name: "PACK SUPREMO FORNECEDORES", price: 34.90, image: "👑", cat: "Fornecedores", desc: "Lista completa com mais de 5 fornecedores de tudo!", special: "highlight" },
+        { id: 101, name: "Discord Nitro - 3 Meses", price: 24.90, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnUI2MbssmzNYR2ZlQRFWJqtFetlhfD6aFzQ&s", cat: "Discord", desc: "Nitro Trimestral para quem não teve nos últimos 12 meses" },
+        { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://cdn.prod.website-files.com/5f9072399b2640f14d6a2bf4/66fc75572317e763f2ea3632_image2.png", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
+        { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://cdn.ggmax.com.br/images/837165d38baa511cbdfc8d361385135f.sm.jpg", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
+        
+        { id: 300, name: "Conta 2014 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2014 sem itens" },
+        { id: 301, name: "Conta 2015 VAZIA", price: 7.80, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2015 sem itens" },
+        { id: 302, name: "Conta 2016 VAZIA", price: 5.72, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2016 sem itens" },
+        { id: 303, name: "Conta 2017 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2017 sem itens" },
+        { id: 304, name: "Conta 2019 VAZIA", price: 7.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2019 sem itens" },
+        { id: 305, name: "Conta 2020 VAZIA", price: 5.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", desc: "Conta antiga de 2020 sem itens" },
+        
+        { id: 400, name: "2x Money", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: dinheiro em dobro" },
+        { id: 401, name: "2x Mastery", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: maestria em dobro" },
+        { id: 402, name: "Fruit Storage", price: 25.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: armazene mais frutas" },
+        { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Espada Lendária Dark Blade" },
+        { id: 404, name: "Fruit Notifier", price: 110.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Notificador de frutas no mapa" },
+        { id: 405, name: "2x Fast Boat", price: 22.90, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Fast Boat ou Chance de Drop" },
+        { id: 406, name: "Haki Lendário", price: 18.00, image: genericGamepass, cat: "Blox Fruits", sub: "gamepass", desc: "Cores lendárias de Haki" },
+        
+        { id: 500, name: "KITSUNE PERMANENTE", price: 159.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/9d/Kitsune.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Kitsune para sempre" },
+        { id: 501, name: "DRAGON PERMANENTE", price: 176.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/8a/Dragon.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dragon para sempre" },
+        { id: 502, name: "CONTROL PERMANENTE", price: 154.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/f3/Control.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Control permanente" },
+        { id: 503, name: "TIGER PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Tiger permanente" },
+        { id: 504, name: "PAIN PERMANENTE", price: 86.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/d/d6/Paw.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Pain permanente" },
+        { id: 505, name: "LIGHTNING PERMANENTE", price: 85.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/70/Rumble.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Lightning permanente" },
+        { id: 506, name: "YETI PERMANENTE", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/8/89/Mammoth.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Yeti permanente" },
+        { id: 507, name: "GAS PERMANENTE", price: 91.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/e/e7/Gas.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gas permanente" },
+        { id: 508, name: "GRAVITY PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/c6/Gravity.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Gravity permanente" },
+        { id: 509, name: "CREATION PERMANENTE", price: 80.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Creation permanente" },
+        { id: 510, name: "FALCON PERMANENTE", price: 45.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/51/Phoenix.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Falcon permanente" },
+        { id: 511, name: "DOUGH PERMANENTE", price: 90.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cd/Dough.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Dough (Massa) permanente" },
+        { id: 512, name: "PORTAL PERMANENTE", price: 76.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/5/5c/Portal.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Portal permanente" },
+        { id: 513, name: "BUDDHA PERMANENTE", price: 75.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/92/Buddha.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Buddha permanente" },
+        { id: 514, name: "VENOM PERMANENTE", price: 95.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a6/Venom.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Venom permanente" },
+        { id: 515, name: "LIGHT PERMANENTE", price: 54.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/10/Light.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Light permanente" },
+        { id: 516, name: "ICE PERMANENTE", price: 35.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/2/2e/Ice.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Ice permanente" },
+        { id: 517, name: "MAGMA PERMANENTE", price: 53.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/b/b7/Magma.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Magma permanente" },
+        { id: 518, name: "T-REX PERMANENTE", price: 86.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/7/73/T-Rex.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta T-Rex permanente" },
+        { id: 519, name: "SPIRIT PERMANENTE", price: 91.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/3/3f/Soul.png", cat: "Blox Fruits", sub: "perm", desc: "Fruta Spirit permanente" },
+        
+        { id: 600, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", sub: "account", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
+        { id: 601, name: "CONTA V4 MINK FULL", price: 52.32, image: "💤", cat: "Blox Fruits", sub: "account", desc: "V4 Mink, CDK, God Human e Level Max" },
+        { id: 602, name: "CONTA V4 CYBORG FULL", price: 56.99, image: "🤖", cat: "Blox Fruits", sub: "account", desc: "V4 Cyborg, CDK, God Human e Level Max" },
+        { id: 603, name: "CONTA V4 DRACO + CDK", price: 75.65, image: "🐉", cat: "Blox Fruits", sub: "account", desc: "V4 Draco, CDK, Soul Guitar e God Human" },
+        { id: 604, name: "CONTA V4 GHOUL + SG", price: 31.99, image: "👻", cat: "Blox Fruits", sub: "account", desc: "V4 Ghoul, CDK, Soul Guitar e God Human" },
+        { id: 605, name: "CONTA V4 SKY FULL", price: 30.00, image: "👼", cat: "Blox Fruits", sub: "account", desc: "V4 Sky, CDK, God Human e Level Max" },
+        { id: 606, name: "CONTA V4 FISCH FULL", price: 56.99, image: "🟠", cat: "Blox Fruits", sub: "account", desc: "V4 Fisch, CDK, God Human e Level Max" },
+        { id: 607, name: "CONTA 7 V4 FULL + CDK", price: 105.00, image: "👑", cat: "Blox Fruits", sub: "account", desc: "7 Raças V4, CDK, SG, GDH" },
+        { id: 608, name: "CONTA MAMUTE + GDH", price: 16.00, image: "🐘", cat: "Blox Fruits", sub: "account", desc: "Mamute, God Human e Lvl 2750" },
+        { id: 609, name: "CONTA KITSUNE INV", price: 39.32, image: "🦊", cat: "Blox Fruits", sub: "account", desc: "Kitsune Invencível" },
+        { id: 610, name: "CONTA T-REX INV + GDH", price: 16.00, image: "🦖", cat: "Blox Fruits", sub: "account", desc: "T-Rex Invencível, God Human e Level Max" },
+        { id: 611, name: "CONTA DOUGH INV + GDH", price: 9.80, image: "🥖", cat: "Blox Fruits", sub: "account", desc: "Dough Invencível, God Human e Lvl 2750" },
+        { id: 612, name: "CONTA GAS INV + GDH", price: 19.00, image: "💨", cat: "Blox Fruits", sub: "account", desc: "Gas Invencível, God Human e Lvl 2750" },
+        { id: 613, name: "CONTA TIGER INV", price: 37.00, image: "🐅", cat: "Blox Fruits", sub: "account", desc: "Tiger Invencível" },
+        { id: 614, name: "CONTA PORTAL + GDH", price: 15.00, image: "🌀", cat: "Blox Fruits", sub: "account", desc: "Portal e God Human" },
+        { id: 615, name: "CONTA CONTROL INV + GDH", price: 37.00, image: "🎮", cat: "Blox Fruits", sub: "account", desc: "Control Invencível e God Human" },
+        { id: 616, name: "CONTA GRAVITY + GDH", price: 16.00, image: "🌌", cat: "Blox Fruits", sub: "account", desc: "Gravity e God Human" },
 
-            // --- CATEGORIA CURSOS ---
-            { id: 2101, name: "Curso Java Script", price: 19.90, image: "📜", cat: "Cursos", desc: "Do zero ao avançado em JS. Crie sites e scripts." },
-            { id: 2102, name: "Curso de Inglês Rápido", price: 15.00, image: "🇺🇸", cat: "Cursos", desc: "Aprenda a falar o básico do ingles." },
-            { id: 2103, name: "Curso Python Master", price: 16.90, image: "🐍", cat: "Cursos", desc: "Automação e criação de bots com Python." },
-            { id: 2104, name: "PACK 1K DE CURSOS", price: 49.90, image: "📚", cat: "Cursos", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
-        ];
+        { id: 700, name: "Script Custom Master DBC", price: 30.00, image: "👑", cat: "Scripts", desc: "Para Dragon Block C [1.7.10]. Cria NPC de Formas" },
+        { id: 701, name: "Script TP Bank", price: 25.00, image: "🏦", cat: "Scripts", desc: "Sistema de Banco de Teleporte completo" },
+        { id: 702, name: "Script Armaduras Custom", price: 15.00, image: "🛡️", cat: "Scripts", desc: "Equipa roupa ao transformar" },
+        { id: 703, name: "Script de Teleportes", price: 14.99, image: "📍", cat: "Scripts", desc: "Teleporte para vários locais no DBC" },
+        { id: 704, name: "Script Custom Races/Effects", price: 30.00, image: "🌀", cat: "Scripts", desc: "NPC que vende raça/efeito Bio-android ou Android" },
+        { id: 705, name: "Script Animação de KI", price: 15.00, image: "💥", cat: "Scripts", desc: "Animação de carregar KI ao apertar 'C'" },
+        
+        { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
+        { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
+        { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 iniciais + 5000 mensais com clube" },
+        { id: 803, name: "Conta 13.500 VBucks", price: 279.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta com 13.500 Vbucks" },
+        { id: 804, name: "Conta Skin Gatalina", price: 5.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta simples com skin Gatalina" },
+        { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Indiana Jones e outras skins" },
+        { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Ice Spice e outras skins" },
+        
+        { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", desc: "Conta Bronze aleatória" },
+        { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", desc: "Conta Diamante aleatória" },
+        { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", desc: "Conta Ascendente aleatória" },
+        { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", desc: "Upada à mão, com dados de criação" },
+        { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", desc: "Conta Nível 1 com Range feito" },
+        
+        { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
+        { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Acesso via Gamepass PC" },
+        
+        { id: 1100, name: "Conta Rockstar (FiveM Ready)", price: 5.00, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", desc: "Licenciada para FiveM" },
+        { id: 1101, name: "Conta Steam com GTA V", price: 18.00, image: "https://cdn.dfg.com.br/itemimages/902913858-contas-steam-gta-v-full-acesso-NA9T.webp", cat: "GTA V", desc: "Conta Steam para baixar e jogar" },
+        { id: 1102, name: "Combo Rockstar + Steam", price: 15.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", desc: "Combo com as duas contas" },
+        
+        { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", desc: "Forma personalizada no jogo" },
+        { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", desc: "Gamepass de experiência" },
+        { id: 1202, name: "2x Drop Chance", price: 25.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Aumenta chance de drops" },
+        { id: 1203, name: "Limit Breaker", price: 23.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/4/45/LimitBreaker.png", cat: "DB Rage", desc: "Quebre os limites do personagem" },
+        { id: 1204, name: "Dragon Radar", price: 22.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/5/50/DragonRadar.png", cat: "DB Rage", desc: "Radar de esferas" },
+        { id: 1205, name: "2x Zeni", price: 16.90, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Multiplicador de dinheiro" },
+        { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", desc: "Mude a cor do seu Ki" },
+        { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", desc: "Transformação Omega" },
+        { id: 1208, name: "Parasite Form", price: 6.50, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Parasita" },
+        { id: 1209, name: "Savior Form", price: 13.00, image: "https://i.imgur.com/L7R6d3J.png", cat: "DB Rage", desc: "Forma Salvador" },
+        { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 10% para sempre" },
+        { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 15% para sempre" },
+        { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 20% para sempre" },
+        { id: 1303, name: "Cupom 25% OFF Vitalício", price: 100.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 25% para sempre" },
+        
+        { id: 1400, name: "All Games Steam", price: 59.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", desc: "Te ensinamos como ter qualquer jogo na Steam!" },
+        { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Fornecedores", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
+        
+        { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", desc: "Aprenda a ter todos os canais liberados" },
+        { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", desc: "Como criar e monetizar vídeos Brainrot" },
+        { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", desc: "Tenha internet em qualquer lugar" },
+        { id: 1603, name: "Método Passe FF Barato", price: 5.90, image: "🎟️", cat: "Tudo por 5,90", desc: "Pegue o passe do Free Fire pagando pouco" },
+        { id: 1604, name: "Método Diamantes FF", price: 5.90, image: "💎", cat: "Tudo por 5,90", desc: "Consiga diamantes com desconto ou free" },
+        { id: 1605, name: "Método Renda Extra", price: 5.90, image: "💰", cat: "Tudo por 5,90", desc: "Dicas fáceis para levantar dinheiro rápido" },
+        { id: 1606, name: "Método Gift Card", price: 5.90, image: "💳", cat: "Tudo por 5,90", desc: "Como conseguir Gift Cards promocionais" },
+        { id: 1607, name: "Método Like FF +1k", price: 5.90, image: "❤️", cat: "Tudo por 5,90", desc: "Método para conseguir +1000 likes no Free Fire" },
 
-        const icons = {
-            "streamings": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
-            "jogos": "fab fa-steam", "roblox": "fas fa-square", "blox fruits": "fas fa-dragon",
-            "scripts": "fas fa-code",
-            "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
-            "gta v": "fas fa-car", "db rage": "fas fa-fire", "cupons": "fas fa-ticket-alt",
-            "painéis": "fas fa-rocket", 
-            "tudo por 5,90": "fas fa-fire-alt", 
-            "fornecedores": "fas fa-truck-loading", 
-            "cursos": "fas fa-graduation-cap"
-        };
+        { id: 2001, name: "Fornecedor Robux (Barato)", price: 9.90, image: "💵", cat: "Fornecedores", desc: "Contato direto para comprar Robux a preço de banana" },
+        { id: 2002, name: "Fornecedor Xit/Paineis FF", price: 10.90, image: "🎯", cat: "Fornecedores", desc: "Os melhores painéis e regedits para Free Fire" },
+        { id: 2003, name: "Fornecedor Brainrots", price: 10.90, image: "🧟", cat: "Fornecedores", desc: "Clips prontos de Brainrot para postar" },
+        { id: 2004, name: "PACK SUPREMO FORNECEDORES", price: 34.90, image: "👑", cat: "Fornecedores", desc: "Lista completa com mais de 5 fornecedores de tudo!", special: "highlight" },
 
-        let cart = [];
-        let user = null;
-        let activeDiscount = 0;
-        let selectedStreamings = [];
-        let secretCats = ['Tudo por 5,90', 'Fornecedores', 'Cursos'];
+        { id: 2101, name: "Curso Java Script", price: 19.90, image: "📜", cat: "Cursos", desc: "Do zero ao avançado em JS. Crie sites e scripts." },
+        { id: 2102, name: "Curso de Inglês Rápido", price: 15.00, image: "🇺🇸", cat: "Cursos", desc: "Aprenda a falar o básico do ingles." },
+        { id: 2103, name: "Curso Python Master", price: 16.90, image: "🐍", cat: "Cursos", desc: "Automação e criação de bots com Python." },
+        { id: 2104, name: "PACK 1K DE CURSOS", price: 49.90, image: "📚", cat: "Cursos", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
+    ];
 
-        window.onload = () => {
-            const saved = localStorage.getItem('blackdz_user');
-            if(saved) {
-                user = saved;
-                document.getElementById('modal-login').classList.remove('active');
-                updateUserDisplay();
-            }
-            loadTheme();
-            
-            if(!EXIBIR_ABA_SECRETA) {
-                document.getElementById('btn-secret').classList.add('hidden');
-            } else {
-                document.getElementById('btn-secret').classList.remove('hidden');
-            }
-            
-            renderCats();
-        };
+    const icons = {
+        "streamings": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
+        "jogos": "fab fa-steam", "roblox": "fas fa-square", "blox fruits": "fas fa-dragon",
+        "scripts": "fas fa-code",
+        "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
+        "gta v": "fas fa-car", "db rage": "fas fa-fire", "cupons": "fas fa-ticket-alt",
+        "painéis": "fas fa-rocket", 
+        "tudo por 5,90": "fas fa-fire-alt", 
+        "fornecedores": "fas fa-truck-loading", 
+        "cursos": "fas fa-graduation-cap"
+    };
 
-        // --- SISTEMA DE NAVEGAÇÃO ---
-        function nav(loc) {
-            if(loc === 'home') {
-                document.getElementById('view-home').classList.remove('hidden');
-                document.getElementById('view-secret').classList.add('hidden');
-                document.getElementById('view-prods').classList.add('hidden');
-                document.getElementById('search-input-desktop').value = '';
-                
-                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-                document.querySelector('.menu-item:first-child').classList.add('active');
-            }
+    let cart = [];
+    let user = null;
+    let activeDiscount = 0;
+    let selectedStreamings = [];
+    let selectedAlaCarte = [];
+    let secretCats = ['Tudo por 5,90', 'Fornecedores', 'Cursos'];
+    let currentContactType = '';
+
+    window.onload = () => {
+        const saved = localStorage.getItem('blackdz_user');
+        if(saved) {
+            user = saved;
+            document.getElementById('modal-login').classList.remove('active');
+            updateUserDisplay();
         }
-
-        function navBack() {
-            const currentCatTitle = document.getElementById('cat-title').innerText;
-            const isSecret = secretCats.some(c => c.toUpperCase() === currentCatTitle);
-            
-            if(isSecret) openSecretTab();
-            else nav('home');
+        loadTheme();
+        
+        if(!EXIBIR_ABA_SECRETA) {
+            document.getElementById('btn-secret').classList.add('hidden');
+        } else {
+            document.getElementById('btn-secret').classList.remove('hidden');
         }
+        
+        renderCats();
+    };
 
-        function openSecretTab() {
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-secret').classList.remove('hidden');
+    function nav(loc) {
+        if(loc === 'home') {
+            document.getElementById('view-home').classList.remove('hidden');
+            document.getElementById('view-secret').classList.add('hidden');
             document.getElementById('view-prods').classList.add('hidden');
+            document.getElementById('search-input-desktop').value = '';
             
             document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-            document.getElementById('btn-secret').classList.add('active');
+            document.querySelector('.menu-item:first-child').classList.add('active');
         }
+    }
 
-        function renderCats() {
-            const allCats = [...new Set(db.map(i => i.cat))];
-            
-            const homeCats = allCats.filter(c => !secretCats.includes(c));
-            const exclusiveCats = allCats.filter(c => secretCats.includes(c));
+    function navBack() {
+        const currentCatTitle = document.getElementById('cat-title').innerText;
+        const isSecret = secretCats.some(c => c.toUpperCase() === currentCatTitle);
+        if(isSecret) openSecretTab(); else nav('home');
+    }
 
-            document.getElementById('container-cats').innerHTML = homeCats.map(c => `
-                <div class="card-cat" onclick="openCat('${c}')">
-                    <i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i>
-                    <span>${c}</span>
-                </div>
-            `).join('');
+    function openSecretTab() {
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-secret').classList.remove('hidden');
+        document.getElementById('view-prods').classList.add('hidden');
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        document.getElementById('btn-secret').classList.add('active');
+    }
 
-            document.getElementById('container-secret-cats').innerHTML = exclusiveCats.map(c => `
-                <div class="card-cat" style="border-color:var(--gold);" onclick="openCat('${c}')">
-                    <i class="${icons[c.toLowerCase()] || 'fas fa-lock'}" style="color:var(--gold);"></i>
-                    <span style="color:var(--gold); font-weight:bold;">${c}</span>
-                </div>
-            `).join('');
-        }
+    function renderCats() {
+        const allCats = [...new Set(db.map(i => i.cat))];
+        const homeCats = allCats.filter(c => !secretCats.includes(c));
+        const exclusiveCats = allCats.filter(c => secretCats.includes(c));
 
-        function openCat(catName) {
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-secret').classList.add('hidden');
-            document.getElementById('view-prods').classList.remove('hidden');
-            document.getElementById('cat-title').innerText = catName.toUpperCase();
-            
-            const title = document.getElementById('cat-title');
-            if (secretCats.includes(catName)) {
-                title.style.borderLeftColor = "var(--gold)";
-                title.style.color = "var(--gold)";
-            } else {
-                title.style.borderLeftColor = "var(--primary)";
-                title.style.color = "#fff";
-            }
+        document.getElementById('container-cats').innerHTML = homeCats.map(c => `
+            <div class="card-cat" onclick="openCat('${c}')">
+                <i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i>
+                <span>${c}</span>
+            </div>`).join('');
 
-            const items = db.filter(i => i.cat === catName);
-            renderProducts(items, catName);
-        }
+        document.getElementById('container-secret-cats').innerHTML = exclusiveCats.map(c => `
+            <div class="card-cat" style="border-color:var(--gold);" onclick="openCat('${c}')">
+                <i class="${icons[c.toLowerCase()] || 'fas fa-lock'}" style="color:var(--gold);"></i>
+                <span style="color:var(--gold); font-weight:bold;">${c}</span>
+            </div>`).join('');
+    }
 
-        function renderProducts(items, catName) {
-            const container = document.getElementById('container-prods');
-            container.innerHTML = '';
-
-            // Lógica de SUBCATEGORIAS
-            if (catName === 'Jogos') {
-                const keys = items.filter(i => i.sub === 'key');
-                const games = items.filter(i => i.sub === 'game');
-                
-                if (keys.length > 0) {
-                    container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>`;
-                    container.innerHTML += generateProductHTML(keys);
-                }
-                if (games.length > 0) {
-                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-gamepad"></i> JOGOS PC (OFFLINE/CONTA)</div>`;
-                    container.innerHTML += generateProductHTML(games);
-                }
-            } 
-            // NOVA LÓGICA BLOX FRUITS
-            else if (catName === 'Blox Fruits') {
-                const perms = items.filter(i => i.sub === 'perm');
-                const gamepasses = items.filter(i => i.sub === 'gamepass');
-                const accounts = items.filter(i => i.sub === 'account');
-
-                if (perms.length > 0) {
-                    container.innerHTML += `<div class="subcat-divider"><i class="fas fa-gem"></i> FRUTAS PERMANENTES</div>`;
-                    container.innerHTML += generateProductHTML(perms);
-                }
-                if (gamepasses.length > 0) {
-                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-scroll"></i> GAMEPASS & ITENS</div>`;
-                    container.innerHTML += generateProductHTML(gamepasses);
-                }
-                if (accounts.length > 0) {
-                    container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-user-ninja"></i> CONTAS UPADAS</div>`;
-                    container.innerHTML += generateProductHTML(accounts);
-                }
-            }
-            else {
-                // Render Normal
-                container.innerHTML = generateProductHTML(items);
-            }
-        }
-
-        function generateProductHTML(items) {
-            return items.map(p => {
-                const isHighlight = p.special === 'highlight';
-                const highlightClass = isHighlight ? 'highlight' : '';
-                const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
-                
-                // LÓGICA DO FAKE DISCOUNT
-                // Calcula um preço antigo falso (ex: +40% ou +80%)
-                const oldPrice = (p.price * 1.6).toFixed(2);
-                const discountPercent = Math.round(((oldPrice - p.price) / oldPrice) * 100);
-                
-                const btnText = p.special === 'streaming-combo' ? 'ESCOLHER' : 'ADICIONAR';
-                const btnClick = p.special === 'streaming-combo' ? 
-                    `openStreamingCombo()` : 
-                    `addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price})`;
-                
-                return `
-                <div class="card-prod ${highlightClass}" onclick="${btnClick}">
-                    ${badge}
-                    <div class="badge-discount">-${discountPercent}%</div>
-                    <div class="prod-img">
-                        ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div class="emoji-fallback">${p.image}</div>`}
-                    </div>
-                    <div class="prod-body">
-                        <div class="prod-title">${p.name}</div>
-                        <div class="prod-desc">${p.desc}</div>
-                        
-                        <div class="price-container">
-                            <span class="price-old">R$ ${oldPrice}</span>
-                            <span class="prod-price">R$ ${p.price.toFixed(2)}</span>
-                        </div>
-                        
-                        <button class="btn-buy" onclick="event.stopPropagation(); ${btnClick}">${btnText}</button>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function doSearch(val) {
-            if(!val) return nav('home');
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-secret').classList.add('hidden');
-            document.getElementById('view-prods').classList.remove('hidden');
-            document.getElementById('cat-title').innerText = "BUSCA";
-            const items = db.filter(i => i.name.toLowerCase().includes(val.toLowerCase()) || i.cat.toLowerCase().includes(val.toLowerCase()));
-            
-            // Renderiza busca normal sem divisao de subcategoria
-            document.getElementById('container-prods').innerHTML = generateProductHTML(items);
-        }
-
-        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
+    function openCat(catName) {
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-prods').classList.remove('hidden');
+        document.getElementById('cat-title').innerText = catName.toUpperCase();
         
-        function addToCart(name, price) {
-            cart.push({name, price});
-            updateCartUI();
-            const drawer = document.getElementById('cart-drawer');
-            if(!drawer.classList.contains('active')) drawer.classList.add('active');
+        const title = document.getElementById('cat-title');
+        if (secretCats.includes(catName)) {
+            title.style.borderLeftColor = "var(--gold)";
+            title.style.color = "var(--gold)";
+        } else {
+            title.style.borderLeftColor = "var(--primary)";
+            title.style.color = "#fff";
         }
 
-        function applyCoupon() {
-            const code = document.getElementById('coupon-code').value.toUpperCase();
-            const feedback = document.getElementById('coupon-feedback');
-            if (couponsDB[code]) {
-                activeDiscount = couponsDB[code];
-                feedback.innerText = `✅ Desconto de ${(activeDiscount*100)}% aplicado!`;
-                feedback.style.color = "var(--success)";
-                updateCartUI();
-            } else {
-                feedback.innerText = "❌ Cupom inválido.";
-                feedback.style.color = "red";
+        const items = db.filter(i => i.cat === catName);
+        renderProducts(items, catName);
+    }
+
+    function renderProducts(items, catName) {
+        const container = document.getElementById('container-prods');
+        container.innerHTML = '';
+
+        if (catName === 'Jogos') {
+            const keys = items.filter(i => i.sub === 'key');
+            const games = items.filter(i => i.sub === 'game');
+            if (keys.length > 0) {
+                container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>`;
+                container.innerHTML += generateProductHTML(keys);
+            }
+            if (games.length > 0) {
+                container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-gamepad"></i> JOGOS PC (OFFLINE/CONTA)</div>`;
+                container.innerHTML += generateProductHTML(games);
+            }
+        } 
+        else if (catName === 'Blox Fruits') {
+            const perms = items.filter(i => i.sub === 'perm');
+            const gamepasses = items.filter(i => i.sub === 'gamepass');
+            const accounts = items.filter(i => i.sub === 'account');
+            if (perms.length > 0) {
+                container.innerHTML += `<div class="subcat-divider"><i class="fas fa-gem"></i> FRUTAS PERMANENTES</div>`;
+                container.innerHTML += generateProductHTML(perms);
+            }
+            if (gamepasses.length > 0) {
+                container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-scroll"></i> GAMEPASS & ITENS</div>`;
+                container.innerHTML += generateProductHTML(gamepasses);
+            }
+            if (accounts.length > 0) {
+                container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-user-ninja"></i> CONTAS UPADAS</div>`;
+                container.innerHTML += generateProductHTML(accounts);
             }
         }
+        else {
+            container.innerHTML = generateProductHTML(items);
+        }
+    }
 
-        /* --- CÓDIGO NOVO DO CHECKOUT (COLE NO FINAL DO SCRIPT) --- */
+    function generateProductHTML(items) {
+        return items.map(p => {
+            const isHighlight = p.special === 'highlight';
+            const highlightClass = isHighlight ? 'highlight' : '';
+            const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
+            
+            const oldPrice = (p.price * 1.6).toFixed(2);
+            const discountPercent = Math.round(((oldPrice - p.price) / oldPrice) * 100);
+            
+            let btnText = 'ADICIONAR';
+            if(p.special === 'streaming-combo' || p.special === 'streaming-select') btnText = 'ESCOLHER';
+            
+            // Corrige escape de aspas
+            const safeName = p.name.replace(/'/g, "\\'");
+            let clickAction = `addToCart('${safeName}', ${p.price})`;
+            
+            if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
+            else if (p.special === 'streaming-select') clickAction = 'openStreamingSelect()';
+
+            return `
+            <div class="card-prod ${highlightClass}" onclick="${clickAction}">
+                ${badge}
+                <div class="badge-discount">-${discountPercent}%</div>
+                <div class="prod-img">
+                    ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div class="emoji-fallback">${p.image}</div>`}
+                </div>
+                <div class="prod-body">
+                    <div class="prod-title">${p.name}</div>
+                    <div class="prod-desc">${p.desc}</div>
+                    
+                    <div class="price-container">
+                        <span class="price-old">R$ ${oldPrice}</span>
+                        <span class="prod-price">R$ ${p.price.toFixed(2)}</span>
+                    </div>
+                    
+                    <button class="btn-buy" onclick="event.stopPropagation(); ${clickAction}">${btnText}</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function doSearch(val) {
+        if(!val) return nav('home');
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-prods').classList.remove('hidden');
+        document.getElementById('cat-title').innerText = "BUSCA";
+        const items = db.filter(i => i.name.toLowerCase().includes(val.toLowerCase()) || i.cat.toLowerCase().includes(val.toLowerCase()));
+        document.getElementById('container-prods').innerHTML = generateProductHTML(items);
+    }
+
+    function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
     
-    // Sobrescreve a função antiga para atualizar o botão "Pagar Agora" corretamente
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCartUI();
+        const drawer = document.getElementById('cart-drawer');
+        if(!drawer.classList.contains('active')) drawer.classList.add('active');
+    }
+
+    function applyCoupon() {
+        const code = document.getElementById('coupon-code').value.toUpperCase();
+        const feedback = document.getElementById('coupon-feedback');
+        if (couponsDB[code]) {
+            activeDiscount = couponsDB[code];
+            feedback.innerText = `✅ Desconto de ${(activeDiscount*100)}% aplicado!`;
+            feedback.style.color = "var(--success)";
+            updateCartUI();
+        } else {
+            feedback.innerText = "❌ Cupom inválido.";
+            feedback.style.color = "red";
+        }
+    }
+
     function updateCartUI() {
         document.getElementById('badge-cart').innerText = cart.length;
         const div = document.getElementById('cart-list');
@@ -1070,20 +1082,18 @@
         const total = cart.reduce((a,b) => a + b.price, 0) * (1 - activeDiscount);
         document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
         
-        // --- A MÁGICA ACONTECE AQUI: Muda o botão para abrir o novo menu ---
         const btnArea = document.querySelector('.cart-drawer .btn-buy'); 
         if(btnArea) {
-            btnArea.setAttribute('onclick', 'openCheckout()'); // Agora chama o novo menu
+            btnArea.setAttribute('onclick', 'openCheckout()'); 
             btnArea.innerHTML = '<i class="fas fa-check-circle"></i> FINALIZAR COMPRA';
         }
     }
 
-    // Abre o novo Modal de Checkout
     function openCheckout() {
         if(cart.length === 0) return alert("Seu carrinho está vazio!");
         if(!user) return alert("Faça login para continuar!");
 
-        toggleCart(); // Esconde a barra lateral
+        toggleCart();
         
         const listDiv = document.getElementById('checkout-items-list');
         let itemsHtml = '';
@@ -1110,22 +1120,18 @@
         openModal('modal-checkout');
     }
 
-    // Copia o PIX
     function copyPixKey() {
         const key = "22981636278";
         navigator.clipboard.writeText(key).then(() => alert("Chave PIX copiada!"));
     }
 
-    // Prepara a mensagem para o Discord
     function openDiscordSteps() {
         closeModal('modal-checkout');
-        
         const total = document.getElementById('cart-total').innerText;
         const date = new Date().toLocaleString('pt-BR');
         let itemsList = cart.map(i => `• ${i.name} (R$ ${i.price.toFixed(2)})`).join('\n');
         let cupomInfo = activeDiscount > 0 ? "SIM" : "NÃO";
 
-        // Cria o texto bonitinho
         const msg = 
 `🛒 **NOVO PEDIDO - BLACKDZ STORE**
 ━━━━━━━━━━━━━━━━━━━━━━
@@ -1144,359 +1150,317 @@ ${itemsList}
         openModal('modal-discord-step');
     }
 
-    // Copia e vai pro link do Discord
     function copyAndGoDiscord() {
         const textArea = document.getElementById('discord-msg-area');
         textArea.select();
         document.execCommand('copy');
-        
-        // IMPORTANTE: TROQUE O LINK ABAIXO PELO SEU CONVITE DO DISCORD
         window.open('https://discord.gg/QrPpzPJpZj', '_blank'); 
     }
     
     function openStreamingCombo() {
-            const div = document.getElementById('streaming-options');
-            selectedStreamings = [];
-            div.innerHTML = streamingOptions.map((s, i) => `
-                <div class="checkbox-item">
-                    <input type="checkbox" value="${s}" onchange="toggleStreaming(this)">
-                    <label>${s}</label>
+        const div = document.getElementById('streaming-options');
+        selectedStreamings = [];
+        div.innerHTML = streamingOptions.map((s, i) => `
+            <div class="checkbox-item">
+                <input type="checkbox" value="${s}" onchange="toggleStreaming(this)">
+                <label>${s}</label>
+            </div>
+        `).join('');
+        openModal('modal-streaming-combo');
+    }
+
+    function toggleStreaming(cb) {
+        if(cb.checked) {
+            if(selectedStreamings.length >= 3) { cb.checked = false; alert('Apenas 3 opções!'); return; }
+            selectedStreamings.push(cb.value);
+        } else {
+            selectedStreamings = selectedStreamings.filter(x => x !== cb.value);
+        }
+    }
+
+    function confirmStreamingCombo() {
+        if(selectedStreamings.length !== 3) { alert('Escolha 3 itens!'); return; }
+        addToCart(`Combo: ${selectedStreamings.join(', ')}`, 14.99); // Valor do Combo
+        closeModal('modal-streaming-combo');
+    }
+
+    /* --- FUNÇÕES DO NOVO SISTEMA DE STREAMING SELECT --- */
+    function openStreamingSelect() {
+        selectedAlaCarte = []; 
+        const div = document.getElementById('alacarte-options');
+        if(!div) return alert("ERRO: O Modal novo não foi encontrado. Verifique se colou o HTML.");
+        
+        div.innerHTML = alacarteDB.map((item, index) => `
+            <div class="checkbox-item" style="justify-content: space-between;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" id="ala-${index}" value="${index}" onchange="updateAlaCarteTotal()">
+                    <label for="ala-${index}">${item.name}</label>
                 </div>
-            `).join('');
-            openModal('modal-streaming-combo');
-        }
+                <span style="color:var(--success); font-weight:bold;">R$ ${item.price.toFixed(2)}</span>
+            </div>
+        `).join('');
 
-        function toggleStreaming(cb) {
-            if(cb.checked) {
-                if(selectedStreamings.length >= 3) { cb.checked = false; alert('Apenas 3 opções!'); return; }
-                selectedStreamings.push(cb.value);
-            } else {
-                selectedStreamings = selectedStreamings.filter(x => x !== cb.value);
+        updateAlaCarteTotal();
+        openModal('modal-streaming-select');
+    }
+
+    function updateAlaCarteTotal() {
+        let total = 0;
+        selectedAlaCarte = []; 
+        alacarteDB.forEach((item, index) => {
+            const checkbox = document.getElementById(`ala-${index}`);
+            if(checkbox && checkbox.checked) {
+                total += item.price;
+                selectedAlaCarte.push(item);
             }
-        }
-
-        function confirmStreamingCombo() {
-            if(selectedStreamings.length !== 3) { alert('Escolha 3 itens!'); return; }
-            addToCart(`Combo: ${selectedStreamings.join(', ')}`, 25.99);
-            closeModal('modal-streaming-combo');
-        }
-
-        function sendWhatsapp(type) {
-            if(!user) return alert("Faça login primeiro!");
-            let msg = "";
-            if(type === 'cart') {
-                if(cart.length === 0) return alert("Carrinho vazio!");
-                msg = `*PEDIDO DE ${user.toUpperCase()}*\n\n` + cart.map(i => `🛒 ${i.name} - R$${i.price.toFixed(2)}`).join('\n') + `\n\n💰 *TOTAL: ${document.getElementById('cart-total').innerText}*`;
-            } else {
-                msg = document.getElementById(type === 'request' ? 'request-msg' : 'support-msg').value;
-            }
-            window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        document.getElementById('form-login').addEventListener('submit', (e) => {
-            e.preventDefault();
-            user = document.getElementById('login-user').value;
-            localStorage.setItem('blackdz_user', user);
-            document.getElementById('modal-login').classList.remove('active');
-            updateUserDisplay();
         });
+        const totalSpan = document.getElementById('alacarte-total');
+        if(totalSpan) totalSpan.innerText = `R$ ${total.toFixed(2)}`;
+    }
 
-        function updateUserDisplay() {
-            document.getElementById('user-display').innerText = user;
-            document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase();
-        }
-        function logout() { localStorage.removeItem('blackdz_user'); location.reload(); }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+    function confirmStreamingSelect() {
+        if(selectedAlaCarte.length === 0) return alert("Selecione pelo menos um item!");
+        let totalFinal = 0;
+        let names = [];
+        selectedAlaCarte.forEach(i => {
+            totalFinal += i.price;
+            names.push(i.name);
+        });
+        const finalName = `Pack: ${names.join(', ')}`;
+        addToCart(finalName, totalFinal);
+        closeModal('modal-streaming-select');
+    }
+    /* ---------------------------------------------------- */
 
-        function updateThemeColor(val, type) {
-            document.documentElement.style.setProperty(`--${type}`, val);
-            saveTheme();
-        }
-        
-        function switchBgTab(tab) {
-            const up = document.getElementById('area-upload');
-            const url = document.getElementById('area-url');
-            const btnUp = document.getElementById('btn-upload');
-            const btnUrl = document.getElementById('btn-url');
-
-            if(tab === 'upload') {
-                up.classList.remove('hidden'); url.classList.add('hidden');
-                btnUp.classList.add('active'); btnUrl.classList.remove('active');
-            } else {
-                up.classList.add('hidden'); url.classList.remove('hidden');
-                btnUp.classList.remove('active'); btnUrl.classList.add('active');
-            }
-        }
-
-        function handleBgUrl(url) {
-            if(!url) return;
-            document.getElementById('main-bg').style.backgroundImage = `url('${url}')`;
-            saveTheme(url);
-        }
-
-        function handleBgUpload(input) {
-            const file = input.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const result = e.target.result;
-                    document.getElementById('main-bg').style.backgroundImage = `url('${result}')`;
-                    try { localStorage.setItem('blackdz_bg_custom', result); } catch(err) {}
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function saveTheme(bgUrl = null) {
-            const theme = {
-                primary: document.getElementById('picker-primary').value,
-                secondary: document.getElementById('picker-secondary').value,
-                aura: document.getElementById('picker-aura').value
-            };
-            localStorage.setItem('blackdz_theme', JSON.stringify(theme));
-            if(bgUrl) localStorage.setItem('blackdz_bg_url', bgUrl);
-        }
-
-        function loadTheme() {
-            const theme = JSON.parse(localStorage.getItem('blackdz_theme'));
-            if(theme) {
-                updateThemeColor(theme.primary, 'primary');
-                updateThemeColor(theme.secondary, 'secondary');
-                updateThemeColor(theme.aura, 'aura');
-                document.getElementById('picker-primary').value = theme.primary;
-                document.getElementById('picker-secondary').value = theme.secondary;
-                document.getElementById('picker-aura').value = theme.aura;
-            }
-            const bgCustom = localStorage.getItem('blackdz_bg_custom');
-            const bgUrl = localStorage.getItem('blackdz_bg_url');
-            if(bgCustom) document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
-            else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
-        }
-        function resetTheme() { localStorage.removeItem('blackdz_theme'); location.reload(); }
-
-        /* --- BLACKDZ AI ULTIMATE (HIPER INTELIGENTE) --- */
-        function toggleChat() { document.getElementById('chat-box').classList.toggle('active'); }
-        function handleChat(e) { if(e.key === 'Enter') sendChatMessage(); }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const txt = input.value.trim();
-            if(!txt) return;
-            
-            const area = document.getElementById('chat-messages');
-            area.innerHTML += `<div class="msg user">${txt}</div>`;
-            area.scrollTop = area.scrollHeight;
-            input.value = '';
-
-            area.innerHTML += `<div class="typing-indicator" id="typing"><span></span><span></span><span></span></div>`;
-            area.scrollTop = area.scrollHeight;
-
-            setTimeout(() => {
-                const t = document.getElementById('typing'); if(t) t.remove();
-                processAiResponse(txt);
-            }, 600 + Math.random() * 500);
-        }
-
-        function processAiResponse(rawText) {
-            const area = document.getElementById('chat-messages');
-            let text = rawText.toLowerCase()
-                .replace(/inv\b/g, "inventario")
-                .replace(/perm\b/g, "permanente")
-                .replace(/acc\b/g, "conta")
-                .replace(/qm\b/g, "quem")
-                .replace(/vc\b/g, "voce");
-
-            let response = "";
-            let foundProducts = [];
-
-            // BUSCA INTELIGENTE NOS PRODUTOS
-            db.forEach(p => {
-                const pName = p.name.toLowerCase();
-                const pCat = p.cat.toLowerCase();
-                // Verifica se o texto contem o nome exato ou parte da categoria
-                if(text.includes(pName) || text.includes(pCat)) {
-                    foundProducts.push(p);
-                }
-                else if (text.includes("valorant") && pCat.includes("valorant")) {
-                    if(!foundProducts.includes(p)) foundProducts.push(p);
-                }
-                else if (text.includes("minecraft") && pCat.includes("minecraft")) {
-                    if(!foundProducts.includes(p)) foundProducts.push(p);
-                }
-            });
-
-            // --- LÓGICA DE DECISÃO ---
-            
-            if (foundProducts.length > 0) {
-                const p = foundProducts[Math.floor(Math.random() * Math.min(3, foundProducts.length))];
-                response = `Encontrei algo que você pode gostar! O <b>${p.name}</b> está por <b>R$ ${p.price.toFixed(2)}</b>. 🔥`;
-                response += `<div class="product-preview-chat" onclick="addToCart('${p.name}', ${p.price})">
-                    ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div style="font-size:24px;">${p.image}</div>`}
-                    <div style="flex:1;">
-                        <div style="font-size:12px; font-weight:bold; color:#fff;">${p.name}</div>
-                        <div style="font-size:11px; color:var(--success);">R$ ${p.price.toFixed(2)}</div>
-                    </div>
-                    <i class="fas fa-cart-plus" style="color:#666;"></i>
-                </div>`;
-            } 
-            else if (text.includes("como comprar") || text.includes("como pagar")) {
-                response = "É fácil! Adicione o que quiser no carrinho 🛒, clique em 'Pagar Agora' e você será redirecionado para o WhatsApp do vendedor para finalizar com PIX ou Cartão.";
-            }
-            else if (text.includes("pix") || text.includes("cartao") || text.includes("boleto")) {
-                response = "Aceitamos principalmente **PIX** (entrega imediata) e Cartão. Fale com o suporte se precisar de outra forma!";
-            }
-            else if (text.includes("confiavel") || text.includes("golpe") || text.includes("seguro")) {
-                response = "100% confiável! A **BlackDz Store** preza pela segurança. Temos centenas de clientes satisfeitos e garantia em todas as contas.";
-            }
-            else if (text.includes("suporte") || text.includes("ajuda") || text.includes("atendimento")) {
-                response = "Precisa de ajuda humana? Clique no botão **Suporte** no menu lateral e mande sua mensagem direto pro nosso WhatsApp!";
-            }
-            else if (text.includes("quem e voce") || text.includes("dono")) {
-                response = "Eu sou a **BlackDz AI**, a mente digital por trás da loja. O Boss (BlackDz) me criou para te ajudar a encontrar as melhores ofertas! 🚀";
-            }
-            else if (text.includes("oi") || text.includes("ola") || text.includes("eai") || text.includes("salve")) {
-                response = "Salve! ✌️ Tudo tranquilo? Se precisar de conta, nitro ou método, só pedir.";
-            }
-            else if (text.includes("curso") || text.includes("fornecedor") || text.includes("metodo")) {
-                response = "Esses itens exclusivos (Cursos, Fornecedores, Métodos) ficam no nosso **Acesso Limitado**! Procure o botão com o cadeado 🔐 no menu.";
-            }
-            else {
-                response = "Hmm, não entendi muito bem. Tenta ser mais específico!";
-            }
-
-            area.innerHTML += `<div class="msg bot">${response}</div>`;
-            area.scrollTop = area.scrollHeight;
-        }
-
-    /* --- SISTEMA DE SUPORTE E PEDIDOS (WHATSAPP/DISCORD) --- */
-
-    let currentContactType = ''; // Guarda se é 'support' ou 'request'
-
-    // 1. Abre a janela de escolha (Zap ou Discord)
     function openContactOptions(type) {
-        // Verifica se o usuário escreveu algo antes de abrir
-        const msg = document.getElementById(type === 'request' ? 'request-msg' : 'support-msg').value;
+        const inputId = type === 'request' ? 'request-msg' : 'support-msg';
+        const msg = document.getElementById(inputId).value;
         if(!msg.trim()) return alert("Por favor, escreva sua mensagem primeiro!");
-
         currentContactType = type;
-        
-        // Muda o título do modal dependendo do tipo
         const title = type === 'request' ? 'ENVIAR SOLICITAÇÃO' : 'ENVIAR SUPORTE';
         document.getElementById('contact-options-title').innerText = title;
-
-        // Fecha o modal anterior e abre o de escolha
         closeModal(type === 'request' ? 'modal-request' : 'modal-support');
         openModal('modal-contact-options');
     }
 
-    // 2. Processa a escolha do usuário
     function processContact(channel) {
         const inputId = currentContactType === 'request' ? 'request-msg' : 'support-msg';
         const userMsg = document.getElementById(inputId).value;
         const date = new Date().toLocaleString('pt-BR');
 
-        // Se escolher WhatsApp
         if (channel === 'whatsapp') {
             const prefix = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ PEDIDO DE SUPORTE';
             const text = `*${prefix}*\n\n👤 *Cliente:* ${user || 'Visitante'}\n📝 *Mensagem:* ${userMsg}`;
             window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(text)}`, '_blank');
             closeModal('modal-contact-options');
         } 
-        
-        // Se escolher Discord
         else if (channel === 'discord') {
             let discordTitle = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ TICKET DE SUPORTE';
-            
-            // Monta a mensagem bonitinha pro Discord
-            const formattedMsg = 
-`**${discordTitle} - BLACKDZ STORE**
-━━━━━━━━━━━━━━━━━━━━━━
-👤 **Usuário:** ${user || 'Visitante'}
-📅 **Data:** ${date}
-━━━━━━━━━━━━━━━━━━━━━━
-📝 **MENSAGEM DO CLIENTE:**
-"${userMsg}"
-━━━━━━━━━━━━━━━━━━━━━━
-*Copie esta mensagem e cole no canal de tickets.*`;
-
-            // Usa o mesmo modal de copiar do checkout (reaproveitando código)
+            const formattedMsg = `**${discordTitle} - BLACKDZ STORE**\n━━━━━━━━━━━━━━━━━━━━━━\n👤 **Usuário:** ${user || 'Visitante'}\n📅 **Data:** ${date}\n━━━━━━━━━━━━━━━━━━━━━━\n📝 **MENSAGEM DO CLIENTE:**\n"${userMsg}"\n━━━━━━━━━━━━━━━━━━━━━━\n*Copie esta mensagem e cole no canal de tickets.*`;
             document.getElementById('discord-msg-area').value = formattedMsg;
             closeModal('modal-contact-options');
             openModal('modal-discord-step');
         }
     }
-    </script>
-    <script>
-    /**
-     * SISTEMA DE PROTEÇÃO ANTI-CÓPIA E ANTI-DEVTOOLS
-     * BlackDz Store Security
-     */
 
-    // 1. Desabilitar Botão Direito
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    function sendWhatsapp(type) {
+        if(!user) return alert("Faça login primeiro!");
+        let msg = "";
+        if(type === 'cart') {
+            if(cart.length === 0) return alert("Carrinho vazio!");
+            msg = `*PEDIDO DE ${user.toUpperCase()}*\n\n` + cart.map(i => `🛒 ${i.name} - R$${i.price.toFixed(2)}`).join('\n') + `\n\n💰 *TOTAL: ${document.getElementById('cart-total').innerText}*`;
+        }
+        window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
-    // 2. Desabilitar Teclas de Atalho (F12, Ctrl+Shift+I, Ctrl+U, etc.)
-    document.onkeydown = function(e) {
-        // F12
-        if(event.keyCode == 123) {
-            return false;
-        }
-        // Ctrl+Shift+I (DevTools)
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-            return false;
-        }
-        // Ctrl+Shift+J (Console)
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-            return false;
-        }
-        // Ctrl+Shift+C (Inspect Element)
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-            return false;
-        }
-        // Ctrl+U (Ver Fonte)
-        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
-        // Ctrl+S (Salvar)
-        if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
-            return false;
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    document.getElementById('form-login').addEventListener('submit', (e) => {
+        e.preventDefault();
+        user = document.getElementById('login-user').value;
+        localStorage.setItem('blackdz_user', user);
+        document.getElementById('modal-login').classList.remove('active');
+        updateUserDisplay();
+    });
+
+    function updateUserDisplay() {
+        document.getElementById('user-display').innerText = user;
+        document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase();
+    }
+    function logout() { localStorage.removeItem('blackdz_user'); location.reload(); }
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+
+    function updateThemeColor(val, type) {
+        document.documentElement.style.setProperty(`--${type}`, val);
+        saveTheme();
+    }
+    
+    function switchBgTab(tab) {
+        const up = document.getElementById('area-upload');
+        const url = document.getElementById('area-url');
+        const btnUp = document.getElementById('btn-upload');
+        const btnUrl = document.getElementById('btn-url');
+        if(tab === 'upload') {
+            up.classList.remove('hidden'); url.classList.add('hidden');
+            btnUp.classList.add('active'); btnUrl.classList.remove('active');
+        } else {
+            up.classList.add('hidden'); url.classList.remove('hidden');
+            btnUp.classList.remove('active'); btnUrl.classList.add('active');
         }
     }
 
-    // 3. Bloqueio de Seleção e Arraste
-    document.onselectstart = function() { return false; } // IE/Chrome
-    document.onmousedown = function() { return false; }   // Outros
+    function handleBgUrl(url) {
+        if(!url) return;
+        document.getElementById('main-bg').style.backgroundImage = `url('${url}')`;
+        saveTheme(url);
+    }
 
-    // 4. Detecção de DevTools (O "Travador")
-    // Se o usuário abrir o console, isso causará uma pausa forçada constante
+    function handleBgUpload(input) {
+        const file = input.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const result = e.target.result;
+                document.getElementById('main-bg').style.backgroundImage = `url('${result}')`;
+                try { localStorage.setItem('blackdz_bg_custom', result); } catch(err) {}
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function saveTheme(bgUrl = null) {
+        const theme = {
+            primary: document.getElementById('picker-primary').value,
+            secondary: document.getElementById('picker-secondary').value,
+            aura: document.getElementById('picker-aura').value
+        };
+        localStorage.setItem('blackdz_theme', JSON.stringify(theme));
+        if(bgUrl) localStorage.setItem('blackdz_bg_url', bgUrl);
+    }
+
+    function loadTheme() {
+        const theme = JSON.parse(localStorage.getItem('blackdz_theme'));
+        if(theme) {
+            updateThemeColor(theme.primary, 'primary');
+            updateThemeColor(theme.secondary, 'secondary');
+            updateThemeColor(theme.aura, 'aura');
+            document.getElementById('picker-primary').value = theme.primary;
+            document.getElementById('picker-secondary').value = theme.secondary;
+            document.getElementById('picker-aura').value = theme.aura;
+        }
+        const bgCustom = localStorage.getItem('blackdz_bg_custom');
+        const bgUrl = localStorage.getItem('blackdz_bg_url');
+        if(bgCustom) document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
+        else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
+    }
+    function resetTheme() { localStorage.removeItem('blackdz_theme'); location.reload(); }
+
+    function toggleChat() { document.getElementById('chat-box').classList.toggle('active'); }
+    function handleChat(e) { if(e.key === 'Enter') sendChatMessage(); }
+
+    function sendChatMessage() {
+        const input = document.getElementById('chat-input');
+        const txt = input.value.trim();
+        if(!txt) return;
+        const area = document.getElementById('chat-messages');
+        area.innerHTML += `<div class="msg user">${txt}</div>`;
+        area.scrollTop = area.scrollHeight;
+        input.value = '';
+        area.innerHTML += `<div class="typing-indicator" id="typing"><span></span><span></span><span></span></div>`;
+        area.scrollTop = area.scrollHeight;
+        setTimeout(() => {
+            const t = document.getElementById('typing'); if(t) t.remove();
+            processAiResponse(txt);
+        }, 600 + Math.random() * 500);
+    }
+
+    function processAiResponse(rawText) {
+        const area = document.getElementById('chat-messages');
+        let text = rawText.toLowerCase().replace(/inv\b/g, "inventario").replace(/perm\b/g, "permanente").replace(/acc\b/g, "conta").replace(/qm\b/g, "quem").replace(/vc\b/g, "voce");
+        let response = "";
+        let foundProducts = [];
+        db.forEach(p => {
+            const pName = p.name.toLowerCase();
+            const pCat = p.cat.toLowerCase();
+            if(text.includes(pName) || text.includes(pCat)) {
+                foundProducts.push(p);
+            } else if (text.includes("valorant") && pCat.includes("valorant")) {
+                if(!foundProducts.includes(p)) foundProducts.push(p);
+            } else if (text.includes("minecraft") && pCat.includes("minecraft")) {
+                if(!foundProducts.includes(p)) foundProducts.push(p);
+            }
+        });
+
+        if (foundProducts.length > 0) {
+            const p = foundProducts[Math.floor(Math.random() * Math.min(3, foundProducts.length))];
+            response = `Encontrei algo que você pode gostar! O <b>${p.name}</b> está por <b>R$ ${p.price.toFixed(2)}</b>. 🔥`;
+            response += `<div class="product-preview-chat" onclick="addToCart('${p.name}', ${p.price})">
+                ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div style="font-size:24px;">${p.image}</div>`}
+                <div style="flex:1;">
+                    <div style="font-size:12px; font-weight:bold; color:#fff;">${p.name}</div>
+                    <div style="font-size:11px; color:var(--success);">R$ ${p.price.toFixed(2)}</div>
+                </div>
+                <i class="fas fa-cart-plus" style="color:#666;"></i>
+            </div>`;
+        } 
+        else if (text.includes("como comprar") || text.includes("como pagar")) {
+            response = "É fácil! Adicione o que quiser no carrinho 🛒, clique em 'Pagar Agora' e você será redirecionado para o WhatsApp do vendedor para finalizar com PIX ou Cartão.";
+        }
+        else if (text.includes("pix") || text.includes("cartao") || text.includes("boleto")) {
+            response = "Aceitamos principalmente **PIX** (entrega imediata) e Cartão. Fale com o suporte se precisar de outra forma!";
+        }
+        else if (text.includes("confiavel") || text.includes("golpe") || text.includes("seguro")) {
+            response = "100% confiável! A **BlackDz Store** preza pela segurança. Temos centenas de clientes satisfeitos e garantia em todas as contas.";
+        }
+        else if (text.includes("suporte") || text.includes("ajuda") || text.includes("atendimento")) {
+            response = "Precisa de ajuda humana? Clique no botão **Suporte** no menu lateral e mande sua mensagem direto pro nosso WhatsApp!";
+        }
+        else if (text.includes("quem e voce") || text.includes("dono")) {
+            response = "Eu sou a **BlackDz AI**, a mente digital por trás da loja. O Boss (BlackDz) me criou para te ajudar a encontrar as melhores ofertas! 🚀";
+        }
+        else if (text.includes("oi") || text.includes("ola") || text.includes("eai") || text.includes("salve")) {
+            response = "Salve! ✌️ Tudo tranquilo? Se precisar de conta, nitro ou método, só pedir.";
+        }
+        else if (text.includes("curso") || text.includes("fornecedor") || text.includes("metodo")) {
+            response = "Esses itens exclusivos (Cursos, Fornecedores, Métodos) ficam no nosso **Acesso Limitado**! Procure o botão com o cadeado 🔐 no menu.";
+        }
+        else {
+            response = "Hmm, não entendi muito bem. Tenta ser mais específico!";
+        }
+        area.innerHTML += `<div class="msg bot">${response}</div>`;
+        area.scrollTop = area.scrollHeight;
+    }
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) return false;
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false;
+    }
+    document.onselectstart = function() { return false; }
+    document.onmousedown = function() { return false; }
+    
     (function() {
         const detectDevTools = function() {
             const start = new Date();
-            debugger; // Aqui é onde a mágica acontece. Se o DevTools abrir, o script para aqui.
+            debugger; 
             const end = new Date();
             if (end - start > 100) {
-                // DevTools detectado - Redirecionar ou travar ou apenas alertar
                 document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:20%;">ACESSO NEGADO 🚫</h1>';
             }
         };
-        
-        // Executa a verificação repetidamente
         setInterval(detectDevTools, 500);
     })();
 
-    // 5. Detectar mudança de tamanho da janela (comum ao abrir DevTools acoplado)
     window.onresize = function() {
         if ((window.outerHeight - window.innerHeight) > 200 || (window.outerWidth - window.innerWidth) > 200) {
-            // Pode ser um sinal de DevTools aberto
             console.clear(); 
         }
     }
 </script>
 </body>
 </html>
-
-
-
