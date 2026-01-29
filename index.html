@@ -676,26 +676,58 @@
     const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
 
     /* --- LÓGICA DO STREAMING A LA CARTE (ID 1) --- */
-    const alacarteDB = [
+const multiSelectLists = {
+    'streamings': [
         { name: 'Crunchyroll', price: 3.90 },
         { name: 'Disney+', price: 4.90 },
         { name: 'HBO Max', price: 4.90 },
         { name: 'Prime Video', price: 4.50 },
         { name: 'Paramount+', price: 4.50 },
         { name: '+18 (Privacy)', price: 5.20 }
-    ];
+    ],
+    'brainrot_elements': [
+        { name: 'Brainrot Normal', price: 14.90 },
+        { name: 'Brainrot Gold', price: 15.90 },
+        { name: 'Brainrot Diamond', price: 16.90 },
+        { name: 'Brainrot Lava', price: 29.90 },
+        { name: 'Brainrot Galaxy', price: 21.90 },
+        { name: 'Brainrot Yin Yang', price: 22.90 },
+        { name: 'Brainrot Radioactive', price: 22.90 },
+        { name: 'Brainrot Cursed', price: 23.90 },
+        { name: 'Brainrot Rainbow', price: 24.90 }
+    ],
+    'lucky_blocks': [
+        { name: 'Lucky Block Secret', price: 13.90 },
+        { name: 'Festive Lucky Block', price: 5.50 },
+        { name: 'Lucky Block Rainbow', price: 8.90 },
+        { name: 'Lucky Block Galaxy', price: 7.50 },
+        { name: 'Omegy Lucky Block', price: 18.00 },
+        { name: '10x Lucky Block Secret', price: 33.90}
+    ],
+    'high_power': [
+        { name: 'Brainrot Secreto [50M+]', price: 23.99 },
+        { name: 'Brainrot Secreto [100M+]', price: 34.00 },
+        { name: 'Brainrot Secreto [250M+]', price: 255.00 },
+        { name: 'Brainrot Secreto [400M+]', price: 95.00 },
+        { name: 'Brainrot Secreto [800M+]', price: 135.00 },
+        { name: 'Brainrot Secreto [1B+]', price: 185.00 }
+    ]
+};
+
+let currentSelectList = [];
 
     // BD COMPLETO E CORRIGIDO
     const db = [
-        { 
-            id: 1, 
-            name: "Monte seu Pacote (Unitário)", 
-            price: 0.00, 
-            image: "https://i.imgur.com/A4MdKTS.jpg", 
-            cat: "Streamings", 
-            desc: "Escolha quais serviços você quer e pague por unidade!", 
-            special: "streaming-select" 
-        },
+{ 
+    id: 1, 
+    name: "Monte seu Pacote (Streamings)", 
+    price: 0.00, 
+    image: "https://i.imgur.com/A4MdKTS.jpg", 
+    cat: "Streamings", 
+    desc: "Escolha quais serviços você quer e pague por unidade!", 
+    special: "multi-select", 
+    selectKey: "streamings" 
+},
         { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
         { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/A4MdKTS.jpg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
         { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://manualdosgames.com/wp-content/uploads/2025/07/xbox-game-pass-1024x683.jpg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
@@ -847,6 +879,45 @@
         { id: 2102, name: "Curso de Inglês Rápido", price: 15.00, image: "🇺🇸", cat: "Cursos", desc: "Aprenda a falar o básico do ingles." },
         { id: 2103, name: "Curso Python Master", price: 16.90, image: "🐍", cat: "Cursos", desc: "Automação e criação de bots com Python." },
         { id: 2104, name: "PACK 1K DE CURSOS", price: 49.90, image: "📚", cat: "Cursos", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
+
+        { id: 3050, name: "Esok Skolah (Unitário)", price: 1.20, image: "🎒", cat: "Brainrots", sub: "tsunami", desc: "Unidade do Esok Skolah." },
+        { id: 3051, name: "PACK 4x Esok Skolah", price: 4.00, image: "🎒", cat: "Brainrots", sub: "tsunami", desc: "Promoção: 4 unidades por R$ 1,00 cada." },
+
+        // Adicione isso onde estão os Brainrots no seu DB
+{ 
+    id: 3090, 
+    name: "MONTE SEU PACK: BRAINROTS COM EVENTOS", 
+    price: 0.00, 
+    image: "https://cdn-icons-png.flaticon.com/512/1160/1160358.png", 
+    cat: "Brainrots", 
+    sub: "steal",
+    desc: "Escolha quais Brainrots Elementais você quer (Lava, Galaxy, Gold...) e pague tudo junto!", 
+    special: "multi-select",
+    selectKey: "brainrot_elements" // Liga com a lista criada acima
+},
+{ 
+    id: 3091, 
+    name: "MONTE SEU PACK: LUCKY BLOCKS", 
+    price: 0.00, 
+    textprice: "Escolha os produtos",
+    image: "https://cdn-icons-png.flaticon.com/512/6662/6662916.png", 
+    cat: "Brainrots", 
+    sub: "steal",
+    desc: "Monte um pacote apenas com Lucky Blocks variados.", 
+    special: "multi-select",
+    selectKey: "lucky_blocks"
+},
+{
+    id: 3092, 
+    name: "MONTE SEU PACK: BRAINROTS [50M a 1B]", 
+    price: 0.00, 
+    image: "https://cdn-icons-png.flaticon.com/512/740/740845.png", 
+    cat: "Brainrots", 
+    sub: "steal",
+    desc: "Selecione apenas as unidades de força extrema (50M até 1B).", 
+    special: "multi-select",
+    selectKey: "high_power"
+},
     ];
 
     const icons = {
@@ -858,7 +929,8 @@
         "painéis": "fas fa-rocket", 
         "tudo por 5,90": "fas fa-fire-alt", 
         "fornecedores": "fas fa-truck-loading", 
-        "cursos": "fas fa-graduation-cap"
+        "cursos": "fas fa-graduation-cap",
+        "brainrots": "fas fa-brain"
     };
 
     let cart = [];
@@ -983,29 +1055,45 @@
                 container.innerHTML += generateProductHTML(accounts);
             }
         }
+        else if (catName === 'Brainrots') {
+            const steal = items.filter(i => i.sub === 'steal');
+            const tsunami = items.filter(i => i.sub === 'tsunami');
+            
+            if (steal.length > 0) {
+                container.innerHTML += `<div class="subcat-divider"><i class="fas fa-mask"></i> ROUBE UM BRAINROT</div>`;
+                container.innerHTML += generateProductHTML(steal);
+            }
+            if (tsunami.length > 0) {
+                container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-water"></i> TSUNAMI DE BRAINROTS</div>`;
+                container.innerHTML += generateProductHTML(tsunami);
+            }
+        }
         else {
             container.innerHTML = generateProductHTML(items);
         }
     }
 
-    function generateProductHTML(items) {
-        return items.map(p => {
-            const isHighlight = p.special === 'highlight';
-            const highlightClass = isHighlight ? 'highlight' : '';
-            const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
-            
-            const oldPrice = (p.price * 1.6).toFixed(2);
-            const discountPercent = Math.round(((oldPrice - p.price) / oldPrice) * 100);
-            
-            let btnText = 'ADICIONAR';
-            if(p.special === 'streaming-combo' || p.special === 'streaming-select') btnText = 'ESCOLHER';
-            
-            // Corrige escape de aspas
-            const safeName = p.name.replace(/'/g, "\\'");
-            let clickAction = `addToCart('${safeName}', ${p.price})`;
-            
-            if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
-            else if (p.special === 'streaming-select') clickAction = 'openStreamingSelect()';
+function generateProductHTML(items) {
+    return items.map(p => {
+
+        const isHighlight = p.special === 'highlight' || p.special === 'multi-select';
+        
+        const highlightClass = isHighlight ? 'highlight' : '';
+        const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
+        
+        const oldPrice = p.price > 0 ? (p.price * 1.6).toFixed(2) : "---"; 
+        const discountPercent = p.price > 0 ? Math.round(((p.price * 1.6 - p.price) / (p.price * 1.6)) * 100) : 0;
+        
+        let btnText = 'ADICIONAR';
+        if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
+        if(p.special === 'multi-select') btnText = 'MONTAR PACK'; 
+        
+        const safeName = p.name.replace(/'/g, "\\'");
+        let clickAction = `addToCart('${safeName}', ${p.price})`;
+        
+        if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
+
+        else if (p.special === 'multi-select') clickAction = `openMultiSelect('${p.selectKey}')`;
 
             return `
             <div class="card-prod ${highlightClass}" onclick="${clickAction}">
@@ -1181,52 +1269,65 @@ ${itemsList}
         closeModal('modal-streaming-combo');
     }
 
-    /* --- FUNÇÕES DO NOVO SISTEMA DE STREAMING SELECT --- */
-    function openStreamingSelect() {
-        selectedAlaCarte = []; 
-        const div = document.getElementById('alacarte-options');
-        if(!div) return alert("ERRO: O Modal novo não foi encontrado. Verifique se colou o HTML.");
-        
-        div.innerHTML = alacarteDB.map((item, index) => `
-            <div class="checkbox-item" style="justify-content: space-between;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <input type="checkbox" id="ala-${index}" value="${index}" onchange="updateAlaCarteTotal()">
-                    <label for="ala-${index}">${item.name}</label>
-                </div>
-                <span style="color:var(--success); font-weight:bold;">R$ ${item.price.toFixed(2)}</span>
+function openMultiSelect(key) {
+    selectedAlaCarte = []; 
+    currentSelectList = multiSelectLists[key]; // Carrega a lista correta baseada no clique
+    
+    if(!currentSelectList) return alert("Erro: Lista não encontrada.");
+
+    const div = document.getElementById('alacarte-options');
+    // Reutilizamos o modal 'modal-streaming-select' mas mudamos o título visualmente
+    document.querySelector('#modal-streaming-select h2').innerText = "MONTE SEU PACOTE";
+    
+    div.innerHTML = currentSelectList.map((item, index) => `
+        <div class="checkbox-item" style="justify-content: space-between;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="multi-${index}" value="${index}" onchange="updateMultiSelectTotal()">
+                <label for="multi-${index}">${item.name}</label>
             </div>
-        `).join('');
+            <span style="color:var(--success); font-weight:bold;">R$ ${item.price.toFixed(2)}</span>
+        </div>
+    `).join('');
 
-        updateAlaCarteTotal();
-        openModal('modal-streaming-select');
-    }
+    updateMultiSelectTotal();
+    openModal('modal-streaming-select');
+}
 
-    function updateAlaCarteTotal() {
-        let total = 0;
-        selectedAlaCarte = []; 
-        alacarteDB.forEach((item, index) => {
-            const checkbox = document.getElementById(`ala-${index}`);
-            if(checkbox && checkbox.checked) {
-                total += item.price;
-                selectedAlaCarte.push(item);
-            }
-        });
-        const totalSpan = document.getElementById('alacarte-total');
-        if(totalSpan) totalSpan.innerText = `R$ ${total.toFixed(2)}`;
-    }
+function updateMultiSelectTotal() {
+    let total = 0;
+    selectedAlaCarte = []; 
+    
+    currentSelectList.forEach((item, index) => {
+        const checkbox = document.getElementById(`multi-${index}`);
+        if(checkbox && checkbox.checked) {
+            total += item.price;
+            selectedAlaCarte.push(item);
+        }
+    });
+    
+    const totalSpan = document.getElementById('alacarte-total');
+    if(totalSpan) totalSpan.innerText = `R$ ${total.toFixed(2)}`;
+}
 
-    function confirmStreamingSelect() {
-        if(selectedAlaCarte.length === 0) return alert("Selecione pelo menos um item!");
-        let totalFinal = 0;
-        let names = [];
-        selectedAlaCarte.forEach(i => {
-            totalFinal += i.price;
-            names.push(i.name);
-        });
-        const finalName = `Pack: ${names.join(', ')}`;
-        addToCart(finalName, totalFinal);
-        closeModal('modal-streaming-select');
-    }
+function confirmStreamingSelect() { // Mantive o nome para não quebrar o HTML do botão, mas a lógica é nova
+    if(selectedAlaCarte.length === 0) return alert("Selecione pelo menos um item!");
+    
+    let totalFinal = 0;
+    let names = [];
+    
+    selectedAlaCarte.forEach(i => {
+        totalFinal += i.price;
+        names.push(i.name);
+    });
+    
+    // Cria um nome de produto resumido para não ficar gigante no carrinho
+    const finalName = `Pack Personalizado (${names.length} itens)`;
+    // Ou se preferir listar tudo: const finalName = `Pack: ${names.join(', ')}`;
+    
+    // Adiciona os detalhes como se fosse um item único
+    addToCart(finalName + ` [${names.join(' + ')}]`, totalFinal);
+    closeModal('modal-streaming-select');
+}
     /* ---------------------------------------------------- */
 
     function openContactOptions(type) {
