@@ -485,7 +485,7 @@
     <div id="modal-login" class="modal-wrapper active">
         <div class="modal-content" style="text-align: center;">
             <h1 style="color:var(--primary); margin-bottom:10px;">BLACKDZ STORE</h1>
-            <p style="color:#888; margin-bottom:20px;">Acesso ao Sistema</p>
+            <p style="color:#888; margin-bottom:20px;">Entrar</p>
             <form id="form-login">
                 <input type="text" id="login-user" class="input-box" placeholder="Nome de Usuário" required>
                 <input type="password" class="input-box" placeholder="Senha" required>
@@ -586,7 +586,7 @@
             <div class="menu-item active" onclick="nav('home'); toggleSidebar()"><i class="fas fa-home"></i> Início</div>
             
             <div class="menu-item secret-tab hidden" id="btn-secret" onclick="openSecretTab(); toggleSidebar()">
-                <i class="fas fa-key"></i> ACESSO LIMITADO
+                <i class="fas fa-key"></i> TEMPO LIMITADO
             </div>
 
             <div class="menu-item" onclick="openModal('modal-request'); toggleSidebar()"><i class="fas fa-box-open"></i> Pedir Item</div>
@@ -617,7 +617,7 @@
         </div>
 
         <div id="view-secret" class="hidden">
-            <h2 style="border-left:5px solid var(--gold); padding-left:15px; margin-bottom:10px; font-size:22px; color: var(--gold);">ACESSO LIMITADO</h2>
+            <h2 style="border-left:5px solid var(--gold); padding-left:15px; margin-bottom:10px; font-size:22px; color: var(--gold);">TEMPO LIMITADO</h2>
             <p style="color:#888; margin-bottom:20px; font-size:13px;">Acesso restrito. Produtos exclusivos e métodos limitados.</p>
             <div class="grid-cats" id="container-secret-cats"></div>
         </div>
@@ -1423,7 +1423,7 @@ ${itemsList}
             response = "Salve! ✌️ Tudo tranquilo? Se precisar de conta, nitro ou método, só pedir.";
         }
         else if (text.includes("curso") || text.includes("fornecedor") || text.includes("metodo")) {
-            response = "Esses itens exclusivos (Cursos, Fornecedores, Métodos) ficam no nosso **Acesso Limitado**! Procure o botão com o cadeado 🔐 no menu.";
+            response = "Esses itens exclusivos (Cursos, Fornecedores, Métodos) ficam no nosso **Tempo Limitado**! Procure o botão com o cadeado 🔐 no menu.";
         }
         else {
             response = "Hmm, não entendi muito bem. Tenta ser mais específico!";
@@ -1464,4 +1464,5 @@ ${itemsList}
 </script>
 </body>
 </html>
+
 
