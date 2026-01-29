@@ -714,7 +714,7 @@ let currentSelectList = [];
     const db = [
 { 
     id: 1, 
-    name: "Monte seu Pacote (Streamings)", 
+    name: "Monte seu Pacote de Streamings", 
     price: 0.00, 
     image: "https://i.imgur.com/A4MdKTS.jpg", 
     cat: "Streamings", 
@@ -878,7 +878,7 @@ let currentSelectList = [];
         { id: 3051, name: "PACK 4x Esok Skolah", price: 4.00, image: "🎒", cat: "Brainrots", sub: "tsunami", desc: "Promoção: 4 unidades por R$ 1,00 cada." },
 { 
     id: 3090, 
-    name: "MONTE SEU PACK: BRAINROTS COM EVENTOS", 
+    name: "BRAINROTS COM EVENTOS", 
     price: 0.00, 
     image: "https://cdn-icons-png.flaticon.com/512/1160/1160358.png", 
     cat: "Brainrots", 
@@ -889,9 +889,8 @@ let currentSelectList = [];
 },
 { 
     id: 3091, 
-    name: "MONTE SEU PACK: LUCKY BLOCKS", 
+    name: "LUCKY BLOCKS", 
     price: 0.00, 
-    textprice: "Escolha os produtos",
     image: "https://cdn-icons-png.flaticon.com/512/6662/6662916.png", 
     cat: "Brainrots", 
     sub: "steal",
@@ -901,7 +900,7 @@ let currentSelectList = [];
 },
 {
     id: 3092, 
-    name: "MONTE SEU PACK: BRAINROTS [50M a 1B]", 
+    name: "BRAINROTS [50M a 1B]", 
     price: 0.00, 
     image: "https://cdn-icons-png.flaticon.com/512/740/740845.png", 
     cat: "Brainrots", 
@@ -1078,7 +1077,7 @@ function generateProductHTML(items) {
         
         let btnText = 'ADICIONAR';
         if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
-        if(p.special === 'multi-select') btnText = 'MONTAR PACK'; 
+        if(p.special === 'multi-select') btnText = 'Escolher'; 
         
         const safeName = p.name.replace(/'/g, "\\'");
         let clickAction = `addToCart('${safeName}', ${p.price})`;
