@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTILOS DO CHECKOUT --- */
+
         .checkout-section { margin-bottom: 20px; }
         .checkout-label { color: var(--success); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; border-left: 3px solid var(--success); padding-left: 10px; }
 
@@ -38,7 +38,6 @@
             align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; 
         }
 
-        /* Cores específicas dos botões */
         .btn-whatsapp .icon-box { background: rgba(37, 211, 102, 0.2); color: #25D366; }
         .btn-whatsapp:hover { border-color: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.2); }
 
@@ -52,22 +51,22 @@
         }
         
         :root {
-            /* CORES ORIGINAIS INTACTAS */
-            --primary: #ff0000;      /* Vermelho Sangue */
-            --secondary: #050505;    /* Preto Profundo */
-            --aura: #ff0000;         /* Brilho Neon */
+
+            --primary: #ff0000;     
+            --secondary: #050505;  
+            --aura: #ff0000;         
             
             --sidebar-bg: #0a0a0a;
             --card-bg: #111;
             --text-white: #ffffff;
             --success: #00ff88;
-            --old-price: #666;       /* Cor do preço antigo */
-            --discount-bg: #ffe600;  /* Fundo da tag de desconto */
+            --old-price: #666;       
+            --discount-bg: #ffe600;  
             
             --gold: #FFD700; 
         }
 
-        /* RESET */
+
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', sans-serif; outline: none; text-decoration: none; 
@@ -82,7 +81,7 @@
             height: 100vh; width: 100vw; overflow: hidden; display: flex;
         }
 
-        /* FUNDO ANIMADO */
+
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://wallpapers.com/images/hd/red-and-black-gaming-geometric-shapes-885-x-498-wallpaper-y06a0904q02l6866.jpg'); 
@@ -105,7 +104,7 @@
 
         h1, h2, h3 { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* SIDEBAR ORIGINAL */
+
         .sidebar {
             width: 260px; height: 100%;
             background: var(--sidebar-bg); 
@@ -201,7 +200,6 @@
             box-shadow: 0 0 10px var(--gold); animation: pulseBadge 1.5s infinite;
         }
 
-        /* --- NOVO: BADGE DE DESCONTO --- */
         .badge-discount {
             position: absolute; top: 10px; left: 10px; background: var(--discount-bg); color: #000;
             padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; z-index: 10;
@@ -222,7 +220,7 @@
         .prod-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; min-height: 35px; }
         .prod-desc { font-size: 11px; color: #888; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* --- NOVO: PREÇO ANTIGO E ATUAL --- */
+   
         .price-container { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 10px; }
         .price-old { text-decoration: line-through; color: var(--old-price); font-size: 11px; font-weight: 500; }
         .prod-price { font-size: 18px; font-weight: 800; color: var(--success); }
@@ -237,7 +235,7 @@
         .highlight .btn-buy { border-color: var(--gold); color: var(--gold); }
         .highlight .btn-buy:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
 
-        /* MODAIS */
+   
         .modal-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999; display: none;
@@ -261,7 +259,6 @@
         }
         textarea.input-box { height: 100px; resize: none; }
 
-        /* ESTILOS PERSONALIZAÇÃO */
         .custom-section-title { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
         .color-picker-row {
             display: flex; align-items: center; justify-content: space-between;
@@ -283,8 +280,6 @@
         .file-upload-box:hover { border-color: var(--primary); color: #fff; }
         .file-upload-box input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-
-        /* CARRINHO DRAWER */
         .cart-drawer {
             position: fixed; top: 0; right: -400px; width: 350px; height: 100%;
             background: #0f0f0f; border-left: 2px solid var(--primary); z-index: 5000;
@@ -298,7 +293,7 @@
         .coupon-input { flex: 1; background: #000; border: 1px solid #333; padding: 5px 10px; color: #fff; border-radius: 4px; font-size: 12px; text-transform: uppercase; user-select: text; }
         .btn-coupon { background: #333; color: #fff; border: 1px solid #555; cursor: pointer; padding: 0 10px; border-radius: 4px; font-size: 12px; }
 
-        /* CHATBOT */
+
         .chat-trigger {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: var(--primary); border-radius: 50%; cursor: pointer;
@@ -351,7 +346,6 @@
             border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
 
-        /* DIVISOR DE SUBCATEGORIA */
         .subcat-divider {
             grid-column: 1 / -1;
             margin-top: 30px; margin-bottom: 10px;
@@ -668,14 +662,14 @@
     </div>
 
 <script>
-    /* --- CONFIGURAÇÃO --- */
+
     const EXIBIR_ABA_SECRETA = true; 
 
     const couponsDB = {'VEMCOMAGENTE': 0.05,};
     const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
     const genericGamepass = "https://i.imgur.com/L7R6d3J.png"; 
 
-    /* --- LÓGICA DO STREAMING A LA CARTE (ID 1) --- */
+
 const multiSelectLists = {
     'streamings': [
         { name: 'Crunchyroll', price: 3.90 },
@@ -716,7 +710,7 @@ const multiSelectLists = {
 
 let currentSelectList = [];
 
-    // BD COMPLETO E CORRIGIDO
+
     const db = [
 { 
     id: 1, 
@@ -882,8 +876,6 @@ let currentSelectList = [];
 
         { id: 3050, name: "Esok Skolah (Unitário)", price: 1.20, image: "🎒", cat: "Brainrots", sub: "tsunami", desc: "Unidade do Esok Skolah." },
         { id: 3051, name: "PACK 4x Esok Skolah", price: 4.00, image: "🎒", cat: "Brainrots", sub: "tsunami", desc: "Promoção: 4 unidades por R$ 1,00 cada." },
-
-        // Adicione isso onde estão os Brainrots no seu DB
 { 
     id: 3090, 
     name: "MONTE SEU PACK: BRAINROTS COM EVENTOS", 
@@ -893,7 +885,7 @@ let currentSelectList = [];
     sub: "steal",
     desc: "Escolha quais Brainrots Elementais você quer (Lava, Galaxy, Gold...) e pague tudo junto!", 
     special: "multi-select",
-    selectKey: "brainrot_elements" // Liga com a lista criada acima
+    selectKey: "brainrot_elements"
 },
 { 
     id: 3091, 
@@ -1265,18 +1257,18 @@ ${itemsList}
 
     function confirmStreamingCombo() {
         if(selectedStreamings.length !== 3) { alert('Escolha 3 itens!'); return; }
-        addToCart(`Combo: ${selectedStreamings.join(', ')}`, 14.99); // Valor do Combo
+        addToCart(`Combo: ${selectedStreamings.join(', ')}`, 14.99); 
         closeModal('modal-streaming-combo');
     }
 
 function openMultiSelect(key) {
     selectedAlaCarte = []; 
-    currentSelectList = multiSelectLists[key]; // Carrega a lista correta baseada no clique
+    currentSelectList = multiSelectLists[key]; 
     
     if(!currentSelectList) return alert("Erro: Lista não encontrada.");
 
     const div = document.getElementById('alacarte-options');
-    // Reutilizamos o modal 'modal-streaming-select' mas mudamos o título visualmente
+
     document.querySelector('#modal-streaming-select h2').innerText = "MONTE SEU PACOTE";
     
     div.innerHTML = currentSelectList.map((item, index) => `
@@ -1309,7 +1301,7 @@ function updateMultiSelectTotal() {
     if(totalSpan) totalSpan.innerText = `R$ ${total.toFixed(2)}`;
 }
 
-function confirmStreamingSelect() { // Mantive o nome para não quebrar o HTML do botão, mas a lógica é nova
+function confirmStreamingSelect() { 
     if(selectedAlaCarte.length === 0) return alert("Selecione pelo menos um item!");
     
     let totalFinal = 0;
@@ -1320,15 +1312,15 @@ function confirmStreamingSelect() { // Mantive o nome para não quebrar o HTML d
         names.push(i.name);
     });
     
-    // Cria um nome de produto resumido para não ficar gigante no carrinho
+
     const finalName = `Pack Personalizado (${names.length} itens)`;
-    // Ou se preferir listar tudo: const finalName = `Pack: ${names.join(', ')}`;
+
     
-    // Adiciona os detalhes como se fosse um item único
+
     addToCart(finalName + ` [${names.join(' + ')}]`, totalFinal);
     closeModal('modal-streaming-select');
 }
-    /* ---------------------------------------------------- */
+
 
     function openContactOptions(type) {
         const inputId = type === 'request' ? 'request-msg' : 'support-msg';
