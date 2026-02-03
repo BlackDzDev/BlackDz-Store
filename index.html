@@ -546,6 +546,41 @@
             <button onclick="confirmStreamingSelect()" class="btn-buy" style="margin-top:15px; background:var(--primary); color:#fff;">ADICIONAR AO CARRINHO</button>
         </div>
     </div>
+    <div id="modal-social" class="modal-wrapper">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="closeModal('modal-social')"></i>
+            <h2 id="social-title" style="color:var(--primary); margin-bottom:10px; text-transform:uppercase;">REDE SOCIAL</h2>
+            
+            <p style="color:#ccc; font-size:13px; margin-bottom:15px; background:#1a1a1a; padding:10px; border-radius:5px; border-left:3px solid var(--success);">
+                🚀 <b>Entrega Rápida & Alta Qualidade</b><br>
+                Garantia de reposição em caso de quedas bruscas. Serviço premium com início imediato após pagamento.
+            </p>
+
+            <div style="margin-bottom:15px;">
+                <label style="color:#888; font-size:12px; font-weight:bold;">TIPO DE SERVIÇO</label>
+                <select id="social-type" class="input-box" onchange="updateSocialTotal()" style="cursor:pointer;">
+                    </select>
+            </div>
+
+            <div style="margin-bottom:15px;">
+                <label style="color:#888; font-size:12px; font-weight:bold;">LINK (PERFIL / FOTO / VÍDEO)</label>
+                <input type="text" id="social-link" class="input-box" placeholder="Cole o link aqui" required>
+            </div>
+
+            <div style="margin-bottom:15px;">
+                <label style="color:#888; font-size:12px; font-weight:bold;">QUANTIDADE</label>
+                <input type="number" id="social-qtd" class="input-box" placeholder="Mínimo: 0" oninput="updateSocialTotal()">
+                <div id="social-min-feedback" style="font-size:11px; color:#666; text-align:right; margin-top:-10px; margin-bottom:10px;">Mínimo: 100</div>
+            </div>
+
+            <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:bold;">TOTAL:</span>
+                <span id="social-total" style="color:var(--success); font-size:22px; font-weight:800;">R$ 0.00</span>
+            </div>
+
+            <button onclick="confirmSocialOrder()" class="btn-buy" style="margin-top:15px; background:var(--primary); color:#fff; padding:12px;">ADICIONAR AO CARRINHO</button>
+        </div>
+    </div>
 
     <div class="sidebar" id="sidebar">
         <div class="brand">BlackDz<span>Store</span></div>
@@ -773,18 +808,18 @@
     let currentSelectList = [];
 //--------------------------------- PRODUTOS DO MIKEY / DZ GOAT SUPREMO PICA DAS GALAXIA! ---------------------------------//
     const db = [
-        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635916452663561/combo.PNG?ex=6981c2b5&is=69807135&hm=3f7c3f13b879fcf3b171481945bbd0228a9e45cc2c8ad62b8ab37f2d9c2da767&", cat: "Streamings", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
-        { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635915110486220/3combo.png?ex=6981c2b5&is=69807135&hm=92fd746d01083dcd9ec26602e94e24c8a412d7dac5451b8321282567c268d635&", cat: "Streamings", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
-        { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635916171514138/combo_streaming.png?ex=6981c2b5&is=69807135&hm=d6cbe3ac742fcef90987520ce0e1ebfc82232910c131053268d7e683f3c4bfae&", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
-        { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467636031145771090/xbox_1mes.png?ex=6981c2d1&is=69807151&hm=23daa71a99507e6bb996ebe93259388fe910450e0d2649e37b06104a1f288d25&", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
-        { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467636028691976283/xbox_1mespv.png?ex=6981c2d0&is=69807150&hm=1bef79268da5a4eee30a1f168d0601c1b467b1be0993efd7a53f9157d2f5dacc&", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
-        { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467636029539221639/xbox_game_pass_pc_key.png?ex=6981c2d0&is=69807150&hm=fb487d0cc28664bd252a161902f5ff9a47ef39e98b632206a4ddab1fbd5d7191&", cat: "Xbox", desc: "Key de gamepass para PC" },
-        { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635912979775588/key_aleatoria_stem.png?ex=6981c2b5&is=69807135&hm=0a82217d1adf2c345b5e75e96a009f04b479dd0c56ab812f77585b096d45c42c&", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
-        { id: 202, name: "[KEY] Steam Key Prata", price: 5.50, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635914447523961/key_prata_steam.png?ex=6981c2b5&is=69807135&hm=e3454f0208d6be50f76d18cabfcf773fe538c4eb1bea880e21897dbf4c6fad73&", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
-        { id: 203, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635913944338553/key_bronze_steam.png?ex=6981c2b5&is=69807135&hm=6874bc58a67b6cdb54ceb40bd13a828e70c63130167136db39282b1ba564d180&", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
-        { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://cdn.discordapp.com/attachments/1444547303389266042/1468024968288665735/55d33a12-e486-44b3-8a0f-35b2be650d65.png?ex=6982844b&is=698132cb&hm=5b9423e9d7a0800a6e8adfd9a031df902227295f5aa204e0af6acd65841dadc0&", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
-        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://cdn.discordapp.com/attachments/1444547303389266042/1468025166021005393/bf03c8df-a882-47d4-a651-a69cdbca1dce.png?ex=6982847a&is=698132fa&hm=c51b948c8f0ca6da815299c56f321dd5edfb05ce395f36158f53ecf2533c0eb2&", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
-        { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
+        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
+        { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
+        { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
+        { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://i.imgur.com/6e0HPd0.jpeg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
+        { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://i.imgur.com/lVuxzOC.jpeg", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
+        { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://i.imgur.com/ZcGTimk.jpeg", cat: "Xbox", desc: "Key de gamepass para PC" },
+        { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
+        { id: 202, name: "[KEY] Steam Key Prata", price: 5.50, image: "https://i.imgur.com/D5R56OL.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
+        { id: 203, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/q7GfRtU.jpeg", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
+        { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/pi3H695.png", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
+        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/fKVG2yp.png", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
+        { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/mdtGEYs.png", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
         { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Elden Ring." },
         { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com GoW Ragnarok." },
         { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/2028edeaf4c0b60142550a3d6e024b6009853ceb9f51591e.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Spider-Man 2." },
@@ -801,9 +836,9 @@
         { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", desc: "Jogo do ano. Conta Offline." },
         { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", desc: "Corrida mundo aberto. Conta Offline." },
         { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", desc: "Obra prima da FromSoftware." },
-        { id: 101, name: "Discord Nitro", price: 0.00, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635917299777568/dc_nitro.png?ex=6981c2b6&is=69807136&hm=278155eba332b5baca70ab3197fc4ec30666b3e52c7d07dfc8488fdcbd172fd5&", cat: "Discord",special: "multi-select", selectKey: "nitro", desc: "Nitro para quem não teve nos últimos 12 meses, nao oferecemos reembolso do Produto!" },
-        { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635916850860366/dc_decora.png?ex=6981c2b5&is=69807135&hm=fde0ab78d6978912972315c8d68beb19b67e6fa663b63c25df155cc7e44776ae&", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
-        { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://cdn.discordapp.com/attachments/1461089305392054282/1467635915739369494/14x_impulsos.png?ex=6981c2b5&is=69807135&hm=ee43fd558e2065db3713b54ec460f90798a980670efed9721c4fc0d495bf076d&", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
+        { id: 101, name: "Discord Nitro", price: 0.00, image: "https://i.imgur.com/nbhV6d1.jpeg", cat: "Discord",special: "multi-select", selectKey: "nitro", desc: "Nitro para quem não teve nos últimos 12 meses, nao oferecemos reembolso do Produto!" },
+        { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://i.imgur.com/P7gwnty.jpeg", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
+        { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://i.imgur.com/pbPpKgX.jpeg", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
         { id: 300, name: "Conta Roblox Antiga Vazis", price: 0.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox",special: "multi-select", selectKey: "robloxacc", desc: "Contas antigas sem itens" },
         { id: 400, name: "2x Money", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cf/BadgeMoneyx2.png", cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: dinheiro em dobro" },
         { id: 401, name: "2x Mastery", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/16/BadgeMasteryx2.png", cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: maestria em dobro" },
@@ -869,6 +904,10 @@
         { id: 3090, name: "BRAINROTS COM EVENTOS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469002523054317/AOI_d_8Q81vFOBEMVT_68IasDigB3N9VEtDoJUDnh3ZBK8x08Zdg2snNDxc2ytxZ40J7sENBAqh9mbeCBmkhzv8famjpRNEV7bn9I8OH2fCwyhTDZVMb90ndC-qx_PZqMXxdaV9QmCRYVeoIb07sxO5cOPmmoBbIdhP95oUGvNWHQQQh5Lm3TAs1024-rj.png?ex=697cdb2f&is=697b89af&hm=6a0a71ce68b4f268604c3aac8ee54d0de17fd1a7e2aeaee382e8b4c0abae39fb&",  cat: "Brainrots", sub: "steal",desc: "Escolha quais Brainrots (aleatorio) com evento você quer?", special: "multi-select",selectKey: "brainrot_elements"},
         { id: 3091, name: "LUCKY BLOCKS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466466917618422074/AOI_d__lDQUX0fL_7vYUAuUJMvyObwYw_q1hkEGeHXKNnECvWLA9sVZCKwjQCSslTd1xvCIS5-6Ro_KsZ_cN5khU9xE9Clk8heccgVMlNygcmwnEWhsBuszVYkBk1Y1PnSFxJI0TuKmfV3L5miHwibeV-Uxg1IQ6t_GD_88jEvsNdpt1kB1ioAs1024-rj.png?ex=697cd93e&is=697b87be&hm=663e1297b6a48093b6c77242b32a6d3bc73a1d4c0a6456168475ae1bc415c36d&", cat: "Brainrots", sub: "steal",desc: "Varios Tipo de Lucky Blocks!.", special: "multi-select",selectKey: "lucky_blocks"},
         { id: 3092, name: "BRAINROTS [50M a 1B]", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466468341089570979/AOI_d_-kPBTLMohPzPrV_O8LYla59R-UDmcfvj9NuPu54u4MAGVp1gKWC00_0UmzSoPyckGHbrrDhhIOsZcmFJ0bbRXkSlYVKcjwTStviVYY4fbGV5wMhyXsk_bO4-Wd0PdH4_DUODJ-AhXeo5Fz1KqwYXdiWAQj-XWfoYQr-rYuMh2C8PR-Ags1024-rj.png?ex=697cda92&is=697b8912&hm=a1af8e10d7d9890885f4d12689f82f9f79bfe1cc521fb181cfbc03f71fddfc41&", cat: "Brainrots", sub: "steal",desc: "Selecione a quatia que quer que o brainrot (radom) venha! (50M até 1B).", special: "multi-select",selectKey: "high_power"},
+        { id: 9001, name: "Serviços Instagram", price: 0.00, image: "https://i.imgur.com/PayuTNR.png", cat: "Redes Sociais", sub: "insta", special: "social-modal", socialPlatform: "instagram", desc: "Seguidores e Curtidas. Qualidade Premium." },
+        { id: 9002, name: "Serviços TikTok", price: 0.00, image: "https://i.imgur.com/9YaQAlZ.png", cat: "Redes Sociais", sub: "tiktok", special: "social-modal", socialPlatform: "tiktok", desc: "Seguidores, Views e Likes." },
+
+    
     ];
 
     const icons = {
@@ -877,7 +916,7 @@
         "brainrots": "fas fa-brain","scripts": "fas fa-code",
         "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
         "gta v": "fas fa-car", "db rage": "fas fa-fire", "cupons": "fas fa-ticket-alt",
-        "painéis": "fas fa-rocket", "tudo por 5,90": "fas fa-fire-alt", "fornecedores": "fas fa-truck-loading", "cursos": "fas fa-graduation-cap"
+        "painéis": "fas fa-rocket","redes sociais": "fas fa-hashtag", "tudo por 5,90": "fas fa-fire-alt", "fornecedores": "fas fa-truck-loading", "cursos": "fas fa-graduation-cap"
     };
 
     let cart = [];
@@ -887,6 +926,84 @@
     let selectedAlaCarte = [];
     let secretCats = ['Tudo por 5,90', 'Fornecedores', 'Cursos'];
     let currentContactType = '';
+    
+    const socialConfig = {
+        'instagram': [
+            { id: 'insta_seg', name: 'Seguidores', price: 0.01, min: 100, unitName: 'segs' }, // 1 centavo cada
+            { id: 'insta_like', name: 'Curtidas', price: 0.01, min: 25, unitName: 'likes' }   // 1 centavo cada
+        ],
+        'tiktok': [
+            { id: 'ttk_like', name: 'Curtidas', price: 0.005, min: 25, unitName: 'likes' },   // 1 centavo por 2 (0.005)
+            { id: 'ttk_view', name: 'Visualizações', price: 0.005, min: 100, unitName: 'views' }, // 1 centavo por 2
+            { id: 'ttk_seg', name: 'Seguidores', price: 0.015, min: 100, unitName: 'segs' }   // 1.5 centavos
+        ]
+    };
+
+    let currentSocialPlatform = '';
+
+    function openSocialModal(platform) {
+        currentSocialPlatform = platform;
+        const services = socialConfig[platform];
+        if(!services) return alert("Em manutenção.");
+
+        // Configurar Título e Ícone
+        const titleMap = { 'instagram': '<i class="fab fa-instagram"></i> INSTAGRAM', 'tiktok': '<i class="fab fa-tiktok"></i> TIKTOK' };
+        document.getElementById('social-title').innerHTML = titleMap[platform] || 'REDES SOCIAIS';
+
+        // Preencher o Select
+        const select = document.getElementById('social-type');
+        select.innerHTML = services.map((s, index) => 
+            `<option value="${index}" data-price="${s.price}" data-min="${s.min}">${s.name} (R$ ${s.price.toFixed(3)}/uni)</option>`
+        ).join('');
+
+        // Resetar campos
+        document.getElementById('social-link').value = '';
+        document.getElementById('social-qtd').value = '';
+        updateSocialTotal();
+
+        openModal('modal-social');
+    }
+
+    function updateSocialTotal() {
+        const select = document.getElementById('social-type');
+        const option = select.options[select.selectedIndex];
+        
+        const pricePerUnit = parseFloat(option.getAttribute('data-price'));
+        const minQty = parseInt(option.getAttribute('data-min'));
+        
+        const qtyInput = document.getElementById('social-qtd');
+        let qty = parseInt(qtyInput.value);
+
+        // Feedback visual do mínimo
+        document.getElementById('social-min-feedback').innerText = `Mínimo permitido: ${minQty}`;
+        
+        if (!qty || qty < 0) qty = 0;
+        
+        const total = qty * pricePerUnit;
+        document.getElementById('social-total').innerText = `R$ ${total.toFixed(2)}`;
+    }
+
+    function confirmSocialOrder() {
+        const select = document.getElementById('social-type');
+        const option = select.options[select.selectedIndex];
+        const serviceName = option.text.split('(')[0].trim(); // Pega só o nome "Seguidores"
+        const minQty = parseInt(option.getAttribute('data-min'));
+        const pricePerUnit = parseFloat(option.getAttribute('data-price'));
+
+        const link = document.getElementById('social-link').value.trim();
+        const qty = parseInt(document.getElementById('social-qtd').value);
+
+        if (!link) return alert("Por favor, cole o LINK do perfil ou publicação.");
+        if (!qty || qty < minQty) return alert(`A quantidade mínima para ${serviceName} é ${minQty}.`);
+
+        const total = qty * pricePerUnit;
+        
+        // Formata o nome para aparecer bonito no carrinho e no WhatsApp/Discord
+        const productName = `[${currentSocialPlatform.toUpperCase()}] ${serviceName} - Qtd: ${qty} (Link: ${link})`;
+
+        addToCart(productName, total);
+        closeModal('modal-social');
+    }
     
     window.onload = () => {
         const saved = localStorage.getItem('blackdz_user');
@@ -958,6 +1075,17 @@
         const container = document.getElementById('container-prods');
         container.innerHTML = '';
         if (catName === 'Jogos') {
+            
+        if (catName === 'Redes Sociais') {
+        const insta = items.filter(i => i.sub === 'insta');
+        const tiktok = items.filter(i => i.sub === 'tiktok');
+        const outros = items.filter(i => i.sub !== 'insta' && i.sub !== 'tiktok');
+
+        if (insta.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fab fa-instagram"></i> INSTAGRAM</div>` + generateProductHTML(insta);
+        if (tiktok.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fab fa-tiktok"></i> TIKTOK</div>` + generateProductHTML(tiktok);
+        if (outros.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-plus"></i> EM BREVE</div>` + generateProductHTML(outros);
+    }
+
             const keys = items.filter(i => i.sub === 'key');
             const games = items.filter(i => i.sub === 'game');
             if (keys.length > 0) { container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>` + generateProductHTML(keys); }
@@ -994,6 +1122,7 @@
             let clickAction = `addToCart('${safeName}', ${p.price})`;
             if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
             else if (p.special === 'multi-select') clickAction = `openMultiSelect('${p.selectKey}')`;
+            else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`; // ADICIONAR ISSO
             return `
             <div class="card-prod ${highlightClass}" onclick="${clickAction}">
                 ${badge}
