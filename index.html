@@ -929,13 +929,13 @@
     
     const socialConfig = {
         'instagram': [
-            { id: 'insta_seg', name: 'Seguidores', price: 0.01, min: 100, unitName: 'segs' }, // 1 centavo cada
-            { id: 'insta_like', name: 'Curtidas', price: 0.01, min: 25, unitName: 'likes' }   // 1 centavo cada
+            { id: 'insta_seg', name: 'Seguidores', price: 0.01, min: 100, unitName: 'segs' }, 
+            { id: 'insta_like', name: 'Curtidas', price: 0.01, min: 25, unitName: 'likes' }   
         ],
         'tiktok': [
-            { id: 'ttk_like', name: 'Curtidas', price: 0.005, min: 25, unitName: 'likes' },   // 1 centavo por 2 (0.005)
-            { id: 'ttk_view', name: 'Visualizações', price: 0.005, min: 100, unitName: 'views' }, // 1 centavo por 2
-            { id: 'ttk_seg', name: 'Seguidores', price: 0.015, min: 100, unitName: 'segs' }   // 1.5 centavos
+            { id: 'ttk_like', name: 'Curtidas', price: 0.005, min: 25, unitName: 'likes' },   
+            { id: 'ttk_view', name: 'Visualizações', price: 0.005, min: 100, unitName: 'views' }, 
+            { id: 'ttk_seg', name: 'Seguidores', price: 0.015, min: 100, unitName: 'segs' }   
         ]
     };
 
@@ -946,17 +946,14 @@
         const services = socialConfig[platform];
         if(!services) return alert("Em manutenção.");
 
-        // Configurar Título e Ícone
         const titleMap = { 'instagram': '<i class="fab fa-instagram"></i> INSTAGRAM', 'tiktok': '<i class="fab fa-tiktok"></i> TIKTOK' };
         document.getElementById('social-title').innerHTML = titleMap[platform] || 'REDES SOCIAIS';
 
-        // Preencher o Select
         const select = document.getElementById('social-type');
         select.innerHTML = services.map((s, index) => 
             `<option value="${index}" data-price="${s.price}" data-min="${s.min}">${s.name} (R$ ${s.price.toFixed(3)}/uni)</option>`
         ).join('');
 
-        // Resetar campos
         document.getElementById('social-link').value = '';
         document.getElementById('social-qtd').value = '';
         updateSocialTotal();
@@ -974,7 +971,6 @@
         const qtyInput = document.getElementById('social-qtd');
         let qty = parseInt(qtyInput.value);
 
-        // Feedback visual do mínimo
         document.getElementById('social-min-feedback').innerText = `Mínimo permitido: ${minQty}`;
         
         if (!qty || qty < 0) qty = 0;
@@ -986,7 +982,7 @@
     function confirmSocialOrder() {
         const select = document.getElementById('social-type');
         const option = select.options[select.selectedIndex];
-        const serviceName = option.text.split('(')[0].trim(); // Pega só o nome "Seguidores"
+        const serviceName = option.text.split('(')[0].trim(); 
         const minQty = parseInt(option.getAttribute('data-min'));
         const pricePerUnit = parseFloat(option.getAttribute('data-price'));
 
@@ -998,7 +994,6 @@
 
         const total = qty * pricePerUnit;
         
-        // Formata o nome para aparecer bonito no carrinho e no WhatsApp/Discord
         const productName = `[${currentSocialPlatform.toUpperCase()}] ${serviceName} - Qtd: ${qty} (Link: ${link})`;
 
         addToCart(productName, total);
@@ -1122,7 +1117,7 @@
             let clickAction = `addToCart('${safeName}', ${p.price})`;
             if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
             else if (p.special === 'multi-select') clickAction = `openMultiSelect('${p.selectKey}')`;
-            else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`; // ADICIONAR ISSO
+            else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`; 
             return `
             <div class="card-prod ${highlightClass}" onclick="${clickAction}">
                 ${badge}
@@ -1350,17 +1345,14 @@
         else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
     }
     function resetTheme() {
-    // 1. Remove as configurações de cores do localStorage
+
     localStorage.removeItem('blackdz_theme');
     
-    // 2. Remove as configurações de plano de fundo (Upload e URL)
     localStorage.removeItem('blackdz_bg_custom');
     localStorage.removeItem('blackdz_bg_url');
     
-    // 3. Reseta o fundo visualmente para o padrão (vazio/preto)
     document.getElementById('main-bg').style.backgroundImage = "none";
     
-    // 4. Recarrega a página para aplicar todos os padrões do CSS original
     location.reload();
 }
 
