@@ -1349,7 +1349,20 @@
         if(bgCustom) document.getElementById('main-bg').style.backgroundImage = `url('${bgCustom}')`;
         else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
     }
-    function resetTheme() { localStorage.removeItem('blackdz_theme'); location.reload(); }
+    function resetTheme() {
+    // 1. Remove as configurações de cores do localStorage
+    localStorage.removeItem('blackdz_theme');
+    
+    // 2. Remove as configurações de plano de fundo (Upload e URL)
+    localStorage.removeItem('blackdz_bg_custom');
+    localStorage.removeItem('blackdz_bg_url');
+    
+    // 3. Reseta o fundo visualmente para o padrão (vazio/preto)
+    document.getElementById('main-bg').style.backgroundImage = "none";
+    
+    // 4. Recarrega a página para aplicar todos os padrões do CSS original
+    location.reload();
+}
 
 // IA DO MIKEY GOAT SUPREMO
 
@@ -1528,5 +1541,6 @@
 </script>
 </body>
 </html>
+
 
 
