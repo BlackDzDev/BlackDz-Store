@@ -1110,7 +1110,7 @@
             const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
             const oldPrice = p.price > 0 ? (p.price * 1.6).toFixed(2) : "---"; 
             const discountPercent = p.price > 0 ? Math.round(((p.price * 1.6 - p.price) / (p.price * 1.6)) * 100) : 0;
-            let btnText = 'ADICIONAR';
+            let btnText = 'COMPRAR';
             if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
             if(p.special === 'multi-select') btnText = 'Escolher'; 
             const safeName = p.name.replace(/'/g, "\\'");
@@ -1533,6 +1533,7 @@
 </script>
 </body>
 </html>
+
 
 
 
