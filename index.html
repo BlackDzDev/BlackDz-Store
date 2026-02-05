@@ -553,7 +553,7 @@
             
             <p style="color:#ccc; font-size:13px; margin-bottom:15px; background:#1a1a1a; padding:10px; border-radius:5px; border-left:3px solid var(--success);">
                 🚀 <b>Entrega Rápida & Alta Qualidade</b><br>
-                Garantia de reposição em caso de quedas bruscas (de 45% ate 80%). Serviço premium com início imediato após pagamento.
+                Garantia de reposição em caso de quedas bruscas. Serviço premium com início imediato após pagamento.
             </p>
 
             <div style="margin-bottom:15px;">
@@ -600,7 +600,17 @@
             <div class="menu-item" onclick="toggleCart(); toggleSidebar()"><i class="fas fa-shopping-cart"></i> Carrinho <span id="badge-cart" style="margin-left:auto; background:#fff; color:#000; padding:2px 6px; border-radius:10px; font-size:10px;">0</span></div>
             <div class="menu-item" onclick="openModal('modal-custom'); toggleSidebar()"><i class="fas fa-paint-brush"></i> Personalizar</div>
             <div class="menu-item" onclick="openModal('modal-support'); toggleSidebar()"><i class="fas fa-headset"></i> Suporte</div>
-            <div class="menu-item" onclick="logout()" style="color:#ff4444; margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Sair</div>
+            <div class="menu-item" style="cursor: default; pointer-events: none;">
+    <i class="fas fa-eye"></i> Visitas No Site
+    <span id="visitor-badge" style="margin-left:auto; background:var(--primary); color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
+</div>
+<div class="menu-item" style="cursor: default; pointer-events: none;">
+    <i class="fas fa-shopping-bag"></i> Vendas
+    
+    <span id="sales-badge" style="margin-left:auto; background: #ff0000; color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
+
+</div>
+            <div class="menu-item" onclick="logout()" style="color:#e90000; margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Sair</div>
         </div>
     </div>
 
@@ -1110,7 +1120,7 @@
             const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
             const oldPrice = p.price > 0 ? (p.price * 1.6).toFixed(2) : "---"; 
             const discountPercent = p.price > 0 ? Math.round(((p.price * 1.6 - p.price) / (p.price * 1.6)) * 100) : 0;
-            let btnText = 'COMPRAR';
+            let btnText = 'ADICIONAR';
             if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
             if(p.special === 'multi-select') btnText = 'Escolher'; 
             const safeName = p.name.replace(/'/g, "\\'");
@@ -1530,11 +1540,72 @@
             console.clear(); 
         }
     }
+
+document.addEventListener("DOMContentLoaded", () => {
+        
+
+        const visitasIniciais = 9357;  
+        const vendasIniciais = 453;    
+
+        const namespace = 'blackdz-loja-oficial-2026'; 
+        
+
+        const visitasBadge = document.getElementById("visitor-badge");
+        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`)
+            .then(res => res.json())
+            .then(data => {
+                let total = data.count + visitasIniciais;
+                visitasBadge.innerText = total.toLocaleString('pt-BR');
+            })
+            .catch(() => {
+
+                visitasBadge.innerText = visitasIniciais.toLocaleString('pt-BR');
+            });
+
+
+        const vendasBadge = document.getElementById("sales-badge");
+        const keyVendas = 'vendas_realizadas';
+
+        function atualizarVendas() {
+            fetch(`https://api.counterapi.dev/v1/${namespace}/${keyVendas}`)
+                .then(res => {
+                    if(!res.ok) throw new Error("Ainda não existe"); 
+                    return res.json();
+                })
+                .then(data => {
+
+                    let total = data.count + vendasIniciais;
+                    vendasBadge.innerText = total.toLocaleString('pt-BR');
+                })
+                .catch(() => {
+
+                    vendasBadge.innerText = vendasIniciais.toLocaleString('pt-BR');
+                });
+        }
+        
+        atualizarVendas(); 
+
+
+        setTimeout(() => {
+
+            const botoesFinalizar = document.querySelectorAll('#modal-checkout .btn-whatsapp, #modal-checkout .btn-discord, #modal-discord-step button');
+            
+            botoesFinalizar.forEach(btn => {
+                btn.addEventListener('click', () => {
+
+                    fetch(`https://api.counterapi.dev/v1/${namespace}/${keyVendas}/up`)
+                        .then(() => {
+
+                            setTimeout(atualizarVendas, 1000);
+                        });
+                });
+            });
+        }, 2000);
+    });
+
 </script>
 </body>
 </html>
-
-
 
 
 
