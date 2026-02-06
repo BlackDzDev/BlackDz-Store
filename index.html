@@ -1811,23 +1811,6 @@ function startSalesNotifications() {
             btn.innerHTML = originalText;
             btn.disabled = false;
         });
-//FUNCOES DE BLOQUEIO BOLADONAS DO MIKE / DZ Taligado?
-window.addEventListener("keydown", e => {
-  const k = e.key.toLowerCase();
-
-  if (
-    k === "f12" ||
-    (e.ctrlKey && k === "u") ||
-    (e.ctrlKey && k === "s") ||
-    (e.ctrlKey && k === "p") ||
-    (e.ctrlKey && e.shiftKey && ["i","j","c","k"].includes(k))
-  ) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-});
-
 </script>
 </body>
 </html>
