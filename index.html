@@ -10,45 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        .checkout-section { margin-bottom: 20px; }
-        .checkout-label { color: var(--success); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; border-left: 3px solid var(--success); padding-left: 10px; }
-
-        .order-summary-box { background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; font-size: 13px; color: #ccc; }
-        .summary-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .summary-total { margin-top: 10px; font-size: 16px; font-weight: 800; color: var(--success); text-align: right; }
-
-        .pix-box { 
-            background: #000; border: 1px dashed #555; padding: 15px; 
-            text-align: center; border-radius: 8px; margin-top: 10px; 
-            font-family: monospace; font-size: 16px; color: #fff; letter-spacing: 1px;
-            user-select: all; cursor: pointer;
-        }
-        .pix-box:active { color: var(--success); border-color: var(--success); }
-
-        .checkout-options { display: flex; flex-direction: column; gap: 10px; }
-        .checkout-card {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #151515; padding: 15px; border-radius: 10px; border: 1px solid #333;
-            cursor: pointer; transition: 0.3s; text-decoration: none;
-        }
-        .checkout-card:hover { transform: translateX(5px); border-color: var(--primary); }
-        .checkout-card .icon-box { 
-            width: 40px; height: 40px; border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; 
-        }
-
-        .btn-whatsapp .icon-box { background: rgba(37, 211, 102, 0.2); color: #25D366; }
-        .btn-whatsapp:hover { border-color: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.2); }
-
-        .btn-discord .icon-box { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
-        .btn-discord:hover { border-color: #5865F2; box-shadow: 0 0 15px rgba(88, 101, 242, 0.2); }
-
-        .copy-area-discord {
-            width: 100%; height: 150px; background: #000; color: #0f0; 
-            font-family: monospace; padding: 10px; border: 1px solid #333; 
-            border-radius: 5px; font-size: 12px; resize: none; margin-bottom: 15px;
-        }
-        
+        /* CSS GERAL E DO TEMA */
         :root {
             --primary: #ff0000;     
             --secondary: #050505;  
@@ -87,16 +49,58 @@
             background: rgba(0, 0, 0, 0.92); z-index: -1; 
         }
 
+
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 150; display: none; backdrop-filter: blur(3px);
+            transition: opacity 0.3s;
         }
+        .sidebar-overlay.active { display: block; }
 
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
 
         h1, h2, h3 { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+
+        .checkout-section { margin-bottom: 20px; }
+        .checkout-label { color: var(--success); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; border-left: 3px solid var(--success); padding-left: 10px; }
+
+        .order-summary-box { background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; font-size: 13px; color: #ccc; }
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .summary-total { margin-top: 10px; font-size: 16px; font-weight: 800; color: var(--success); text-align: right; }
+
+        .pix-box { 
+            background: #000; border: 1px dashed #555; padding: 15px; 
+            text-align: center; border-radius: 8px; margin-top: 10px; 
+            font-family: monospace; font-size: 14px; color: #fff; letter-spacing: 0.5px;
+            user-select: all; cursor: pointer; word-break: break-all;
+        }
+        .pix-box:active { color: var(--success); border-color: var(--success); }
+
+        .checkout-input-group { margin-bottom: 15px; }
+        .checkout-input-label { color: #888; font-size: 12px; margin-bottom: 5px; display: block; font-weight: bold;}
+        .checkout-input { 
+            width: 100%; background: #080808; border: 1px solid #333; padding: 12px; 
+            color: #fff; border-radius: 5px; font-size: 13px; transition: 0.3s;
+        }
+        .checkout-input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(255,0,0,0.2); }
+
+        .terms-box {
+            background: #151515; padding: 10px; border-radius: 5px; border: 1px solid #333;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #ccc;
+        }
+        .terms-box input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary); }
+
+        .btn-confirm-payment {
+            width: 100%; padding: 15px; background: var(--success); color: #000;
+            font-weight: 800; border: none; border-radius: 5px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; margin-top: 10px;
+        }
+        .btn-confirm-payment:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); transform: scale(1.02); }
+        .btn-confirm-payment:disabled { background: #333; color: #666; cursor: not-allowed; }
+
 
         .sidebar {
             width: 260px; height: 100%;
@@ -107,14 +111,12 @@
             box-shadow: 5px 0 20px var(--aura);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .brand {
             font-size: 24px; font-weight: 800; color: #fff; text-align: center;
             margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px;
             text-shadow: 0 0 15px var(--aura);
         }
         .brand span { color: var(--primary); }
-
         .user-box {
             background: #151515; padding: 12px; border-radius: 8px; border: 1px solid #333;
             display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
@@ -123,15 +125,12 @@
             width: 35px; height: 35px; background: var(--primary); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; color: #fff;
         }
-
         .menu-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
-        
         .menu-item {
             padding: 12px 15px; color: #ccc; cursor: pointer; border-radius: 6px;
             transition: 0.2s; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;
         }
         .menu-item:hover, .menu-item.active { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--aura); }
-
         .menu-item.secret-tab {
             background: linear-gradient(90deg, #1a1a1a, #000);
             border: 1px solid var(--gold);
@@ -146,7 +145,6 @@
         }
 
         .content { flex: 1; height: 100%; overflow-y: auto; padding: 25px; position: relative; }
-
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 30px; background: rgba(20,20,20,0.9); padding: 12px 20px;
@@ -154,9 +152,7 @@
             position: sticky; top: 0; z-index: 90; backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
         }
-
         .mobile-menu-btn { display: none; background: transparent; border: none; color: #fff; font-size: 22px; cursor: pointer; }
-
         .search-wrap { position: relative; width: 350px; flex: 1; max-width: 500px; }
         .search-wrap input {
             width: 100%; background: #000; border: 1px solid #333; padding: 10px 15px 10px 35px;
@@ -183,7 +179,6 @@
             display: flex; flex-direction: column; transition: 0.3s; position: relative;
         }
         .card-prod:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.8); }
-        
         .card-prod.highlight { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
         .card-prod.highlight:hover { box-shadow: 0 0 25px rgba(255, 215, 0, 0.3); transform: translateY(-5px); border-color: var(--gold); }
         
@@ -192,13 +187,11 @@
             padding: 3px 8px; border-radius: 10px; font-size: 9px; font-weight: 800; z-index: 10;
             box-shadow: 0 0 10px var(--gold); animation: pulseBadge 1.5s infinite;
         }
-
         .badge-discount {
             position: absolute; top: 10px; left: 10px; background: var(--discount-bg); color: #000;
             padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; z-index: 10;
             box-shadow: 0 0 5px rgba(255,230,0,0.5); transform: rotate(-2deg);
         }
-
         @keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         .prod-img {
@@ -208,64 +201,64 @@
         .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .card-prod:hover .prod-img img { transform: scale(1.1); }
         .emoji-fallback { font-size: 3.5rem; opacity: 0.7; }
-
         .prod-body { padding: 15px; flex: 1; display: flex; flex-direction: column; }
         .prod-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; min-height: 35px; }
         .prod-desc { font-size: 11px; color: #888; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
-   
         .price-container { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 10px; }
         .price-old { text-decoration: line-through; color: var(--old-price); font-size: 11px; font-weight: 500; }
         .prod-price { font-size: 18px; font-weight: 800; color: var(--success); }
-        
         .btn-buy {
             width: 100%; padding: 10px; background: transparent; border: 1px solid var(--primary);
             color: var(--primary); font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s;
             text-transform: uppercase; font-size: 12px; letter-spacing: 1px;
         }
         .btn-buy:hover { background: var(--primary); color: #fff; box-shadow: 0 0 15px var(--aura); }
-
         .highlight .btn-buy { border-color: var(--gold); color: var(--gold); }
         .highlight .btn-buy:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
 
-   
+        .fake-sale-toast {
+            position: fixed; bottom: 20px; left: 20px;
+            background: rgba(10, 10, 10, 0.95); border-left: 4px solid var(--success);
+            padding: 12px 15px; border-radius: 5px; z-index: 9999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 12px;
+            transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 320px;
+        }
+        .fake-sale-toast.show { transform: translateX(0); }
+        .fake-sale-img { width: 35px; height: 35px; border-radius: 5px; object-fit: cover; background: #222; }
+        .fake-sale-info { display: flex; flex-direction: column; }
+        .fake-sale-title { font-size: 12px; font-weight: bold; color: #fff; }
+        .fake-sale-desc { font-size: 10px; color: #bbb; }
+        .fake-sale-desc span { color: var(--success); font-weight: bold; }
+
+        .order-card {
+            background: #151515; border: 1px solid #333; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .order-info { flex: 1; }
+        .order-date { font-size: 11px; color: #666; margin-bottom: 5px; }
+        .order-items { font-size: 13px; color: #ddd; font-weight: bold; }
+        .order-total { color: var(--success); font-weight: 800; font-size: 15px; }
+
         .modal-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999; display: none;
             align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px;
         }
         .modal-wrapper.active { display: flex; animation: fadeIn 0.2s; }
-
         .modal-content {
-            background: #111; 
-            border: 2px solid var(--aura); 
-            padding: 30px;
+            background: #111; border: 2px solid var(--aura); padding: 30px;
             border-radius: 15px; width: 450px; max-width: 100%; position: relative;
             box-shadow: 0 0 50px var(--aura); text-align: left;
         }
         .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 20px; color: #666; transition: 0.2s; }
         .modal-close:hover { color: var(--primary); }
-        
         .input-box {
             width: 100%; background: #222; border: 1px solid #444; color: #fff;
             padding: 12px; margin-bottom: 15px; border-radius: 5px; user-select: text;
         }
-        textarea.input-box { height: 100px; resize: none; }
-
-        .custom-section-title { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .color-picker-row {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #333;
-        }
-        input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; cursor: pointer; background: none; }
         
-        .custom-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .tab-btn {
-            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #666;
-            padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s;
-        }
-        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
         .file-upload-box {
             border: 2px dashed #444; border-radius: 8px; padding: 20px; text-align: center;
             cursor: pointer; transition: 0.3s; color: #888; font-size: 12px; position: relative;
@@ -280,27 +273,22 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.8);
         }
         .cart-drawer.active { right: 0; }
-
         .coupon-area { background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px dashed #444; }
         .coupon-flex { display: flex; gap: 5px; }
         .coupon-input { flex: 1; background: #000; border: 1px solid #333; padding: 5px 10px; color: #fff; border-radius: 4px; font-size: 12px; text-transform: uppercase; user-select: text; }
         .btn-coupon { background: #333; color: #fff; border: 1px solid #555; cursor: pointer; padding: 0 10px; border-radius: 4px; font-size: 12px; }
 
-
         .chat-trigger {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: var(--primary); border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; font-size: 28px;
-            z-index: 4000; 
-            box-shadow: 0 0 20px var(--aura);
+            z-index: 4000; box-shadow: 0 0 20px var(--aura);
             animation: pulse 2s infinite;
         }
-        
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 20px var(--aura); transform: scale(1); }
             50% { box-shadow: 0 0 40px var(--aura); transform: scale(1.05); }
         }
-
         .chat-box {
             position: fixed; bottom: 100px; right: 30px; width: 380px; height: 550px;
             background: #111; border: 2px solid var(--primary); border-radius: 15px;
@@ -308,7 +296,6 @@
             box-shadow: 0 10px 50px rgba(0,0,0,0.8);
         }
         .chat-box.active { display: flex; animation: slideUp 0.3s; }
-        
         .chat-header {
             background: var(--primary); padding: 15px; font-weight: bold; 
             display: flex; justify-content: space-between; align-items: center;
@@ -325,7 +312,6 @@
         }
         .msg.bot { background: #1a1a1a; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #333; }
         .msg.user { background: var(--primary); align-self: flex-end; border-bottom-right-radius: 2px; color: #fff; }
-        
         .chat-input-area {
             padding: 10px; background: #1a1a1a; display: flex; gap: 8px;
             border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
@@ -339,18 +325,16 @@
             border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
 
+
         .subcat-divider {
-            grid-column: 1 / -1;
-            margin-top: 30px; margin-bottom: 10px;
+            grid-column: 1 / -1; margin-top: 30px; margin-bottom: 10px;
             border-bottom: 1px solid #333; padding-bottom: 5px;
             font-size: 18px; color: #888; display: flex; align-items: center; gap: 10px;
             text-transform: uppercase; letter-spacing: 2px;
         }
         .subcat-divider i { color: var(--primary); }
-
         .hidden { display: none !important; }
         .checkbox-item { background: #1a1a1a; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; gap: 10px; align-items: center; border: 1px solid #333; }
-
         .product-preview-chat {
             background: #111; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-top: 10px;
             display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s;
@@ -364,6 +348,19 @@
         .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
         .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        
+        .custom-section-title { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .color-picker-row {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #333;
+        }
+        input[type="color"] { -webkit-appearance: none; border: none; width: 40px; height: 40px; cursor: pointer; background: none; }
+        .custom-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .tab-btn {
+            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #666;
+            padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         @media (max-width: 768px) {
             .sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; z-index: 5000; }
@@ -382,91 +379,74 @@
     </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
-    <div id="modal-contact-options" class="modal-wrapper">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-contact-options')"></i>
-            <h2 id="contact-options-title" style="text-align:center; color:var(--primary); margin-bottom:20px;">ESCOLHA O CANAL</h2>
-            <p style="color:#ccc; font-size:13px; text-align:center; margin-bottom:20px;">Por onde deseja enviar sua mensagem?</p>
-            <div class="checkout-options">
-                <div class="checkout-card btn-whatsapp" onclick="processContact('whatsapp')">
-                    <div style="display:flex; align-items:center;">
-                        <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                        <div><div style="font-weight:bold; color:#fff;">WhatsApp</div><div style="font-size:11px; color:#888;">Resposta mais rápida</div></div>
-                    </div>
-                </div>
-                <div class="checkout-card btn-discord" onclick="processContact('discord')">
-                    <div style="display:flex; align-items:center;">
-                        <div class="icon-box"><i class="fab fa-discord"></i></div>
-                        <div><div style="font-weight:bold; color:#fff;">Discord</div><div style="font-size:11px; color:#888;">Abrir Ticket no Servidor</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="bg-fixed" id="main-bg"></div>
     <div class="bg-overlay"></div>
+    
+    <div id="fake-toast" class="fake-sale-toast">
+        <img id="fake-img" class="fake-sale-img" src="" alt="">
+        <div class="fake-sale-info">
+            <div id="fake-title" class="fake-sale-title"></div>
+            <div id="fake-text" class="fake-sale-desc"></div>
+        </div>
+    </div>
     
     <div id="modal-checkout" class="modal-wrapper">
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal('modal-checkout')"></i>
             <h2 style="text-align:center; color:var(--primary); margin-bottom:20px; text-transform: uppercase; letter-spacing: 2px;">Finalizar Compra</h2>
+            
             <div class="checkout-section">
-                <div class="checkout-label">Resumo do Pedido</div>
+                <div class="checkout-label">1. Resumo do Pedido</div>
                 <div class="order-summary-box" id="checkout-items-list"></div>
             </div>
+
             <div class="checkout-section">
-                <div class="checkout-label">Instruções de Pagamento</div>
-                <p style="font-size:12px; color:#888; margin-bottom:5px;">Para finalizar, faça o pagamento via PIX para a chave abaixo:</p>
-                <div class="pix-box" onclick="copyPixKey()" title="Clique para copiar">22981636278</div>
-                <div style="text-align:center; font-size:10px; color:#666; margin-top:5px;">(Clique na chave para copiar)</div>
+                <div class="checkout-label">2. Pagamento via PIX</div>
+                <p style="font-size:12px; color:#888; margin-bottom:5px;">Copie a chave abaixo e faça o pagamento do valor total.</p>
+                <div class="pix-box" onclick="copyPixKey()" title="Clique para copiar">dd17e932-f294-478f-9abf-fff070abcf91</div>
             </div>
+
             <div class="checkout-section">
-                <div class="checkout-label">Enviar Comprovante</div>
-                <div class="checkout-options">
-                    <div class="checkout-card btn-whatsapp" onclick="sendWhatsapp('cart')">
-                        <div style="display:flex; align-items:center;">
-                            <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                            <div><div style="font-weight:bold; color:#fff;">WhatsApp</div><div style="font-size:11px; color:#888;">Enviar comprovante direto</div></div>
-                        </div>
-                        <i class="fas fa-chevron-right" style="color:#555;"></i>
-                    </div>
-                    <div class="checkout-card btn-discord" onclick="openDiscordSteps()">
-                        <div style="display:flex; align-items:center;">
-                            <div class="icon-box"><i class="fab fa-discord"></i></div>
-                            <div><div style="font-weight:bold; color:#fff;">Discord</div><div style="font-size:11px; color:#888;">Abrir Ticket no servidor</div></div>
-                        </div>
-                        <i class="fas fa-chevron-right" style="color:#555;"></i>
+                <div class="checkout-label">3. Confirmação</div>
+                
+                <div class="checkout-input-group">
+                    <label class="checkout-input-label">SEU CONTATO (Discord/Zap/Email)</label>
+                    <input type="text" id="buyer-contact" class="checkout-input" placeholder="Ex: blackdz#1234" required>
+                </div>
+
+                <div class="checkout-input-group">
+                    <label class="checkout-input-label">ENVIAR COMPROVANTE (Imagem/PDF)</label>
+                    <div class="file-upload-box" style="padding: 15px; border: 1px dashed #555;">
+                        <i class="fas fa-camera" style="font-size:20px; margin-bottom:5px;"></i><br>
+                        <span id="file-name-display">Clique para selecionar o arquivo</span>
+                        <input type="file" id="payment-proof-file" accept="image/*, application/pdf" onchange="document.getElementById('file-name-display').innerText = this.files[0] ? this.files[0].name : 'Clique para selecionar'">
                     </div>
                 </div>
+
+                <div class="terms-box">
+                    <input type="checkbox" id="terms-check">
+                    <label for="terms-check">Li e concordo que produtos digitais <b>não possuem reembolso</b> após envio.</label>
+                </div>
+
+                <button class="btn-confirm-payment" onclick="submitOrderToWebhook()">
+                    <i class="fas fa-check-circle"></i> ENVIAR PEDIDO
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="modal-discord-step" class="modal-wrapper">
-        <div class="modal-content" style="text-align:center;">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-discord-step')"></i>
-            <h2 style="color:#5865F2; margin-bottom:10px;"><i class="fab fa-discord"></i> PEDIDO DISCORD</h2>
-            <p style="color:#ccc; font-size:13px; margin-bottom:15px;">
-                1. Copie a mensagem abaixo.<br>2. Clique no botão para abrir o Discord.<br>3. Abra um <b>Ticket</b> e cole a mensagem junto com o comprovante.
-            </p>
-            <textarea id="discord-msg-area" class="copy-area-discord" readonly></textarea>
-            <button class="btn-buy" style="background:#5865F2; border-color:#5865F2; color:#fff; padding:15px; font-size:14px;" onclick="copyAndGoDiscord()">
-                <i class="fas fa-copy"></i> COPIAR E ABRIR DISCORD
-            </button>
-        </div>
-    </div>
-    
-    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar-overlay" onclick="closeSidebarMobile()"></div>
 
     <div id="modal-login" class="modal-wrapper active">
         <div class="modal-content" style="text-align: center;">
             <h1 style="color:var(--primary); margin-bottom:10px;">BLACKDZ STORE</h1>
-            <p style="color:#888; margin-bottom:20px;">Entrar</p>
+            <p style="color:#888; margin-bottom:20px;">Acesso ao Painel</p>
             <form id="form-login">
                 <input type="text" id="login-user" class="input-box" placeholder="Nome de Usuário" required>
-                <input type="password" class="input-box" placeholder="Senha" required>
-                <button type="submit" class="btn-buy" style="background:var(--primary); color:#fff; padding:12px;">ENTRAR</button>
+                <input type="password" id="login-pass" class="input-box" placeholder="Senha" required>
+                <p style="font-size: 11px; color:#666; margin-bottom: 15px;">Se não tiver conta, ela será criada automaticamente.</p>
+                <button type="submit" class="btn-buy" style="background:var(--primary); color:#fff; padding:12px;">ACESSAR / CRIAR</button>
             </form>
         </div>
     </div>
@@ -506,21 +486,17 @@
         </div>
     </div>
 
-    <div id="modal-support" class="modal-wrapper">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-support')"></i>
-            <h2 style="color:var(--primary); margin-bottom:15px;">SUPORTE</h2>
-            <textarea id="support-msg" class="input-box" placeholder="Qual seu problema?"></textarea>
-            <button onclick="openContactOptions('support')" class="btn-buy">AVANÇAR</button>
-        </div>
-    </div>
-
-    <div id="modal-request" class="modal-wrapper">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="closeModal('modal-request')"></i>
-            <h2 style="color:var(--primary); margin-bottom:15px;">SOLICITAR ITEM</h2>
-            <textarea id="request-msg" class="input-box" placeholder="O que você procura?"></textarea>
-            <button onclick="openContactOptions('request')" class="btn-buy">AVANÇAR</button>
+    <div id="modal-success" class="modal-wrapper">
+        <div class="modal-content" style="text-align:center;">
+            <i class="fas fa-check-circle" style="font-size:50px; color:var(--success); margin-bottom:20px;"></i>
+            <h2 style="color:var(--success);">PEDIDO ENVIADO!</h2>
+            <p style="color:#ccc; margin-top:10px; font-size:14px;">
+                Recebemos seu comprovante e seus dados.<br>
+                O pedido foi salvo na aba <b>Meus Pedidos</b>.<br>
+                A entrega será feita no contato informado.<br><br>
+                <b>Fique de olho no seu Discord/Email!</b>
+            </p>
+            <button class="btn-buy" style="margin-top:20px; width:100%;" onclick="closeModal('modal-success'); nav('orders');">VER MEUS PEDIDOS</button>
         </div>
     </div>
 
@@ -546,38 +522,32 @@
             <button onclick="confirmStreamingSelect()" class="btn-buy" style="margin-top:15px; background:var(--primary); color:#fff;">ADICIONAR AO CARRINHO</button>
         </div>
     </div>
+
     <div id="modal-social" class="modal-wrapper">
         <div class="modal-content">
             <i class="fas fa-times modal-close" onclick="closeModal('modal-social')"></i>
             <h2 id="social-title" style="color:var(--primary); margin-bottom:10px; text-transform:uppercase;">REDE SOCIAL</h2>
-            
             <p style="color:#ccc; font-size:13px; margin-bottom:15px; background:#1a1a1a; padding:10px; border-radius:5px; border-left:3px solid var(--success);">
-                🚀 <b>Entrega Rápida & Alta Qualidade</b><br>
-                Garantia de reposição em caso de quedas bruscas. Serviço premium com início imediato após pagamento.
+                🚀 <b>Entrega Automática</b><br>
+                O sistema inicia assim que o pagamento for validado no Webhook.
             </p>
-
             <div style="margin-bottom:15px;">
                 <label style="color:#888; font-size:12px; font-weight:bold;">TIPO DE SERVIÇO</label>
-                <select id="social-type" class="input-box" onchange="updateSocialTotal()" style="cursor:pointer;">
-                    </select>
+                <select id="social-type" class="input-box" onchange="updateSocialTotal()" style="cursor:pointer;"></select>
             </div>
-
             <div style="margin-bottom:15px;">
                 <label style="color:#888; font-size:12px; font-weight:bold;">LINK (PERFIL / FOTO / VÍDEO)</label>
                 <input type="text" id="social-link" class="input-box" placeholder="Cole o link aqui" required>
             </div>
-
             <div style="margin-bottom:15px;">
                 <label style="color:#888; font-size:12px; font-weight:bold;">QUANTIDADE</label>
                 <input type="number" id="social-qtd" class="input-box" placeholder="Mínimo: 0" oninput="updateSocialTotal()">
                 <div id="social-min-feedback" style="font-size:11px; color:#666; text-align:right; margin-top:-10px; margin-bottom:10px;">Mínimo: 100</div>
             </div>
-
             <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:bold;">TOTAL:</span>
                 <span id="social-total" style="color:var(--success); font-size:22px; font-weight:800;">R$ 0.00</span>
             </div>
-
             <button onclick="confirmSocialOrder()" class="btn-buy" style="margin-top:15px; background:var(--primary); color:#fff; padding:12px;">ADICIONAR AO CARRINHO</button>
         </div>
     </div>
@@ -596,20 +566,18 @@
             <div class="menu-item secret-tab hidden" id="btn-secret" onclick="openSecretTab(); toggleSidebar()">
                 <i class="fas fa-key"></i> TEMPO LIMITADO
             </div>
-            <div class="menu-item" onclick="openModal('modal-request'); toggleSidebar()"><i class="fas fa-box-open"></i> Pedir Item</div>
             <div class="menu-item" onclick="toggleCart(); toggleSidebar()"><i class="fas fa-shopping-cart"></i> Carrinho <span id="badge-cart" style="margin-left:auto; background:#fff; color:#000; padding:2px 6px; border-radius:10px; font-size:10px;">0</span></div>
+            <div class="menu-item" onclick="nav('orders'); toggleSidebar()"><i class="fas fa-box-open"></i> Meus Pedidos</div>
             <div class="menu-item" onclick="openModal('modal-custom'); toggleSidebar()"><i class="fas fa-paint-brush"></i> Personalizar</div>
-            <div class="menu-item" onclick="openModal('modal-support'); toggleSidebar()"><i class="fas fa-headset"></i> Suporte</div>
+            
             <div class="menu-item" style="cursor: default; pointer-events: none;">
-    <i class="fas fa-eye"></i> Visitas No Site
-    <span id="visitor-badge" style="margin-left:auto; background:var(--primary); color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
-</div>
-<div class="menu-item" style="cursor: default; pointer-events: none;">
-    <i class="fas fa-shopping-bag"></i> Vendas
-    
-    <span id="sales-badge" style="margin-left:auto; background: #ff0000; color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
-
-</div>
+                <i class="fas fa-eye"></i> Visitas No Site
+                <span id="visitor-badge" style="margin-left:auto; background:var(--primary); color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
+            </div>
+            <div class="menu-item" style="cursor: default; pointer-events: none;">
+                <i class="fas fa-shopping-bag"></i> Vendas
+                <span id="sales-badge" style="margin-left:auto; background: #ff0000; color:#fff; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold; min-width: 30px; text-align: center;">...</span>
+            </div>
             <div class="menu-item" onclick="logout()" style="color:#e90000; margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Sair</div>
         </div>
     </div>
@@ -619,7 +587,7 @@
             <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
             <div class="search-wrap">
                 <i class="fas fa-search"></i>
-                <input type="text" id="search-input-desktop" placeholder="Pesquisar..." onkeyup="doSearch(this.value)">
+                <input type="text" id="search-input-desktop" placeholder="Pesquisar (Nome ou Tag)..." onkeyup="doSearch(this.value)">
             </div>
             <button class="btn-buy" style="width:auto; padding:8px 15px;" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i></button>
         </div>
@@ -637,6 +605,11 @@
             <h2 style="border-left:5px solid var(--gold); padding-left:15px; margin-bottom:10px; font-size:22px; color: var(--gold);">TEMPO LIMITADO</h2>
             <p style="color:#888; margin-bottom:20px; font-size:13px;">Acesso restrito. Produtos exclusivos e métodos limitados.</p>
             <div class="grid-cats" id="container-secret-cats"></div>
+        </div>
+
+        <div id="view-orders" class="hidden">
+            <h2 style="border-left:5px solid var(--success); padding-left:15px; margin-bottom:20px; font-size:22px;">MEUS PEDIDOS</h2>
+            <div id="orders-list"></div>
         </div>
 
         <div id="view-prods" class="hidden">
@@ -672,23 +645,50 @@
     <div class="chat-trigger" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
     <div class="chat-box" id="chat-box">
         <div class="chat-header">
-            <span>BlackDz Store AI [BETA]</span> 
+            <span>Suporte BlackDz</span> 
             <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer;"></i>
         </div>
-        <div id="chat-messages" class="chat-messages">
-            <div class="msg bot"> Salve! Sou a IA da BlackDz Store. 🤖<br>Posso te ajudar a encontrar produtos, mudar o visual da loja ou tirar dúvidas. O que manda?</div>
+        
+        <div id="chat-mode-select" style="display:flex; flex-direction:column; height:100%; justify-content:center; align-items:center; gap:15px; padding:20px;">
+            <p style="color:#ccc; text-align:center;">Como deseja ser atendido?</p>
+            <button onclick="startChatMode('ai')" class="btn-buy" style="width:100%; padding:15px; border-color:var(--success); color:var(--success);">
+                <i class="fas fa-robot"></i> INTELIGÊNCIA ARTIFICIAL (EM DEV, NAO CLIQUE)
+            </button>
+            <button onclick="startChatMode('human')" class="btn-buy" style="width:100%; padding:15px;">
+                <i class="fas fa-headset"></i> FALAR COM HUMANO
+            </button>
         </div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" class="chat-input" placeholder="Digite aqui (ex: ir para jogos, comprar nitro)..." onkeypress="handleChat(event)">
-            <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+
+        <div id="chat-interface" style="display:none; flex-direction:column; height:100%;">
+            <div id="chat-messages" class="chat-messages">
+                </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Digite aqui..." onkeypress="handleChat(event)">
+                <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <button onclick="resetChat()" style="background:none; border:none; color:#666; font-size:10px; padding:5px; cursor:pointer;">Voltar ao menu</button>
         </div>
     </div>
 
 <script>
 
     const EXIBIR_ABA_SECRETA = true; 
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1469080146282676316/F0AMFpyFZXSPZQcFkOVFwOuokspX4hDBXewh5fVud3iYjSyelx2X4862Mg5RG8So8gol";
+    const PIX_KEY = "dd17e932-f294-478f-9abf-fff070abcf91";
+
+    const CHAT_WEBHOOK = "https://discord.com/api/webhooks/1469088429059997797/pr4ktlLzwM4uLa_QHlCO03W-7A-gMMNuCor5TEppFxovsbHgpFcFUpr37hW5xMxtR90-";
+
     const couponsDB = {'VEMCOMAGENTE': 0.05,};
     const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
+
+    const fakeNames = [
+        "Gabriel S.", "Lucas M.", "Ana Clara", "Felipe D.", "darkzin", "Killer77", "Joao123", "Maria Eduarda", 
+        "Pedro H.", "Rafaela", "NinjaBr", "Ghost", "Spectre", "LuffyFan", "NarutoUzumaki", "GamerX", "ProPlayer", 
+        "NoobMaster", "Slayer", "Viper", "Phoenix", "JettMain", "SageRes", "CypherCam", "OmenTp", "Brimstone", 
+        "SovaDart", "ReynaFlash", "RazeGrenade", "BreachStun", "KilljoyTurret", "SkyeHeal", "YoruClone", "AstraStar", 
+        "KayoKnife", "ChamberTrap", "NeonSlide", "FadeEye", "HarborWater", "GekkoPet", "DeadlockNet", "IsoShield", 
+        "CloveSmoke", "VyseThorn", "TeemoSup", "Yasuo0/10", "LeeSinQ", "ZedShadow", "AhriCharm", "LuxUlt"
+    ];
 
     const multiSelectLists = {
     'streamings': [
@@ -816,100 +816,101 @@
 };
 
     let currentSelectList = [];
-//--------------------------------- PRODUTOS DO MIKEY / DZ GOAT SUPREMO PICA DAS GALAXIA! ---------------------------------//
+    
+
     const db = [
-        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
-        { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
-        { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "Streamings", desc: "Acesso a múltiplas plataformas de streaming" },
-        { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://i.imgur.com/6e0HPd0.jpeg", cat: "Xbox", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
-        { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://i.imgur.com/lVuxzOC.jpeg", cat: "Xbox", desc: "Conta Privada com EA PLAY e xCloud" },
-        { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://i.imgur.com/ZcGTimk.jpeg", cat: "Xbox", desc: "Key de gamepass para PC" },
-        { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
-        { id: 202, name: "[KEY] Steam Key Prata", price: 5.50, image: "https://i.imgur.com/D5R56OL.jpeg", cat: "Jogos", sub: "key", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
-        { id: 203, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/q7GfRtU.jpeg", cat: "Jogos", sub: "key", desc: "Jogos com análises positivas na Steam." },
-        { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/pi3H695.png", cat: "Jogos", sub: "key", desc: "Garantia de jogo Triple A (Grande Produção)." },
-        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/fKVG2yp.png", cat: "Jogos", sub: "key", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
-        { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/mdtGEYs.png", cat: "Jogos", sub: "key", desc: "Jogos versões Deluxe ou Gold Editions." },
-        { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Elden Ring." },
-        { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com GoW Ragnarok." },
-        { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/2028edeaf4c0b60142550a3d6e024b6009853ceb9f51591e.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline com Spider-Man 2." },
-        { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline TLOU Part I." },
-        { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", desc: "O jogo do macaco! Conta Offline." },
-        { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline MK1." },
-        { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", desc: "Conta Steam Offline Hogwarts Legacy." },
-        { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", desc: "Versão Premium Edition." },
-        { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", desc: "Edição Lendária completa." },
-        { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", desc: "Remake aclamado. Conta Offline." },
-        { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", desc: "Versão atualizada. Conta Offline." },
-        { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", desc: "Ultimate Edition. Conta Offline." },
-        { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", desc: "Modo história e online (depende da conta)." },
-        { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", desc: "Jogo do ano. Conta Offline." },
-        { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", desc: "Corrida mundo aberto. Conta Offline." },
-        { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", desc: "Obra prima da FromSoftware." },
-        { id: 101, name: "Discord Nitro", price: 0.00, image: "https://i.imgur.com/nbhV6d1.jpeg", cat: "Discord",special: "multi-select", selectKey: "nitro", desc: "Nitro para quem não teve nos últimos 12 meses, nao oferecemos reembolso do Produto!" },
-        { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://i.imgur.com/P7gwnty.jpeg", cat: "Discord", desc: "Decoração aleatória para seu perfil" },
-        { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://i.imgur.com/pbPpKgX.jpeg", cat: "Discord", desc: "14 impulsos no servidor por 3 meses" },
-        { id: 300, name: "Conta Roblox Antiga Vazis", price: 0.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox",special: "multi-select", selectKey: "robloxacc", desc: "Contas antigas sem itens" },
-        { id: 400, name: "2x Money", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cf/BadgeMoneyx2.png", cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: dinheiro em dobro" },
-        { id: 401, name: "2x Mastery", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/16/BadgeMasteryx2.png", cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: maestria em dobro" },
-        { id: 402, name: "Fruit Storage", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/6/6a/BadgeFruitStorage.png", cat: "Blox Fruits", sub: "gamepass", desc: "Gamepass: armazene mais frutas" },
-        { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a0/Dark_Blade.png", cat: "Blox Fruits", sub: "gamepass", desc: "Espada Lendária Dark Blade" },
-        { id: 404, name: "Fruit Notifier", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/98/BadgeFruitNotifier.png", cat: "Blox Fruits", sub: "gamepass", desc: "Notificador de frutas no mapa" },
-        { id: 405, name: "Fast Boat", price: 22.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/fa/BadgeBoats.png", cat: "Blox Fruits", sub: "gamepass", desc: "Fast Boat" },
-        { id: 406, name: "Haki Lendário", price: 18.00, image: "https://cdn.ggmax.com.br/images/a4b6b372cd55f8d9c0d184aaabe37cee.sm.jpg", cat: "Blox Fruits", sub: "gamepass", desc: "Cores lendárias de Haki" },
-        { id: 407, name: "2x Boss Drops", price: 22.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a5/1ef7847c5d048db227d14eeb25637467.png", cat: "Blox Fruits", sub: "gamepass", desc: "2x Boss Drops" },
-        { id: 500, name: "Frutas Permanentes [part1]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm",special: "multi-select", selectKey: "perm1", desc: "Frutas Permanentes [pagina 1]" },
-        { id: 501, name: "Frutas Permanentes [part2]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm",special: "multi-select", selectKey: "perm2", desc: "Frutas Permanentes [pagina 2]" },
-        { id: 600, name: "RAÇAS V4", price: 0.00, image: "https://preview.redd.it/what-race-should-i-get-to-v4-v0-5h46zqr3geoe1.jpeg?auto=webp&s=a094515443326872f991b83dddf72c9e85581023", cat: "Blox Fruits", special:"multi-select", sub: "account", selectKey: "v4", desc: "Contas com raças V4 e outros items e frutas" },
-        { id: 601, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", special:"highlight", sub: "account", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
-        { id: 602, name: "FRUTAS INV", price: 0.00, image: "https://i.pinimg.com/564x/54/2e/31/542e31005a49c7faad80d706cef51816.jpg", cat: "Blox Fruits", special:"multi-select", sub: "account", selectKey: "frutasinv", desc: "level max, estilos de luta e pode vir cdk, soul guitar e godhuman" },
-        { id: 700, name: "JavaScripts DBC", price: 0.00, image: "https://i.ytimg.com/vi/k7sv0SOL8tM/maxresdefault.jpg", cat: "Scripts",special: "multi-select", selectKey: "dbc", desc: "Para Dragon Block C [1.7.10]." },
-        { id: 701, name: "Scripts ROBLOX", price: 0.00, image: "https://i.gruposwhats.app/6411167d02570.jpg", cat: "Scripts",special: "multi-select", selectKey: "script", desc: "Scripts para voce usar no Roblox." },
-        { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
-        { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
-        { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "1000 iniciais + 5000 mensais com clube" },
-        { id: 803, name: "Conta 13.500 VBucks", price: 279.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta com 13.500 Vbucks" },
-        { id: 804, name: "Conta Skin Gatalina", price: 5.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Conta simples com skin Gatalina" },
-        { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Indiana Jones e outras skins" },
-        { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", desc: "Com Ice Spice e outras skins" },
-        { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", desc: "Conta Bronze aleatória" },
-        { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", desc: "Conta Diamante aleatória" },
-        { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", desc: "Conta Ascendente aleatória" },
-        { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", desc: "Upada à mão, com dados de criação" },
-        { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", desc: "Conta Nível 1 com Range feito" },
-        { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
-        { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", desc: "Acesso via Gamepass PC" },
-        { id: 1100, name: "Conta Rockstar (FiveM Licenciado)", price: 6.99, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", desc: "Licenciada para FiveM" },
-        { id: 1101, name: "Conta Steam com GTA V Instalavel", price: 4.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "GTA V", desc: "Conta Steam para baixar o GTA e jogar o Fivem, o GTA dessa conta nao da pra jogar sme ser no Fivem" },
-        { id: 1102, name: "Combo Rockstar + Steam", price: 10.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", desc: "Combo com as duas contas" },
-        { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", desc: "Forma personalizada no jogo" },
-        { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", desc: "Gamepass de experiência" },
-        { id: 1203, name: "Limit Breaker", price: 23.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/4/45/LimitBreaker.png", cat: "DB Rage", desc: "Quebre os limites do personagem" },
-        { id: 1204, name: "Dragon Radar", price: 22.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/5/50/DragonRadar.png", cat: "DB Rage", desc: "Radar de esferas" },
-        { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", desc: "Mude a cor do seu Ki" },
-        { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", desc: "Transformação Omega" },
-        { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 10% para sempre" },
-        { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 15% para sempre" },
-        { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 20% para sempre" },
-        { id: 1303, name: "Cupom 25% OFF Vitalício", price: 100.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", desc: "Código de 25% para sempre" },
-        { id: 1400, name: "All Games Steam", price: 59.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", desc: "Te ensinamos como ter qualquer jogo na Steam!" },
-        { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Fornecedores", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
-        { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", desc: "Aprenda a ter todos os canais liberados" },
-        { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", desc: "Como criar e monetizar vídeos Brainrot" },
-        { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", desc: "Tenha internet em qualquer lugar" },
-        { id: 1603, name: "Método Passe FF Barato", price: 5.90, image: "🎟️", cat: "Tudo por 5,90", desc: "Pegue o passe do Free Fire pagando pouco" },
-        { id: 1604, name: "Método Diamantes FF", price: 5.90, image: "💎", cat: "Tudo por 5,90", desc: "Consiga diamantes com desconto ou free" },
-        { id: 1605, name: "Método Renda Extra", price: 5.90, image: "💰", cat: "Tudo por 5,90", desc: "Dicas fáceis para levantar dinheiro rápido" },
-        { id: 1606, name: "Método Gift Card", price: 5.90, image: "💳", cat: "Tudo por 5,90", desc: "Como conseguir Gift Cards promocionais" },
-        { id: 1607, name: "Método Like FF +1k", price: 5.90, image: "❤️", cat: "Tudo por 5,90", desc: "Método para conseguir +1000 likes no Free Fire" },
-        { id: 2001, name: "Fornecedor Robux (Barato)", price: 9.90, image: "💵", cat: "Fornecedores", desc: "Contato direto para comprar Robux a preço de banana" },
-        { id: 2002, name: "Fornecedor Xit/Paineis FF", price: 10.90, image: "🎯", cat: "Fornecedores", desc: "Os melhores painéis e regedits para Free Fire" },
-        { id: 2003, name: "Fornecedor Brainrots", price: 10.90, image: "🧟", cat: "Fornecedores", desc: "Clips prontos de Brainrot para postar" },
-        { id: 2004, name: "PACK SUPREMO FORNECEDORES", price: 34.90, image: "👑", cat: "Fornecedores", desc: "Lista completa com mais de 5 fornecedores de tudo!", special: "highlight" },
-        { id: 2101, name: "Curso Java Script", price: 1.90, image: "📜", cat: "Cursos", desc: "Curso de JavaScript do ZERO" },
-        { id: 2102, name: "Curso de Inglês Rápido", price: 1.90, image: "🇺🇸", cat: "Cursos", desc: "Aprenda a falar o básico do ingles." },
-        { id: 2103, name: "Curso Python", price: 1.90, image: "🐍", cat: "Cursos", desc: "Curso Phyton do ZERO." },
-        { id: 2104, name: "PACK 1K DE CURSOS", price: 19.90, image: "📚", cat: "Cursos", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
+        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
+        { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", tags: "combo, netflix, hbo, disney, barato", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
+        { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "Streamings", tags: "tudo liberado, canais, filmes", desc: "Acesso a múltiplas plataformas de streaming" },
+        { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://i.imgur.com/6e0HPd0.jpeg", cat: "Xbox", tags: "gamepass, microsoft, xcloud, nuvem", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
+        { id: 5, name: "Game Pass Ultimate - 1 Mês (Priv.)", price: 55.90, image: "https://i.imgur.com/lVuxzOC.jpeg", cat: "Xbox", tags: "privada, gamepass, codigo, microsoft", desc: "Conta Privada com EA PLAY e xCloud" },
+        { id: 6, name: "Xbox Game Pass PC Key", price: 49.90, image: "https://i.imgur.com/ZcGTimk.jpeg", cat: "Xbox", tags: "key, pc, gamepass, 25 digitos", desc: "Key de gamepass para PC" },
+        { id: 200, name: "[KEY] Steam Key Aleatória", price: 4.90, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", tags: "steam, jogo, random, sorte", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
+        { id: 202, name: "[KEY] Steam Key Prata", price: 5.50, image: "https://i.imgur.com/D5R56OL.jpeg", cat: "Jogos", sub: "key", tags: "steam, indie, barato", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
+        { id: 203, name: "[KEY] Steam Key Bronze", price: 6.50, image: "https://i.imgur.com/q7GfRtU.jpeg", cat: "Jogos", sub: "key", tags: "steam, bronze, jogos", desc: "Jogos com análises positivas na Steam." },
+        { id: 203, name: "[KEY] Steam Key Triple A", price: 18.90, image: "https://i.imgur.com/pi3H695.png", cat: "Jogos", sub: "key", tags: "gta, rdr2, elden ring, aaa", desc: "Garantia de jogo Triple A (Grande Produção)." },
+        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 34.00, image: "https://i.imgur.com/fKVG2yp.png", cat: "Jogos", sub: "key", tags: "lançamento, aaa, top", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
+        { id: 205, name: "[KEY] Steam Key Deluxe", price: 26.90, image: "https://i.imgur.com/mdtGEYs.png", cat: "Jogos", sub: "key", tags: "deluxe, gold, premium", desc: "Jogos versões Deluxe ou Gold Editions." },
+        { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", tags: "souls, rpg, fromsoftware", desc: "Conta Steam Offline com Elden Ring." },
+        { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", tags: "kratos, sony, playstation", desc: "Conta Steam Offline com GoW Ragnarok." },
+        { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/2028edeaf4c0b60142550a3d6e024b6009853ceb9f51591e.jpg", cat: "Jogos", sub: "game", tags: "marvel, aranha, peter parker", desc: "Conta Steam Offline com Spider-Man 2." },
+        { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", tags: "zumbi, tlou, ellie", desc: "Conta Steam Offline TLOU Part I." },
+        { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", tags: "macaco, wukong, souls", desc: "O jogo do macaco! Conta Offline." },
+        { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", tags: "luta, mk1, fatality", desc: "Conta Steam Offline MK1." },
+        { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", tags: "harry potter, magia, bruxo", desc: "Conta Steam Offline Hogwarts Legacy." },
+        { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", tags: "heroi, dc, morcego", desc: "Versão Premium Edition." },
+        { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", tags: "dc, luta, superman", desc: "Edição Lendária completa." },
+        { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", tags: "terror, zumbi, leon", desc: "Remake aclamado. Conta Offline." },
+        { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", tags: "futuro, rpg, keanu", desc: "Versão atualizada. Conta Offline." },
+        { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", tags: "cowboy, velho oeste, rockstar", desc: "Ultimate Edition. Conta Offline." },
+        { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", tags: "gta 5, rockstar, crime", desc: "Modo história e online (depende da conta)." },
+        { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", tags: "ninja, souls, dificil", desc: "Jogo do ano. Conta Offline." },
+        { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", tags: "carro, corrida, mundo aberto", desc: "Corrida mundo aberto. Conta Offline." },
+        { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", tags: "rpg, souls, boss", desc: "Obra prima da FromSoftware." },
+        { id: 101, name: "Discord Nitro", price: 0.00, image: "https://i.imgur.com/nbhV6d1.jpeg", cat: "Discord", tags: "nitro, boost, chat", special: "multi-select", selectKey: "nitro", desc: "Nitro para quem não teve nos últimos 12 meses, nao oferecemos reembolso do Produto!" },
+        { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://i.imgur.com/P7gwnty.jpeg", cat: "Discord", tags: "perfil, avatar, efeito", desc: "Decoração aleatória para seu perfil" },
+        { id: 103, name: "14x Impulsos Server (3 meses)", price: 87.00, image: "https://i.imgur.com/pbPpKgX.jpeg", cat: "Discord", tags: "boost, servidor, nivel", desc: "14 impulsos no servidor por 3 meses" },
+        { id: 300, name: "Conta Roblox Antiga Vazis", price: 0.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", tags: "conta, velha, 2010", special: "multi-select", selectKey: "robloxacc", desc: "Contas antigas sem itens" },
+        { id: 400, name: "2x Money", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cf/BadgeMoneyx2.png", cat: "Blox Fruits", sub: "gamepass", tags: "dinheiro, beli, dobro", desc: "Gamepass: dinheiro em dobro" },
+        { id: 401, name: "2x Mastery", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/16/BadgeMasteryx2.png", cat: "Blox Fruits", sub: "gamepass", tags: "maestria, xp, upar", desc: "Gamepass: maestria em dobro" },
+        { id: 402, name: "Fruit Storage", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/6/6a/BadgeFruitStorage.png", cat: "Blox Fruits", sub: "gamepass", tags: "bau, storage, guardar", desc: "Gamepass: armazene mais frutas" },
+        { id: 403, name: "Dark Blade (Yoru)", price: 56.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a0/Dark_Blade.png", cat: "Blox Fruits", sub: "gamepass", tags: "espada, yoru, mihawk, sword", desc: "Espada Lendária Dark Blade" },
+        { id: 404, name: "Fruit Notifier", price: 110.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/9/98/BadgeFruitNotifier.png", cat: "Blox Fruits", sub: "gamepass", tags: "notificador, achar fruta", desc: "Notificador de frutas no mapa" },
+        { id: 405, name: "Fast Boat", price: 22.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/f/fa/BadgeBoats.png", cat: "Blox Fruits", sub: "gamepass", tags: "barco, rapido", desc: "Fast Boat" },
+        { id: 406, name: "Haki Lendário", price: 18.00, image: "https://cdn.ggmax.com.br/images/a4b6b372cd55f8d9c0d184aaabe37cee.sm.jpg", cat: "Blox Fruits", sub: "gamepass", tags: "cor, haki, lendario", desc: "Cores lendárias de Haki" },
+        { id: 407, name: "2x Boss Drops", price: 22.90, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/a/a5/1ef7847c5d048db227d14eeb25637467.png", cat: "Blox Fruits", sub: "gamepass", tags: "drop, item, boss", desc: "2x Boss Drops" },
+        { id: 500, name: "Frutas Permanentes [part1]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm", tags: "kitsune, dragon, perm", special: "multi-select", selectKey: "perm1", desc: "Frutas Permanentes [pagina 1]" },
+        { id: 501, name: "Frutas Permanentes [part2]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm", tags: "buddha, portal, perm", special: "multi-select", selectKey: "perm2", desc: "Frutas Permanentes [pagina 2]" },
+        { id: 600, name: "RAÇAS V4", price: 0.00, image: "https://preview.redd.it/what-race-should-i-get-to-v4-v0-5h46zqr3geoe1.jpeg?auto=webp&s=a094515443326872f991b83dddf72c9e85581023", cat: "Blox Fruits", tags: "v4, race, shark, angel, ghoul", special:"multi-select", sub: "account", selectKey: "v4", desc: "Contas com raças V4 e outros items e frutas" },
+        { id: 601, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", special:"highlight", sub: "account", tags: "barato, conta, random", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
+        { id: 602, name: "FRUTAS INV", price: 0.00, image: "https://i.pinimg.com/564x/54/2e/31/542e31005a49c7faad80d706cef51816.jpg", cat: "Blox Fruits", special:"multi-select", sub: "account", tags: "inventario, frutas, contas", selectKey: "frutasinv", desc: "level max, estilos de luta e pode vir cdk, soul guitar e godhuman" },
+        { id: 700, name: "JavaScripts DBC", price: 0.00, image: "https://i.ytimg.com/vi/k7sv0SOL8tM/maxresdefault.jpg", cat: "Scripts", tags: "dragon block c, minecraft, mod", special: "multi-select", selectKey: "dbc", desc: "Para Dragon Block C [1.7.10]." },
+        { id: 701, name: "Scripts ROBLOX", price: 0.00, image: "https://i.gruposwhats.app/6411167d02570.jpg", cat: "Scripts", tags: "hack, cheat, executor", special: "multi-select", selectKey: "script", desc: "Scripts para voce usar no Roblox." },
+        { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, skin, lisa", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
+        { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, clube", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
+        { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, muito", desc: "1000 iniciais + 5000 mensais com clube" },
+        { id: 803, name: "Conta 13.500 VBucks", price: 279.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, conta", desc: "Conta com 13.500 Vbucks" },
+        { id: 804, name: "Conta Skin Gatalina", price: 5.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "gato, skin, barata", desc: "Conta simples com skin Gatalina" },
+        { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "skins, conta", desc: "Com Indiana Jones e outras skins" },
+        { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "skins, ice spice", desc: "Com Ice Spice e outras skins" },
+        { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", tags: "low elo, smurf, rank", desc: "Conta Bronze aleatória" },
+        { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", tags: "high elo, rank", desc: "Conta Diamante aleatória" },
+        { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", tags: "high elo, rank, top", desc: "Conta Ascendente aleatória" },
+        { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", tags: "ranked ready, smurf", desc: "Upada à mão, com dados de criação" },
+        { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", tags: "nova, conta, riot", desc: "Conta Nível 1 com Range feito" },
+        { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", tags: "mojang, original, capa", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
+        { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", tags: "gamepass, aluguel", desc: "Acesso via Gamepass PC" },
+        { id: 1100, name: "Conta Rockstar (FiveM Licenciado)", price: 6.99, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", tags: "fivem, roleplay, rp", desc: "Licenciada para FiveM" },
+        { id: 1101, name: "Conta Steam com GTA V Instalavel", price: 4.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "GTA V", tags: "fivem, steam", desc: "Conta Steam para baixar o GTA e jogar o Fivem, o GTA dessa conta nao da pra jogar sme ser no Fivem" },
+        { id: 1102, name: "Combo Rockstar + Steam", price: 10.00, image: "https://gameplayscassi.com.br/wp-content/uploads/2023/01/Rockstar-Games-Sale.jpg", cat: "GTA V", tags: "combo, fivem", desc: "Combo com as duas contas" },
+        { id: 1200, name: "Custom Anime Girl Form", price: 35.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/9/9f/AnimeGirl.png", cat: "DB Rage", tags: "skin, forma", desc: "Forma personalizada no jogo" },
+        { id: 1201, name: "2x Training EXP", price: 29.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/1/1c/X2trainingXP.png", cat: "DB Rage", tags: "xp, upar", desc: "Gamepass de experiência" },
+        { id: 1203, name: "Limit Breaker", price: 23.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/4/45/LimitBreaker.png", cat: "DB Rage", tags: "limite, forca", desc: "Quebre os limites do personagem" },
+        { id: 1204, name: "Dragon Radar", price: 22.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/5/50/DragonRadar.png", cat: "DB Rage", tags: "esferas, radar", desc: "Radar de esferas" },
+        { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", tags: "cor, ki", desc: "Mude a cor do seu Ki" },
+        { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", tags: "transformacao, ssj", desc: "Transformação Omega" },
+        { id: 1300, name: "Cupom 10% OFF Vitalício", price: 30.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", tags: "desconto", desc: "Código de 10% para sempre" },
+        { id: 1301, name: "Cupom 15% OFF Vitalício", price: 50.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", tags: "desconto", desc: "Código de 15% para sempre" },
+        { id: 1302, name: "Cupom 20% OFF Vitalício", price: 80.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", tags: "desconto", desc: "Código de 20% para sempre" },
+        { id: 1303, name: "Cupom 25% OFF Vitalício", price: 100.00, image: "https://cdn-icons-png.flaticon.com/512/2953/2953363.png", cat: "Cupons", tags: "desconto", desc: "Código de 25% para sempre" },
+        { id: 1400, name: "All Games Steam", price: 59.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", tags: "metodo, steam, jogos", desc: "Te ensinamos como ter qualquer jogo na Steam!" },
+        { id: 1500, name: "Painel de Serviços", price: 49.90, image: "🚀", cat: "Fornecedores", tags: "smm, seguidores, revenda", desc: "Painel de seguidores, likes, curtidas para todas as redes sociais.", auto: true },
+        { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", tags: "tv, canais, futebol", desc: "Aprenda a ter todos os canais liberados" },
+        { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", tags: "tiktok, monetizacao", desc: "Como criar e monetizar vídeos Brainrot" },
+        { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", tags: "4g, vpn, dados", desc: "Tenha internet em qualquer lugar" },
+        { id: 1603, name: "Método Passe FF Barato", price: 5.90, image: "🎟️", cat: "Tudo por 5,90", tags: "free fire, garena", desc: "Pegue o passe do Free Fire pagando pouco" },
+        { id: 1604, name: "Método Diamantes FF", price: 5.90, image: "💎", cat: "Tudo por 5,90", tags: "free fire, diamantes", desc: "Consiga diamantes com desconto ou free" },
+        { id: 1605, name: "Método Renda Extra", price: 5.90, image: "💰", cat: "Tudo por 5,90", tags: "dinheiro, marketing", desc: "Dicas fáceis para levantar dinheiro rápido" },
+        { id: 1606, name: "Método Gift Card", price: 5.90, image: "💳", cat: "Tudo por 5,90", tags: "ifood, uber, steam", desc: "Como conseguir Gift Cards promocionais" },
+        { id: 1607, name: "Método Like FF +1k", price: 5.90, image: "❤️", cat: "Tudo por 5,90", tags: "free fire, like", desc: "Método para conseguir +1000 likes no Free Fire" },
+        { id: 2001, name: "Fornecedor Robux (Barato)", price: 9.90, image: "💵", cat: "Fornecedores", tags: "roblox, robux, revenda", desc: "Contato direto para comprar Robux a preço de banana" },
+        { id: 2002, name: "Fornecedor Xit/Paineis FF", price: 10.90, image: "🎯", cat: "Fornecedores", tags: "free fire, xit, painel", desc: "Os melhores painéis e regedits para Free Fire" },
+        { id: 2003, name: "Fornecedor Brainrots", price: 10.90, image: "🧟", cat: "Fornecedores", tags: "clips, videos", desc: "Clips prontos de Brainrot para postar" },
+        { id: 2004, name: "PACK SUPREMO FORNECEDORES", price: 34.90, image: "👑", cat: "Fornecedores", tags: "pack, lista, fornecedor", desc: "Lista completa com mais de 5 fornecedores de tudo!", special: "highlight" },
+        { id: 2101, name: "Curso Java Script", price: 1.90, image: "📜", cat: "Cursos", tags: "programacao, js", desc: "Curso de JavaScript do ZERO" },
+        { id: 2102, name: "Curso de Inglês Rápido", price: 1.90, image: "🇺🇸", cat: "Cursos", tags: "idioma, aprender", desc: "Aprenda a falar o básico do ingles." },
+        { id: 2103, name: "Curso Python", price: 1.90, image: "🐍", cat: "Cursos", tags: "programacao, python", desc: "Curso Phyton do ZERO." },
+        { id: 2104, name: "PACK 1K DE CURSOS", price: 19.90, image: "📚", cat: "Cursos", tags: "pack, pirata", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
         { id: 3051, name: "PACK 4x Esok Skolah", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469729047810089/AOI_d_-GPHxpioch7PEDYNos5aBTEP0xpXP_a0uBvpuCOGMWmTUicfMl4C1pGr8xTNC1uzYrfyvaYm_owAolvcNFC1Dc9p9tv0HNrCTOc0xvXRf8pU6nQv0bumRcYAlr4WR6xdlrCTuwTJwevvJRwEvw39r3J1wDLSeihrSlsBCjWcq0gF5h3gs1024-rj.png?ex=697cdbdd&is=697b8a5d&hm=5001a1d7cf2ae1faddc0e54c7a11487199c0999b8a62ba94aee85385aa4bea02&", cat: "Brainrots", sub: "tsunami", special: "multi-select", selectKey: "esok", desc: "Promoção: 4 unidades por R$ 1,00 cada." },
         { id: 3090, name: "BRAINROTS COM EVENTOS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469002523054317/AOI_d_8Q81vFOBEMVT_68IasDigB3N9VEtDoJUDnh3ZBK8x08Zdg2snNDxc2ytxZ40J7sENBAqh9mbeCBmkhzv8famjpRNEV7bn9I8OH2fCwyhTDZVMb90ndC-qx_PZqMXxdaV9QmCRYVeoIb07sxO5cOPmmoBbIdhP95oUGvNWHQQQh5Lm3TAs1024-rj.png?ex=697cdb2f&is=697b89af&hm=6a0a71ce68b4f268604c3aac8ee54d0de17fd1a7e2aeaee382e8b4c0abae39fb&",  cat: "Brainrots", sub: "steal",desc: "Escolha quais Brainrots (aleatorio) com evento você quer?", special: "multi-select",selectKey: "brainrot_elements"},
         { id: 3091, name: "LUCKY BLOCKS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466466917618422074/AOI_d__lDQUX0fL_7vYUAuUJMvyObwYw_q1hkEGeHXKNnECvWLA9sVZCKwjQCSslTd1xvCIS5-6Ro_KsZ_cN5khU9xE9Clk8heccgVMlNygcmwnEWhsBuszVYkBk1Y1PnSFxJI0TuKmfV3L5miHwibeV-Uxg1IQ6t_GD_88jEvsNdpt1kB1ioAs1024-rj.png?ex=697cd93e&is=697b87be&hm=663e1297b6a48093b6c77242b32a6d3bc73a1d4c0a6456168475ae1bc415c36d&", cat: "Brainrots", sub: "steal",desc: "Varios Tipo de Lucky Blocks!.", special: "multi-select",selectKey: "lucky_blocks"},
@@ -1011,7 +1012,7 @@
     }
     
     window.onload = () => {
-        const saved = localStorage.getItem('blackdz_user');
+        const saved = localStorage.getItem('blackdz_current_user');
         if(saved) {
             user = saved;
             document.getElementById('modal-login').classList.remove('active');
@@ -1021,16 +1022,26 @@
         if(!EXIBIR_ABA_SECRETA) document.getElementById('btn-secret').classList.add('hidden');
         else document.getElementById('btn-secret').classList.remove('hidden');
         renderCats();
+        renderOrders();
+        startSalesNotifications();
     };
 
     function nav(loc) {
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-prods').classList.add('hidden');
+        document.getElementById('view-orders').classList.add('hidden');
+
         if(loc === 'home') {
             document.getElementById('view-home').classList.remove('hidden');
-            document.getElementById('view-secret').classList.add('hidden');
-            document.getElementById('view-prods').classList.add('hidden');
             document.getElementById('search-input-desktop').value = '';
-            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
             document.querySelector('.menu-item:first-child').classList.add('active');
+        }
+        else if(loc === 'orders') {
+            document.getElementById('view-orders').classList.remove('hidden');
+            renderOrders();
+
         }
     }
 
@@ -1044,6 +1055,7 @@
         document.getElementById('view-home').classList.add('hidden');
         document.getElementById('view-secret').classList.remove('hidden');
         document.getElementById('view-prods').classList.add('hidden');
+        document.getElementById('view-orders').classList.add('hidden');
         document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
         document.getElementById('btn-secret').classList.add('active');
     }
@@ -1061,6 +1073,7 @@
     function openCat(catName) {
         document.getElementById('view-home').classList.add('hidden');
         document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-orders').classList.add('hidden');
         document.getElementById('view-prods').classList.remove('hidden');
         document.getElementById('cat-title').innerText = catName.toUpperCase();
         
@@ -1148,13 +1161,24 @@
         }).join('');
     }
 
+
     function doSearch(val) {
         if(!val) return nav('home');
         document.getElementById('view-home').classList.add('hidden');
         document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-orders').classList.add('hidden');
         document.getElementById('view-prods').classList.remove('hidden');
         document.getElementById('cat-title').innerText = "BUSCA";
-        const items = db.filter(i => i.name.toLowerCase().includes(val.toLowerCase()) || i.cat.toLowerCase().includes(val.toLowerCase()));
+        
+        const lowerVal = val.toLowerCase();
+        
+        const items = db.filter(i => {
+            const inName = i.name.toLowerCase().includes(lowerVal);
+            const inCat = i.cat.toLowerCase().includes(lowerVal);
+            const inTags = i.tags && i.tags.toLowerCase().includes(lowerVal);
+            return inName || inCat || inTags;
+        });
+        
         document.getElementById('container-prods').innerHTML = generateProductHTML(items);
     }
 
@@ -1195,10 +1219,14 @@
         const total = cart.reduce((a,b) => a + b.price, 0) * (1 - activeDiscount);
         document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
     }
+    
+
+    
     function openCheckout() {
         if(cart.length === 0) return alert("Seu carrinho está vazio!");
         if(!user) return alert("Faça login para continuar!");
         toggleCart();
+        
         const listDiv = document.getElementById('checkout-items-list');
         let itemsHtml = '';
         let subtotal = 0;
@@ -1210,24 +1238,81 @@
         const discountText = activeDiscount > 0 ? `<div style="color:var(--gold); font-size:12px; text-align:right;">Desconto: ${(activeDiscount*100)}% OFF</div>` : '';
         itemsHtml += `${discountText}<div class="summary-total">Total: R$ ${total.toFixed(2)}</div>`;
         listDiv.innerHTML = itemsHtml;
+        
+        document.getElementById('buyer-contact').value = "";
+        document.getElementById('payment-proof-file').value = "";
+        document.getElementById('file-name-display').innerText = "Clique para selecionar o arquivo";
+        document.getElementById('terms-check').checked = false; 
+        
+        
         openModal('modal-checkout');
     }
-    function copyPixKey() { navigator.clipboard.writeText("22981636278").then(() => alert("Chave PIX copiada!")); }
-    function openDiscordSteps() {
-        closeModal('modal-checkout');
-        const total = document.getElementById('cart-total').innerText;
-        const date = new Date().toLocaleString('pt-BR');
-        let itemsList = cart.map(i => `• ${i.name} (R$ ${i.price.toFixed(2)})`).join('\n');
-        let cupomInfo = activeDiscount > 0 ? "SIM" : "NÃO";
-        const msg = `🛒 **NOVO PEDIDO - BLACKDZ STORE**\n━━━━━━━━━━━━━━━━━━━━━━\n👤 **Cliente:** ${user}\n📅 **Data:** ${date}\n━━━━━━━━━━━━━━━━━━━━━━\n📦 **ITENS:**\n${itemsList}\n\n🎟️ **Cupom:** ${cupomInfo}\n💰 **VALOR TOTAL:** ${total}\n━━━━━━━━━━━━━━━━━━━━━━\n✅ *Pagamento PIX realizado. Comprovante em anexo.*`;
-        document.getElementById('discord-msg-area').value = msg;
-        openModal('modal-discord-step');
+
+    function copyPixKey() { navigator.clipboard.writeText(PIX_KEY).then(() => alert("Chave PIX copiada!")); }
+
+{
+        const key = `blackdz_orders_${user}`;
+        let orders = JSON.parse(localStorage.getItem(key)) || [];
+        orders.unshift(order);
+        localStorage.setItem(key, JSON.stringify(orders));
     }
-    function copyAndGoDiscord() {
-        document.getElementById('discord-msg-area').select();
-        document.execCommand('copy');
-        window.open('https://discord.gg/zNekhYQs3A', '_blank'); 
+        const key = `blackdz_orders_${user}`;
+        let orders = JSON.parse(localStorage.getItem(key)) || [];
+        orders.unshift(order);
+        localStorage.setItem(key, JSON.stringify(orders));
+
+        formData.append('payload_json', JSON.stringify(payloadJson));
+        formData.append('file', file);
+
+        fetch(WEBHOOK_URL, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if(response.ok) {
+                closeModal('modal-checkout');
+                cart = [];
+                updateCartUI();
+                openModal('modal-success');
+            } else {
+                alert("Erro ao enviar. O arquivo pode ser muito grande (limite do Discord é 8MB).");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro de conexão.");
+        })
+        .finally(() => {
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> ENVIAR PEDIDO';
+            btn.disabled = false;
+        });
+    
+
+
+    function renderOrders() {
+        const div = document.getElementById('orders-list');
+        if(!user) {
+            div.innerHTML = "<p style='color:#666; text-align:center;'>Faça login para ver seus pedidos.</p>";
+            return;
+        }
+        const key = `blackdz_orders_${user}`;
+        const orders = JSON.parse(localStorage.getItem(key)) || [];
+        
+        if(orders.length === 0) {
+            div.innerHTML = "<p style='color:#666; text-align:center;'>Você ainda não fez nenhum pedido.</p>";
+        } else {
+            div.innerHTML = orders.map(o => `
+                <div class="order-card">
+                    <div class="order-info">
+                        <div class="order-date">Pedido ${o.id} • ${o.date}</div>
+                        <div class="order-items">${o.items}</div>
+                    </div>
+                    <div class="order-total">${o.total}</div>
+                </div>
+            `).join('');
+        }
     }
+
     function openStreamingCombo() {
         const div = document.getElementById('streaming-options');
         selectedStreamings = [];
@@ -1271,54 +1356,64 @@
         closeModal('modal-streaming-select');
     }
 
-    function openContactOptions(type) {
-        const inputId = type === 'request' ? 'request-msg' : 'support-msg';
-        const msg = document.getElementById(inputId).value;
-        if(!msg.trim()) return alert("Por favor, escreva sua mensagem primeiro!");
-        currentContactType = type;
-        const title = type === 'request' ? 'ENVIAR SOLICITAÇÃO' : 'ENVIAR SUPORTE';
-        document.getElementById('contact-options-title').innerText = title;
-        closeModal(type === 'request' ? 'modal-request' : 'modal-support');
-        openModal('modal-contact-options');
-    }
-    function processContact(channel) {
-        const inputId = currentContactType === 'request' ? 'request-msg' : 'support-msg';
-        const userMsg = document.getElementById(inputId).value;
-        const date = new Date().toLocaleString('pt-BR');
-        if (channel === 'whatsapp') {
-            const prefix = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ PEDIDO DE SUPORTE';
-            const text = `*${prefix}*\n\n👤 *Cliente:* ${user || 'Visitante'}\n📝 *Mensagem:* ${userMsg}`;
-            window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(text)}`, '_blank');
-        } else if (channel === 'discord') {
-            let discordTitle = currentContactType === 'request' ? '📦 SOLICITAÇÃO DE ITEM' : '🛠️ TICKET DE SUPORTE';
-            const formattedMsg = `**${discordTitle} - BLACKDZ STORE**\n━━━━━━━━━━━━━━━━━━━━━━\n👤 **Usuário:** ${user || 'Visitante'}\n📅 **Data:** ${date}\n━━━━━━━━━━━━━━━━━━━━━━\n📝 **MENSAGEM DO CLIENTE:**\n"${userMsg}"\n━━━━━━━━━━━━━━━━━━━━━━\n*Copie esta mensagem e cole no canal de tickets.*`;
-            document.getElementById('discord-msg-area').value = formattedMsg;
-            openModal('modal-discord-step');
-        }
-        closeModal('modal-contact-options');
-    }
-    function sendWhatsapp(type) {
-        if(!user) return alert("Faça login primeiro!");
-        let msg = "";
-        if(type === 'cart') {
-            if(cart.length === 0) return alert("Carrinho vazio!");
-            msg = `*PEDIDO DE ${user.toUpperCase()}*\n\n` + cart.map(i => `🛒 ${i.name} - R$${i.price.toFixed(2)}`).join('\n') + `\n\n💰 *TOTAL: ${document.getElementById('cart-total').innerText}*`;
-        }
-        window.open(`https://wa.me/5522981636278?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    
     document.getElementById('form-login').addEventListener('submit', (e) => {
         e.preventDefault();
-        user = document.getElementById('login-user').value;
-        localStorage.setItem('blackdz_user', user);
+        const userInput = document.getElementById('login-user').value.trim();
+        const passInput = document.getElementById('login-pass').value.trim();
+        
+        if(!userInput || !passInput) return alert("Preencha todos os campos");
+
+        const usersDB = JSON.parse(localStorage.getItem('blackdz_users_db')) || {};
+
+        if (usersDB[userInput]) {
+
+            if (usersDB[userInput] === passInput) {
+                loginSuccess(userInput);
+            } else {
+                alert("Senha incorreta!");
+            }
+        } else {
+
+            usersDB[userInput] = passInput;
+            localStorage.setItem('blackdz_users_db', JSON.stringify(usersDB));
+            alert("Conta criada com sucesso!");
+            loginSuccess(userInput);
+        }
+    });
+
+    function loginSuccess(u) {
+        user = u;
+        localStorage.setItem('blackdz_current_user', user);
         document.getElementById('modal-login').classList.remove('active');
         updateUserDisplay();
-    });
+        renderOrders();
+    }
+
     function updateUserDisplay() { document.getElementById('user-display').innerText = user; document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase(); }
-    function logout() { localStorage.removeItem('blackdz_user'); location.reload(); }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+    function logout() { localStorage.removeItem('blackdz_current_user'); location.reload(); }
+    
+function toggleSidebar() { 
+
+        if (window.innerWidth > 768) return;
+
+        document.getElementById('sidebar').classList.toggle('active'); 
+
+        const overlay = document.querySelector('.sidebar-overlay');
+        if (document.getElementById('sidebar').classList.contains('active')) {
+            overlay.classList.add('active');
+        } else {
+            overlay.classList.remove('active');
+        }
+    }
+    
+    function closeSidebarMobile() {
+        document.getElementById('sidebar').classList.remove('active');
+        document.querySelector('.sidebar-overlay').classList.remove('active');
+    }
+
     function updateThemeColor(val, type) { document.documentElement.style.setProperty(`--${type}`, val); saveTheme(); }
     function switchBgTab(tab) {
         const up = document.getElementById('area-upload'); const url = document.getElementById('area-url');
@@ -1355,81 +1450,174 @@
         else if (bgUrl) document.getElementById('main-bg').style.backgroundImage = `url('${bgUrl}')`;
     }
     function resetTheme() {
+        localStorage.removeItem('blackdz_theme');
+        localStorage.removeItem('blackdz_bg_custom');
+        localStorage.removeItem('blackdz_bg_url');
+        document.getElementById('main-bg').style.backgroundImage = "none";
+        location.reload();
+    }
 
-    localStorage.removeItem('blackdz_theme');
-    
-    localStorage.removeItem('blackdz_bg_custom');
-    localStorage.removeItem('blackdz_bg_url');
-    
-    document.getElementById('main-bg').style.backgroundImage = "none";
-    
-    location.reload();
+function startSalesNotifications() {
+    const loop = () => {
+
+        const hour = new Date().getHours();
+
+
+        let chance = (hour >= 1 && hour <= 6) ? 0.3 : 0.7;
+
+
+        let delay = Math.floor(Math.random() * (600000 - 60000)) + 60000;
+
+        setTimeout(() => {
+
+
+            if (Math.random() < chance) {
+                showFakeNotification();
+
+
+                if (Math.random() < 0.2) {
+                    setTimeout(showFakeNotification, 3000);
+                }
+            }
+
+            loop();
+        }, delay);
+    };
+
+
+    setTimeout(showFakeNotification, 5000);
+    loop();
 }
 
-// IA DO MIKEY GOAT SUPREMO
+    function showFakeNotification() {
+        const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
 
-    function toggleChat() { document.getElementById('chat-box').classList.toggle('active'); }
-    function handleChat(e) { if(e.key === 'Enter') sendChatMessage(); }
+        const validProducts = db.filter(p => p.price > 0);
+        const randomProd = validProducts[Math.floor(Math.random() * validProducts.length)];
+        
+        const toast = document.getElementById('fake-toast');
+        const img = document.getElementById('fake-img');
+        const title = document.getElementById('fake-title');
+        const text = document.getElementById('fake-text');
+
+
+        if(randomProd.image.includes('http')) img.src = randomProd.image;
+        else img.src = 'https://i.imgur.com/Ljpes5c.png'; 
+
+        title.innerText = `${randomName} comprou:`;
+        text.innerHTML = `<span>${randomProd.name}</span> acabou de sair!`;
+
+        toast.classList.add('show');
+
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 5000);
+    }
+
+
+
+// --- VARIÁVEIS GLOBAIS DO CHAT (TEM QUE FICAR NO TOPO DESTA SEÇÃO) ---
+    var chatMode = null;           // Usei 'var' para garantir compatibilidade global
+    var humanContactSent = false;
+    var tempContact = "";
+
+    // --- FUNÇÕES DO CHAT ---
+    function toggleChat() { 
+        document.getElementById('chat-box').classList.toggle('active'); 
+    }
+
+    function handleChat(e) { 
+        if(e.key === 'Enter') sendChatMessage(); 
+    }
+
+    function resetChat() {
+        document.getElementById('chat-mode-select').style.display = 'flex';
+        document.getElementById('chat-interface').style.display = 'none';
+        document.getElementById('chat-messages').innerHTML = '';
+        chatMode = null;
+        humanContactSent = false;
+        tempContact = ""; 
+    }
+
+    function startChatMode(mode) {
+        chatMode = mode; // Agora a variável já existe lá em cima
+        document.getElementById('chat-mode-select').style.display = 'none';
+        document.getElementById('chat-interface').style.display = 'flex';
+        const area = document.getElementById('chat-messages');
+
+        if(mode === 'ai') {
+            area.innerHTML = `<div class="msg bot">Salve! Sou a IA da BlackDz. 🤖<br>Posso ajudar a achar produtos, mudar temas ou tirar dúvidas. Manda a braba!</div>`;
+        } else {
+            area.innerHTML = `<div class="msg bot">👤 <b>Suporte Humano</b><br>Para começar, digite seu <b>Discord ou WhatsApp</b> para que a gente possa te responder depois.</div>`;
+        }
+    }
 
     function sendChatMessage() {
         const input = document.getElementById('chat-input');
         const txt = input.value.trim();
         if(!txt) return;
+        
         const area = document.getElementById('chat-messages');
         area.innerHTML += `<div class="msg user">${txt}</div>`;
-        area.scrollTop = area.scrollHeight;
         input.value = '';
-        
-        const loadingId = 'typing-' + Date.now();
-        area.innerHTML += `<div class="msg bot" id="${loadingId}" style="width:50px"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
         area.scrollTop = area.scrollHeight;
 
-        setTimeout(() => {
-            const loader = document.getElementById(loadingId);
-            if(loader) loader.remove();
-            BlackDzAI.process(txt, area);
-        }, 800 + Math.random() * 500); 
-    }
+        if(chatMode === 'ai') {
+            const loadingId = 'typing-' + Date.now();
+            area.innerHTML += `<div class="msg bot" id="${loadingId}"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
+            setTimeout(() => {
+                const loader = document.getElementById(loadingId);
+                if(loader) loader.remove();
+                BlackDzAI.process(txt, area);
+            }, 1000);
 
-    function similarity(s1, s2) {
-        var longer = s1; var shorter = s2;
-        if (s1.length < s2.length) { longer = s2; shorter = s1; }
-        var longerLength = longer.length;
-        if (longerLength == 0) return 1.0;
-        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-    }
-    function editDistance(s1, s2) {
-        s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
-        var costs = new Array();
-        for (var i = 0; i <= s1.length; i++) {
-            var lastValue = i;
-            for (var j = 0; j <= s2.length; j++) {
-                if (i == 0) costs[j] = j;
-                else {
-                    if (j > 0) {
-                        var newValue = costs[j - 1];
-                        if (s1.charAt(i - 1) != s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                        costs[j - 1] = lastValue;
-                        lastValue = newValue;
-                    }
-                }
+        } else if (chatMode === 'human') {
+            
+            if(!humanContactSent) {
+                tempContact = txt;
+                humanContactSent = true;
+
+                setTimeout(() => {
+                     area.innerHTML += `<div class="msg bot">Certo! Anotei seu contato: <b>${tempContact}</b>.<br>Agora, digite sua dúvida ou o motivo do chamado para eu enviar tudo para o suporte. 👇</div>`;
+                     area.scrollTop = area.scrollHeight;
+                }, 600);
+
+            } else {
+                const embedPayload = {
+                    title: "🔔 NOVO CHAMADO DE SUPORTE",
+                    description: "Cliente solicitando atendimento.",
+                    color: 16711680,
+                    thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png" },
+                    fields: [
+                        { name: "👤 Cliente", value: user || "Visitante", inline: true },
+                        { name: "📞 Contato", value: `\`${tempContact}\``, inline: true },
+                        { name: "📝 Mensagem", value: `\`\`\`${txt}\`\`\``, inline: false },
+                        { name: "📅 Data", value: new Date().toLocaleString('pt-BR'), inline: false }
+                    ]
+                };
+
+                fetch(CHAT_WEBHOOK, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        username: "Suporte BlackDz",
+                        avatar_url: "https://i.imgur.com/Ljpes5c.png",
+                        embeds: [embedPayload]
+                    })
+                })
+                .then(() => {
+                    area.innerHTML += `<div class="msg bot" style="border-color:#00ff88; color:#00ff88;">✅ Chamado enviado!<br>Fique de olho no seu <b>${tempContact}</b>.</div>`;
+                    area.scrollTop = area.scrollHeight;
+                });
             }
-            if (i > 0) costs[s2.length] = lastValue;
         }
-        return costs[s2.length];
     }
 
     const BlackDzAI = {
-        lastContext: null,
-
         process: (text, area) => {
-            const raw = text;
-            text = text.toLowerCase()
-                .replace(/[áàãâä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i')
-                .replace(/[óòõôö]/g, 'o').replace(/[úùûü]/g, 'u').replace(/ç/g, 'c');
-
+            text = text.toLowerCase().replace(/[áàãâä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i').replace(/[óòõôö]/g, 'o').replace(/[úùûü]/g, 'u').replace(/ç/g, 'c');
             let response = "";
-            let action = null;
 
             const categories = [...new Set(db.map(x => x.cat.toLowerCase()))];
             let bestCatMatch = { name: null, score: 0 };
@@ -1445,167 +1633,224 @@
                 openCat(realCatName);
                 response = `Abri a categoria **${realCatName}** para você! Dá uma olhada nas ofertas. 😎`;
             }
-
             else if (text.includes('cor') || text.includes('tema') || text.includes('muda')) {
-                const colors = {
-                    'azul': '#0000ff', 'vermelho': '#ff0000', 'verde': '#00ff00', 'roxo': '#800080', 
-                    'rosa': '#ff00ff', 'amarelo': '#ffff00', 'laranja': '#ffa500', 'preto': '#000000', 'branco': '#ffffff'
-                };
+                const colors = { 'azul':'#0000ff', 'vermelho':'#ff0000', 'verde':'#00ff00', 'roxo':'#800080', 'rosa':'#ff00ff', 'amarelo':'#ffff00', 'laranja':'#ffa500', 'preto':'#000000', 'branco':'#ffffff' };
                 let colorFound = null;
                 for (let c in colors) { if (text.includes(c)) colorFound = colors[c]; }
 
                 if (colorFound) {
-                    updateThemeColor(colorFound, 'primary');
-                    updateThemeColor(colorFound, 'aura');
-                    response = `Visual atualizado! A loja agora está no estilo **${Object.keys(colors).find(key => colors[key] === colorFound)}**. Ficou top? 🎨`;
+                    updateThemeColor(colorFound, 'primary'); updateThemeColor(colorFound, 'aura');
+                    response = `Visual atualizado para **${Object.keys(colors).find(key => colors[key] === colorFound)}**. Ficou top? 🎨`;
                 } else if (text.includes('reset') || text.includes('padrao')) {
-                    resetTheme();
-                    response = "Resetei o tema para o padrão da BlackDz (Vermelho e Preto). 🔴⚫";
+                    resetTheme(); response = "Resetei o tema para o padrão da BlackDz (Vermelho e Preto). 🔴⚫";
                 }
             }
-
             else if (text.includes('comprar') || text.includes('quero') || text.includes('tem') || text.length > 2) {
-
                 let matches = db.map(p => {
                     const nameScore = similarity(p.name, text);
                     const descScore = similarity(p.desc || "", text);
-
                     const includesBonus = (p.name.toLowerCase().includes(text) || (p.desc && p.desc.toLowerCase().includes(text))) ? 0.3 : 0;
                     return { product: p, score: Math.max(nameScore, descScore) + includesBonus };
                 }).filter(x => x.score > 0.55).sort((a, b) => b.score - a.score);
 
                 if (matches.length > 0) {
                     const topMatch = matches[0].product;
-                    
                     if (text.includes('comprar') || text.includes('carrinho')) {
                         addToCart(topMatch.name, topMatch.price);
-                        response = `Beleza! Adicionei **${topMatch.name}** ao seu carrinho. 🛒<br>Mais alguma coisa?`;
+                        response = `Beleza! Adicionei **${topMatch.name}** ao seu carrinho. 🛒`;
                     } else {
-                        response = `Encontrei isso aqui: <b>${topMatch.name}</b> por <b>R$ ${topMatch.price.toFixed(2)}</b>. 🔥`;
-
                         const safeName = topMatch.name.replace(/'/g, "\\'");
                         const imgHTML = topMatch.image.includes('http') || topMatch.image.includes('data:image') ? `<img src="${topMatch.image}">` : `<div style="font-size:24px;">${topMatch.image}</div>`;
-                        
-                        response += `<div class="product-preview-chat" onclick="addToCart('${safeName}', ${topMatch.price})">
-                            ${imgHTML}
-                            <div style="flex:1;">
-                                <div style="font-size:12px; font-weight:bold; color:#fff;">${topMatch.name}</div>
-                                <div style="font-size:11px; color:var(--success);">Clique para adicionar</div>
-                            </div>
-                            <i class="fas fa-cart-plus" style="color:#666;"></i>
+                        response = `Encontrei: <b>${topMatch.name}</b> por <b>R$ ${topMatch.price.toFixed(2)}</b>.
+                        <div class="product-preview-chat" onclick="addToCart('${safeName}', ${topMatch.price})">
+                            ${imgHTML} <div style="flex:1;"><div style="font-size:12px; font-weight:bold; color:#fff;">${topMatch.name}</div><div style="font-size:11px; color:var(--success);">Clique para adicionar</div></div><i class="fas fa-cart-plus" style="color:#666;"></i>
                         </div>`;
                     }
                 } else {
-
-                    if (text.includes('carrinho')) {
-                        toggleCart();
-                        response = "Abri seu carrinho! 🛒";
-                    } else if (text.includes('oi') || text.includes('ola')) {
-                        response = "E aí! 👋 Eu sou a IA da loja. Me diz o que você procura (Jogos, Contas, Métodos...)";
-                    } else if (text.includes('ajuda') || text.includes('suporte')) {
-                        response = "Se precisar de ajuda humana, clique em **Suporte** no menu. Eu posso te ajudar a achar produtos ou mudar a cor da loja!";
-                    } else if (text.includes('pagamento') || text.includes('pix')) {
-                        response = "Aceitamos PIX com entrega automática. É só adicionar ao carrinho e finalizar. 💸";
-                    } else {
-                        response = "Não achei esse produto específico... 😕<br>Mas você pode usar a opção **'Pedir Item'** no menu e nós corremos atrás pra você!";
-                    }
+                    if (text.includes('carrinho')) { toggleCart(); response = "Abri seu carrinho! 🛒"; }
+                    else if (text.includes('oi') || text.includes('ola')) { response = "E aí! 👋 O que você procura hoje?"; }
+                    else { response = "Não achei esse produto... 😕 Tente outra palavra-chave."; }
                 }
             }
-
-
             area.innerHTML += `<div class="msg bot">${response}</div>`;
             area.scrollTop = area.scrollHeight;
         }
     };
 
-
     document.addEventListener('contextmenu', event => event.preventDefault());
-    
-    document.onkeydown = function(e) {
-        if(event.keyCode == 123) return false;
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-    }
-    
+    document.onkeydown = function(e) { if(event.keyCode == 123) return false; if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; }
+    document.onselectstart = function(e) { if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return true; return false; }
 
-    document.onselectstart = function(e) { 
-        if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return true;
-        return false; 
-    }
-    
 
-    window.onresize = function() {
-        if ((window.outerHeight - window.innerHeight) > 200 || (window.outerWidth - window.innerWidth) > 200) {
-            console.clear(); 
-        }
-    }
-
-document.addEventListener("DOMContentLoaded", () => {
-        
-
-        const visitasIniciais = 9357;  
-        const vendasIniciais = 453;    
-
-        const namespace = 'blackdz-loja-oficial-2026'; 
-        
-
+    document.addEventListener("DOMContentLoaded", () => {
         const visitasBadge = document.getElementById("visitor-badge");
-        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`)
-            .then(res => res.json())
-            .then(data => {
-                let total = data.count + visitasIniciais;
-                visitasBadge.innerText = total.toLocaleString('pt-BR');
-            })
-            .catch(() => {
-
-                visitasBadge.innerText = visitasIniciais.toLocaleString('pt-BR');
-            });
-
-
         const vendasBadge = document.getElementById("sales-badge");
-        const keyVendas = 'vendas_realizadas';
-
-        function atualizarVendas() {
-            fetch(`https://api.counterapi.dev/v1/${namespace}/${keyVendas}`)
-                .then(res => {
-                    if(!res.ok) throw new Error("Ainda não existe"); 
-                    return res.json();
-                })
-                .then(data => {
-
-                    let total = data.count + vendasIniciais;
-                    vendasBadge.innerText = total.toLocaleString('pt-BR');
-                })
-                .catch(() => {
-
-                    vendasBadge.innerText = vendasIniciais.toLocaleString('pt-BR');
-                });
-        }
-        
-        atualizarVendas(); 
+        const namespace = 'blackdz-loja-oficial-2026'; 
 
 
-        setTimeout(() => {
+        visitasBadge.innerText = "9.357";
+        vendasBadge.innerText = "453";
 
-            const botoesFinalizar = document.querySelectorAll('#modal-checkout .btn-whatsapp, #modal-checkout .btn-discord, #modal-discord-step button');
-            
-            botoesFinalizar.forEach(btn => {
-                btn.addEventListener('click', () => {
-
-                    fetch(`https://api.counterapi.dev/v1/${namespace}/${keyVendas}/up`)
-                        .then(() => {
-
-                            setTimeout(atualizarVendas, 1000);
-                        });
-                });
-            });
-        }, 2000);
+        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`).then(r=>r.json()).then(d => visitasBadge.innerText = (d.count + 9357).toLocaleString('pt-BR')).catch(()=>{});
+        fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas`).then(r=>r.json()).then(d => vendasBadge.innerText = (d.count + 453).toLocaleString('pt-BR')).catch(()=>{});
     });
+
+
+
+
+ // --- FUNÇÃO DE SALVAR LOCALMENTE (CORRIGIDA) ---
+    function saveOrderLocally(items, total, externalId) {
+        if(!user) return;
+        
+        // AQUI ESTAVA O ERRO: A variável 'order' precisa ser criada assim:
+        const order = {
+            id: externalId,
+            date: new Date().toLocaleDateString('pt-BR'),
+            items: items.map(i => i.name).join(', '),
+            total: total
+        };
+        
+        const key = `blackdz_orders_${user}`;
+        let orders = JSON.parse(localStorage.getItem(key)) || [];
+        orders.unshift(order);
+        localStorage.setItem(key, JSON.stringify(orders));
+    }
+
+    // --- FUNÇÃO DE ENVIAR PEDIDO (WEBHOOK) ---
+    function submitOrderToWebhook() {
+        // Validações básicas
+        const contactInput = document.getElementById('buyer-contact');
+        const fileInput = document.getElementById('payment-proof-file');
+        const termsCheck = document.getElementById('terms-check');
+
+        if (!contactInput || !fileInput) return alert("Erro interno nos campos.");
+        
+        const contact = contactInput.value;
+        const file = fileInput.files[0];
+        
+        if(!contact) return alert("Preencha o contato!");
+        if(!file) return alert("Anexe o comprovante!");
+        if(!termsCheck.checked) return alert("Aceite os termos!");
+
+        const btn = document.querySelector('.btn-confirm-payment');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
+        btn.disabled = true;
+
+        // Prepara dados
+        const safeCart = (typeof cart !== 'undefined') ? cart : [];
+        const safeDiscount = (typeof activeDiscount !== 'undefined') ? activeDiscount : 0;
+        const orderId = '#' + Math.floor(Math.random() * 90000 + 10000);
+        
+        const rawTotal = safeCart.reduce((a,b) => a + b.price, 0);
+        const finalTotal = rawTotal * (1 - safeDiscount);
+        
+        const itemsReceipt = safeCart.map(i => `📦 ${i.name}\n   └─ 💵 R$ ${i.price.toFixed(2)}`).join('\n\n');
+
+        // Salva Localmente
+        saveOrderLocally(safeCart, `R$ ${finalTotal.toFixed(2)}`, orderId);
+
+        // Envia Webhook
+        const formData = new FormData();
+        const payloadJson = {
+            username: "BlackDz Sales Bot",
+            avatar_url: "https://i.imgur.com/Ljpes5c.png",
+            embeds: [{
+                title: `✅ PEDIDO APROVADO: ${orderId}`,
+                description: "Pagamento enviado para análise.",
+                color: 3066993,
+                thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/10543/10543134.png" },
+                fields: [
+                    { name: "👤 Cliente", value: `**User:** ${user || "Anônimo"}\n**Contato:** \`${contact}\``, inline: true },
+                    { name: "💰 Total", value: `\`R$ ${finalTotal.toFixed(2)}\``, inline: true },
+                    { name: "🛒 Lista", value: `\`\`\`text\n${itemsReceipt}\n\`\`\``, inline: false }
+                ]
+            }]
+        };
+
+        formData.append('payload_json', JSON.stringify(payloadJson));
+        formData.append('file', file);
+
+        fetch(WEBHOOK_URL, { method: "POST", body: formData })
+        .then(res => {
+            if(res.ok) {
+                closeModal('modal-checkout');
+                if(typeof cart !== 'undefined') cart = [];
+                updateCartUI();
+                openModal('modal-success');
+            } else alert("Erro no envio (Imagem muito grande?)");
+        })
+        .finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }
+
+        formData.append('payload_json', JSON.stringify(payloadJson));
+        formData.append('file', file);
+
+        fetch(WEBHOOK_URL, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if(response.ok) {
+                closeModal('modal-checkout');
+                if(typeof cart !== 'undefined') cart = []; 
+                updateCartUI();
+                openModal('modal-success');
+            } else {
+                alert("Erro ao enviar. Verifique se a imagem não é muito pesada (Limite 8MB).");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro de conexão com o servidor.");
+        })
+        .finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+//FUNCOES DE BLOQUEIO BOLADONAS DO MIKE / DZ Taligado?
+window.addEventListener("keydown", e => {
+  const k = e.key.toLowerCase();
+
+  if (
+    k === "f12" ||
+    (e.ctrlKey && k === "u") ||
+    (e.ctrlKey && k === "s") ||
+    (e.ctrlKey && k === "p") ||
+    (e.ctrlKey && e.shiftKey && ["i","j","c","k"].includes(k))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+});
+setInterval(() => {
+  const threshold = 160;
+  if (
+    window.outerWidth - window.innerWidth > threshold ||
+    window.outerHeight - window.innerHeight > threshold
+  ) {
+    document.documentElement.innerHTML = "";
+    alert("DevTools detectado 👀");
+    location.reload();
+  }
+}, 500);
+(function loop(){
+  debugger;
+  setTimeout(loop, 50);
+})();
+["contextmenu","selectstart","copy","cut","paste"].forEach(ev =>
+  document.addEventListener(ev, e => e.preventDefault())
+);
+setInterval(() => {
+  if (!document.hasFocus()) {
+    location.reload();
+  }
+}, 1000);
 
 </script>
 </body>
 </html>
-
-
-
