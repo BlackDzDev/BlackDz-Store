@@ -671,11 +671,9 @@
     </div>
 
 <script>
-
     const EXIBIR_ABA_SECRETA = true; 
     const WEBHOOK_URL = "https://discord.com/api/webhooks/1469080146282676316/F0AMFpyFZXSPZQcFkOVFwOuokspX4hDBXewh5fVud3iYjSyelx2X4862Mg5RG8So8gol";
     const PIX_KEY = "dd17e932-f294-478f-9abf-fff070abcf91";
-
     const CHAT_WEBHOOK = "https://discord.com/api/webhooks/1469088429059997797/pr4ktlLzwM4uLa_QHlCO03W-7A-gMMNuCor5TEppFxovsbHgpFcFUpr37hW5xMxtR90-";
 
     const couponsDB = {'VEMCOMAGENTE': 0.05,};
@@ -817,7 +815,6 @@
 
     let currentSelectList = [];
     
-
     const db = [
         { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
         { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", tags: "combo, netflix, hbo, disney, barato", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
@@ -917,8 +914,6 @@
         { id: 3092, name: "BRAINROTS [50M a 1B]", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466468341089570979/AOI_d_-kPBTLMohPzPrV_O8LYla59R-UDmcfvj9NuPu54u4MAGVp1gKWC00_0UmzSoPyckGHbrrDhhIOsZcmFJ0bbRXkSlYVKcjwTStviVYY4fbGV5wMhyXsk_bO4-Wd0PdH4_DUODJ-AhXeo5Fz1KqwYXdiWAQj-XWfoYQr-rYuMh2C8PR-Ags1024-rj.png?ex=697cda92&is=697b8912&hm=a1af8e10d7d9890885f4d12689f82f9f79bfe1cc521fb181cfbc03f71fddfc41&", cat: "Brainrots", sub: "steal",desc: "Selecione a quatia que quer que o brainrot (radom) venha! (50M até 1B).", special: "multi-select",selectKey: "high_power"},
         { id: 9001, name: "Serviços Instagram", price: 0.00, image: "https://i.imgur.com/PayuTNR.png", cat: "Redes Sociais", sub: "insta", special: "social-modal", socialPlatform: "instagram", desc: "Seguidores e Curtidas. Qualidade Premium." },
         { id: 9002, name: "Serviços TikTok", price: 0.00, image: "https://i.imgur.com/9YaQAlZ.png", cat: "Redes Sociais", sub: "tiktok", special: "social-modal", socialPlatform: "tiktok", desc: "Seguidores, Views e Likes." },
-
-    
     ];
 
     const icons = {
@@ -1092,18 +1087,16 @@
     function renderProducts(items, catName) {
         const container = document.getElementById('container-prods');
         container.innerHTML = '';
-        if (catName === 'Jogos') {
-            
+        
         if (catName === 'Redes Sociais') {
-        const insta = items.filter(i => i.sub === 'insta');
-        const tiktok = items.filter(i => i.sub === 'tiktok');
-        const outros = items.filter(i => i.sub !== 'insta' && i.sub !== 'tiktok');
+            const insta = items.filter(i => i.sub === 'insta');
+            const tiktok = items.filter(i => i.sub === 'tiktok');
+            const outros = items.filter(i => i.sub !== 'insta' && i.sub !== 'tiktok');
 
-        if (insta.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fab fa-instagram"></i> INSTAGRAM</div>` + generateProductHTML(insta);
-        if (tiktok.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fab fa-tiktok"></i> TIKTOK</div>` + generateProductHTML(tiktok);
-        if (outros.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-plus"></i> EM BREVE</div>` + generateProductHTML(outros);
-    }
-
+            if (insta.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fab fa-instagram"></i> INSTAGRAM</div>` + generateProductHTML(insta);
+            if (tiktok.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fab fa-tiktok"></i> TIKTOK</div>` + generateProductHTML(tiktok);
+            if (outros.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-plus"></i> EM BREVE</div>` + generateProductHTML(outros);
+        } else if (catName === 'Jogos') {
             const keys = items.filter(i => i.sub === 'key');
             const games = items.filter(i => i.sub === 'game');
             if (keys.length > 0) { container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>` + generateProductHTML(keys); }
@@ -1249,45 +1242,6 @@
     }
 
     function copyPixKey() { navigator.clipboard.writeText(PIX_KEY).then(() => alert("Chave PIX copiada!")); }
-
-{
-        const key = `blackdz_orders_${user}`;
-        let orders = JSON.parse(localStorage.getItem(key)) || [];
-        orders.unshift(order);
-        localStorage.setItem(key, JSON.stringify(orders));
-    }
-        const key = `blackdz_orders_${user}`;
-        let orders = JSON.parse(localStorage.getItem(key)) || [];
-        orders.unshift(order);
-        localStorage.setItem(key, JSON.stringify(orders));
-
-        formData.append('payload_json', JSON.stringify(payloadJson));
-        formData.append('file', file);
-
-        fetch(WEBHOOK_URL, {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if(response.ok) {
-                closeModal('modal-checkout');
-                cart = [];
-                updateCartUI();
-                openModal('modal-success');
-            } else {
-                alert("Erro ao enviar. O arquivo pode ser muito grande (limite do Discord é 8MB).");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Erro de conexão.");
-        })
-        .finally(() => {
-            btn.innerHTML = '<i class="fas fa-check-circle"></i> ENVIAR PEDIDO';
-            btn.disabled = false;
-        });
-    
-
 
     function renderOrders() {
         const div = document.getElementById('orders-list');
@@ -1518,7 +1472,7 @@ function startSalesNotifications() {
 
 
 // --- VARIÁVEIS GLOBAIS DO CHAT (TEM QUE FICAR NO TOPO DESTA SEÇÃO) ---
-    var chatMode = null;           // Usei 'var' para garantir compatibilidade global
+    var chatMode = null;            // Usei 'var' para garantir compatibilidade global
     var humanContactSent = false;
     var tempContact = "";
 
@@ -1579,8 +1533,8 @@ function startSalesNotifications() {
                 humanContactSent = true;
 
                 setTimeout(() => {
-                     area.innerHTML += `<div class="msg bot">Certo! Anotei seu contato: <b>${tempContact}</b>.<br>Agora, digite sua dúvida ou o motivo do chamado para eu enviar tudo para o suporte. 👇</div>`;
-                     area.scrollTop = area.scrollHeight;
+                      area.innerHTML += `<div class="msg bot">Certo! Anotei seu contato: <b>${tempContact}</b>.<br>Agora, digite sua dúvida ou o motivo do chamado para eu enviar tudo para o suporte. 👇</div>`;
+                      area.scrollTop = area.scrollHeight;
                 }, 600);
 
             } else {
@@ -1677,10 +1631,34 @@ function startSalesNotifications() {
         }
     };
 
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.onkeydown = function(e) { if(event.keyCode == 123) return false; if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; }
-    document.onselectstart = function(e) { if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return true; return false; }
-
+    // Função de similaridade simples para a IA
+    function similarity(s1, s2) {
+        let longer = s1; let shorter = s2;
+        if (s1.length < s2.length) { longer = s2; shorter = s1; }
+        let longerLength = longer.length;
+        if (longerLength == 0) return 1.0;
+        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    }
+    function editDistance(s1, s2) {
+        s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
+        let costs = new Array();
+        for (let i = 0; i <= s1.length; i++) {
+            let lastValue = i;
+            for (let j = 0; j <= s2.length; j++) {
+                if (i == 0) costs[j] = j;
+                else {
+                    if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) != s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+            }
+            if (i > 0) costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
         const visitasBadge = document.getElementById("visitor-badge");
@@ -1696,13 +1674,10 @@ function startSalesNotifications() {
     });
 
 
-
-
- // --- FUNÇÃO DE SALVAR LOCALMENTE (CORRIGIDA) ---
+    // --- FUNÇÃO DE SALVAR LOCALMENTE (CORRIGIDA) ---
     function saveOrderLocally(items, total, externalId) {
         if(!user) return;
         
-        // AQUI ESTAVA O ERRO: A variável 'order' precisa ser criada assim:
         const order = {
             id: externalId,
             date: new Date().toLocaleDateString('pt-BR'),
@@ -1786,31 +1761,38 @@ function startSalesNotifications() {
         });
     }
 
-        formData.append('payload_json', JSON.stringify(payloadJson));
-        formData.append('file', file);
+//FUNCOES DE BLOQUEIO BOLADONAS DO MIKE / DZ Taligado?
+window.addEventListener("keydown", e => {
+  const k = e.key.toLowerCase();
 
-        fetch(WEBHOOK_URL, {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if(response.ok) {
-                closeModal('modal-checkout');
-                if(typeof cart !== 'undefined') cart = []; 
-                updateCartUI();
-                openModal('modal-success');
-            } else {
-                alert("Erro ao enviar. Verifique se a imagem não é muito pesada (Limite 8MB).");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Erro de conexão com o servidor.");
-        })
-        .finally(() => {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
+  if (
+    k === "f12" ||
+    (e.ctrlKey && k === "u") ||
+    (e.ctrlKey && k === "s") ||
+    (e.ctrlKey && k === "p") ||
+    (e.ctrlKey && e.shiftKey && ["i","j","c","k"].includes(k))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+});
+setInterval(() => {
+  const threshold = 160;
+  if (
+    window.outerWidth - window.innerWidth > threshold ||
+    window.outerHeight - window.innerHeight > threshold
+  ) {
+    document.documentElement.innerHTML = "";
+    alert("DevTools detectado 👀");
+    location.reload();
+  }
+}, 500);
+
+["contextmenu","selectstart","copy","cut","paste"].forEach(ev =>
+  document.addEventListener(ev, e => e.preventDefault())
+);
+
 </script>
 </body>
 </html>
