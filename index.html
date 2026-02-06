@@ -1827,29 +1827,6 @@ window.addEventListener("keydown", e => {
     return false;
   }
 });
-setInterval(() => {
-  const threshold = 160;
-  if (
-    window.outerWidth - window.innerWidth > threshold ||
-    window.outerHeight - window.innerHeight > threshold
-  ) {
-    document.documentElement.innerHTML = "";
-    alert("DevTools detectado 👀");
-    location.reload();
-  }
-}, 500);
-(function loop(){
-  debugger;
-  setTimeout(loop, 50);
-})();
-["contextmenu","selectstart","copy","cut","paste"].forEach(ev =>
-  document.addEventListener(ev, e => e.preventDefault())
-);
-setInterval(() => {
-  if (!document.hasFocus()) {
-    location.reload();
-  }
-}, 1000);
 
 </script>
 </body>
