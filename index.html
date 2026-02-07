@@ -10,19 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS GERAL E DO TEMA */
-        :root {
-            --primary: #ff0000;     
-            --secondary: #050505;  
-            --aura: #ff0000;         
-            --sidebar-bg: #0a0a0a;
-            --card-bg: #111;
-            --text-white: #ffffff;
-            --success: #00ff88;
-            --old-price: #666;       
-            --discount-bg: #ff0000;  
-            --gold: #ff0000; 
-        }
+:root {
+    --primary: #ff0000;     
+    --secondary: #050505;  
+    --aura: #ff0000;         
+    --sidebar-bg: #0a0a0a;
+    --card-bg: #111;
+    --text-white: #ffffff;
+    --success: #00ff88;
+    --old-price: #666;       
+    --discount-bg: #ff0000;  
+    --gold: #ff0000;
+    
+    --cat-size: 140px;     
+    --cat-height: 130px;   
+    --icon-size: 32px;     
+    --prod-size: 220px;     
+}
 
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
@@ -49,7 +53,6 @@
             background: rgba(0, 0, 0, 0.92); z-index: -1; 
         }
 
-
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 150; display: none; backdrop-filter: blur(3px);
@@ -62,7 +65,6 @@
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
 
         h1, h2, h3 { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-
 
         .checkout-section { margin-bottom: 20px; }
         .checkout-label { color: var(--success); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; border-left: 3px solid var(--success); padding-left: 10px; }
@@ -161,19 +163,27 @@
         .search-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--aura); }
         .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; }
 
-        .grid-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .card-cat {
-            background: #111; border: 1px solid #333; border-radius: 10px; height: 130px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; text-align: center; padding: 10px;
-        }
-        .card-cat:hover { 
-            border-color: var(--primary); transform: translateY(-5px); 
-            box-shadow: 0 0 20px var(--aura); 
-        }
-        .card-cat i { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
+.grid-cats { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(var(--cat-size), 1fr)); 
+    gap: 15px; 
+}
+.card-cat {
+    background: #111; border: 1px solid #333; border-radius: 10px; 
+    height: var(--cat-height); 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s; text-align: center; padding: 10px;
+}
+.card-cat i { 
+    font-size: var(--icon-size); 
+    color: var(--primary); margin-bottom: 10px; 
+}
 
-        .grid-prods { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.grid-prods { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(var(--prod-size), 1fr)); 
+    gap: 20px; 
+}
         .card-prod {
             background: #111; border: 1px solid #333; border-radius: 10px; overflow: hidden;
             display: flex; flex-direction: column; transition: 0.3s; position: relative;
@@ -200,7 +210,7 @@
         }
         .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .card-prod:hover .prod-img img { transform: scale(1.1); }
-        .emoji-fallback { font-size: 3.5rem; opacity: 0.7; }
+        .emoji-fallback { font-size: 4rem; opacity: 1; text-shadow: 0 0 20px var(--primary); }
         .prod-body { padding: 15px; flex: 1; display: flex; flex-direction: column; }
         .prod-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; min-height: 35px; }
         .prod-desc { font-size: 11px; color: #888; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -258,6 +268,7 @@
             width: 100%; background: #222; border: 1px solid #444; color: #fff;
             padding: 12px; margin-bottom: 15px; border-radius: 5px; user-select: text;
         }
+        select.input-box { cursor: pointer; appearance: none; -webkit-appearance: none; }
         
         .file-upload-box {
             border: 2px dashed #444; border-radius: 8px; padding: 20px; text-align: center;
@@ -468,6 +479,12 @@
                 <label>Aura/Brilho</label>
                 <input type="color" id="picker-aura" value="#ff0000" oninput="updateThemeColor(this.value, 'aura')">
             </div>
+            <div class="custom-section-title" style="margin-top:20px;">📏 TAMANHO DA LOJA</div>
+    <div class="color-picker-row">
+        <label>Escala (Categorias)</label>
+        <input type="range" id="size-slider" min="100" max="160" value="100" step="10" oninput="updateStoreScale(this.value)" style="width: 50%; cursor: pointer;">
+        <span id="scale-display" style="font-size:12px; color:#888; width: 40px; text-align:right;">100%</span>
+    </div>
             <div class="custom-section-title" style="margin-top:20px;">🖼️ PLANO DE FUNDO</div>
             <div class="custom-tabs">
                 <button class="tab-btn active" id="btn-upload" onclick="switchBgTab('upload')">📁 UPLOAD</button>
@@ -541,8 +558,8 @@
             </div>
             <div style="margin-bottom:15px;">
                 <label style="color:#888; font-size:12px; font-weight:bold;">QUANTIDADE</label>
-                <input type="number" id="social-qtd" class="input-box" placeholder="Mínimo: 0" oninput="updateSocialTotal()">
-                <div id="social-min-feedback" style="font-size:11px; color:#666; text-align:right; margin-top:-10px; margin-bottom:10px;">Mínimo: 100</div>
+                <input type="number" id="social-qtd" class="input-box" placeholder="Mínimo: 20" oninput="updateSocialTotal()">
+                <div id="social-min-feedback" style="font-size:11px; color:#666; text-align:right; margin-top:-10px; margin-bottom:10px;">Mínimo: 20</div>
             </div>
             <div style="border-top:1px solid #333; margin-top:15px; padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:bold;">TOTAL:</span>
@@ -563,6 +580,7 @@
         </div>
         <div class="menu-list">
             <div class="menu-item active" onclick="nav('home'); toggleSidebar()"><i class="fas fa-home"></i> Início</div>
+            <div class="menu-item" id="btn-smm" onclick="openSMMSidebar(); toggleSidebar()"><i class="fas fa-rocket"></i> Painel SMM</div>
             <div class="menu-item secret-tab hidden" id="btn-secret" onclick="openSecretTab(); toggleSidebar()">
                 <i class="fas fa-key"></i> TEMPO LIMITADO
             </div>
@@ -652,7 +670,7 @@
         <div id="chat-mode-select" style="display:flex; flex-direction:column; height:100%; justify-content:center; align-items:center; gap:15px; padding:20px;">
             <p style="color:#ccc; text-align:center;">Como deseja ser atendido?</p>
             <button onclick="startChatMode('ai')" class="btn-buy" style="width:100%; padding:15px; border-color:var(--success); color:var(--success);">
-                <i class="fas fa-robot"></i> INTELIGÊNCIA ARTIFICIAL (EM DEV, NAO CLIQUE)
+                <i class="fas fa-robot"></i> INTELIGÊNCIA ARTIFICIAL
             </button>
             <button onclick="startChatMode('human')" class="btn-buy" style="width:100%; padding:15px;">
                 <i class="fas fa-headset"></i> FALAR COM HUMANO
@@ -676,18 +694,46 @@
     const PIX_KEY = "dd17e932-f294-478f-9abf-fff070abcf91";
     const CHAT_WEBHOOK = "https://discord.com/api/webhooks/1469088429059997797/pr4ktlLzwM4uLa_QHlCO03W-7A-gMMNuCor5TEppFxovsbHgpFcFUpr37hW5xMxtR90-";
 
-    const couponsDB = {'VEMCOMAGENTE': 0.05,};
+    const couponsDB = {'VEMCOMAGENTE': 0.05, 'BLACKDZ': 0.10};
     const streamingOptions = ['Netflix', 'Prime Video', 'HBO Max', 'Globo Play', 'Crunchyroll', 'YouTube Premium', 'Paramount+', '+18 (Privacy)'];
 
     const fakeNames = [
         "Gabriel S.", "Lucas M.", "Ana Clara", "Felipe D.", "darkzin", "Killer77", "Joao123", "Maria Eduarda", 
-        "Pedro H.", "Rafaela", "NinjaBr", "Ghost", "Spectre", "LuffyFan", "NarutoUzumaki", "GamerX", "ProPlayer", 
-        "NoobMaster", "Slayer", "Viper", "Phoenix", "JettMain", "SageRes", "CypherCam", "OmenTp", "Brimstone", 
-        "SovaDart", "ReynaFlash", "RazeGrenade", "BreachStun", "KilljoyTurret", "SkyeHeal", "YoruClone", "AstraStar", 
-        "KayoKnife", "ChamberTrap", "NeonSlide", "FadeEye", "HarborWater", "GekkoPet", "DeadlockNet", "IsoShield", 
-        "CloveSmoke", "VyseThorn", "TeemoSup", "Yasuo0/10", "LeeSinQ", "ZedShadow", "AhriCharm", "LuxUlt"
+        "Pedro H.", "Rafaela", "NinjaBr", "Ghost", "Spectre", "LuffyFan", "NarutoUzumaki", "GamerX", "ProPlayer"
     ];
 
+
+    const socialConfig = {
+        'instagram': [
+            { id: 'insta_seg', name: 'Seguidores', price: 0.010, min: 20 }, 
+            { id: 'insta_like', name: 'Curtidas', price: 0.010, min: 20 }   
+        ],
+        'tiktok': [
+            { id: 'ttk_seg', name: 'Seguidores', price: 0.015, min: 20 },   
+            { id: 'ttk_like', name: 'Curtidas', price: 0.010, min: 20 }
+        ],
+        'youtube': [
+            { id: 'yt_view', name: 'Visualizações', price: 0.020, min: 20 },
+            { id: 'yt_like', name: 'Likes', price: 0.010, min: 20 }
+        ],
+        'twitch': [
+            { id: 'tw_seg', name: 'Seguidores', price: 0.010, min: 20 },
+            { id: 'tw_view_vid', name: 'Views (Vídeo)', price: 0.010, min: 20 },
+            { id: 'tw_view_live', name: 'Views Live (1h)', price: 0.030, min: 20 }
+        ],
+        'kwai': [
+            { id: 'kw_like', name: 'Curtidas', price: 0.015, min: 20 },
+            { id: 'kw_seg', name: 'Seguidores', price: 0.030, min: 20 }
+        ],
+        'facebook': [
+            { id: 'fb_seg', name: 'Seguidores', price: 0.015, min: 20 },
+            { id: 'fb_like', name: 'Curtidas', price: 0.015, min: 20 }
+        ],
+        'discord': [
+            { id: 'dc_off', name: 'Membros Offline', price: 0.020, min: 20 },
+            { id: 'dc_on', name: 'Membros Online', price: 0.030, min: 20 }
+        ]
+    };
     const multiSelectLists = {
     'streamings': [
         { name: 'Crunchyroll', price: 3.90 },
@@ -812,11 +858,17 @@
         { name: "CONTA GRAVITY + GDH", price: 16.00 },
     ],
 };
-
-    let currentSelectList = [];
     
     const db = [
-        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
+        { id: 9001, name: "Instagram Painel", price: 0.00, image: "<i class='fab fa-instagram' style='color:#E1306C; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "insta", special: "social-modal", socialPlatform: "instagram", desc: "Seguidores e Curtidas. Entrega Automática." },
+        { id: 9002, name: "TikTok Painel", price: 0.00, image: "<i class='fab fa-tiktok' style='color:#00f2ea; text-shadow:2px 2px #ff0050; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "tiktok", special: "social-modal", socialPlatform: "tiktok", desc: "Seguidores e Likes. Cresça seu perfil." },
+        { id: 9003, name: "YouTube Painel", price: 0.00, image: "<i class='fab fa-youtube' style='color:#FF0000; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "youtube", special: "social-modal", socialPlatform: "youtube", desc: "Views e Likes para seus vídeos." },
+        { id: 9004, name: "Twitch Painel", price: 0.00, image: "<i class='fab fa-twitch' style='color:#9146FF; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "twitch", special: "social-modal", socialPlatform: "twitch", desc: "Seguidores e Views para Live/VOD." },
+        { id: 9005, name: "Kwai Painel", price: 0.00, image: "<i class='fas fa-video' style='color:#ff8800; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "kwai", special: "social-modal", socialPlatform: "kwai", desc: "Curtidas e Seguidores no Kwai." },
+        { id: 9006, name: "Facebook Painel", price: 0.00, image: "<i class='fab fa-facebook' style='color:#1877F2; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "facebook", special: "social-modal", socialPlatform: "facebook", desc: "Seguidores e Likes para Páginas." },
+        { id: 9007, name: "Discord Painel", price: 0.00, image: "<i class='fab fa-discord' style='color:#5865F2; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "discord", special: "social-modal", socialPlatform: "discord", desc: "Membros Online e Offline para Servidor." },
+
+         { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
         { id: 2, name: "Monte seu Combo 3 Streamings", price: 14.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", tags: "combo, netflix, hbo, disney, barato", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
         { id: 3, name: "Pacote Completo Streamings", price: 22.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "Streamings", tags: "tudo liberado, canais, filmes", desc: "Acesso a múltiplas plataformas de streaming" },
         { id: 4, name: "Game Pass Ultimate - 1 Mês (Comp.)", price: 9.90, image: "https://i.imgur.com/6e0HPd0.jpeg", cat: "Xbox", tags: "gamepass, microsoft, xcloud, nuvem", desc: "Conta compartilhada, EA PLAY e xCloud inclusos" },
@@ -912,17 +964,15 @@
         { id: 3090, name: "BRAINROTS COM EVENTOS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469002523054317/AOI_d_8Q81vFOBEMVT_68IasDigB3N9VEtDoJUDnh3ZBK8x08Zdg2snNDxc2ytxZ40J7sENBAqh9mbeCBmkhzv8famjpRNEV7bn9I8OH2fCwyhTDZVMb90ndC-qx_PZqMXxdaV9QmCRYVeoIb07sxO5cOPmmoBbIdhP95oUGvNWHQQQh5Lm3TAs1024-rj.png?ex=697cdb2f&is=697b89af&hm=6a0a71ce68b4f268604c3aac8ee54d0de17fd1a7e2aeaee382e8b4c0abae39fb&",  cat: "Brainrots", sub: "steal",desc: "Escolha quais Brainrots (aleatorio) com evento você quer?", special: "multi-select",selectKey: "brainrot_elements"},
         { id: 3091, name: "LUCKY BLOCKS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466466917618422074/AOI_d__lDQUX0fL_7vYUAuUJMvyObwYw_q1hkEGeHXKNnECvWLA9sVZCKwjQCSslTd1xvCIS5-6Ro_KsZ_cN5khU9xE9Clk8heccgVMlNygcmwnEWhsBuszVYkBk1Y1PnSFxJI0TuKmfV3L5miHwibeV-Uxg1IQ6t_GD_88jEvsNdpt1kB1ioAs1024-rj.png?ex=697cd93e&is=697b87be&hm=663e1297b6a48093b6c77242b32a6d3bc73a1d4c0a6456168475ae1bc415c36d&", cat: "Brainrots", sub: "steal",desc: "Varios Tipo de Lucky Blocks!.", special: "multi-select",selectKey: "lucky_blocks"},
         { id: 3092, name: "BRAINROTS [50M a 1B]", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466468341089570979/AOI_d_-kPBTLMohPzPrV_O8LYla59R-UDmcfvj9NuPu54u4MAGVp1gKWC00_0UmzSoPyckGHbrrDhhIOsZcmFJ0bbRXkSlYVKcjwTStviVYY4fbGV5wMhyXsk_bO4-Wd0PdH4_DUODJ-AhXeo5Fz1KqwYXdiWAQj-XWfoYQr-rYuMh2C8PR-Ags1024-rj.png?ex=697cda92&is=697b8912&hm=a1af8e10d7d9890885f4d12689f82f9f79bfe1cc521fb181cfbc03f71fddfc41&", cat: "Brainrots", sub: "steal",desc: "Selecione a quatia que quer que o brainrot (radom) venha! (50M até 1B).", special: "multi-select",selectKey: "high_power"},
-        { id: 9001, name: "Serviços Instagram", price: 0.00, image: "https://i.imgur.com/PayuTNR.png", cat: "Redes Sociais", sub: "insta", special: "social-modal", socialPlatform: "instagram", desc: "Seguidores e Curtidas. Qualidade Premium." },
-        { id: 9002, name: "Serviços TikTok", price: 0.00, image: "https://i.imgur.com/9YaQAlZ.png", cat: "Redes Sociais", sub: "tiktok", special: "social-modal", socialPlatform: "tiktok", desc: "Seguidores, Views e Likes." },
     ];
 
     const icons = {
         "streamings": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
-        "jogos": "fab fa-steam", "roblox": "fas fa-square\" style=\"transform: rotate(15deg)", "blox fruits": "fas fa-dragon",
+        "jogos": "fab fa-steam", "roblox": "fas fa-square", "blox fruits": "fas fa-dragon",
         "brainrots": "fas fa-brain","scripts": "fas fa-code",
         "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
         "gta v": "fas fa-car", "db rage": "fas fa-fire", "cupons": "fas fa-ticket-alt",
-        "painéis": "fas fa-rocket","redes sociais": "fas fa-hashtag", "tudo por 5,90": "fas fa-fire-alt", "fornecedores": "fas fa-truck-loading", "cursos": "fas fa-graduation-cap"
+        "painéis": "fas fa-rocket","🚀 painel smm": "fas fa-hashtag", "tudo por 5,90": "fas fa-fire-alt", "fornecedores": "fas fa-truck-loading", "cursos": "fas fa-graduation-cap"
     };
 
     let cart = [];
@@ -932,19 +982,6 @@
     let selectedAlaCarte = [];
     let secretCats = ['Tudo por 5,90', 'Fornecedores', 'Cursos'];
     let currentContactType = '';
-    
-    const socialConfig = {
-        'instagram': [
-            { id: 'insta_seg', name: 'Seguidores', price: 0.01, min: 100, unitName: 'segs' }, 
-            { id: 'insta_like', name: 'Curtidas', price: 0.01, min: 25, unitName: 'likes' }   
-        ],
-        'tiktok': [
-            { id: 'ttk_like', name: 'Curtidas', price: 0.005, min: 25, unitName: 'likes' },   
-            { id: 'ttk_view', name: 'Visualizações', price: 0.005, min: 100, unitName: 'views' }, 
-            { id: 'ttk_seg', name: 'Seguidores', price: 0.015, min: 100, unitName: 'segs' }   
-        ]
-    };
-
     let currentSocialPlatform = '';
 
     function openSocialModal(platform) {
@@ -952,7 +989,16 @@
         const services = socialConfig[platform];
         if(!services) return alert("Em manutenção.");
 
-        const titleMap = { 'instagram': '<i class="fab fa-instagram"></i> INSTAGRAM', 'tiktok': '<i class="fab fa-tiktok"></i> TIKTOK' };
+        const titleMap = { 
+            'instagram': '<i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM', 
+            'tiktok': '<i class="fab fa-tiktok" style="color:#00f2ea"></i> TIKTOK',
+            'youtube': '<i class="fab fa-youtube" style="color:#FF0000"></i> YOUTUBE',
+            'twitch': '<i class="fab fa-twitch" style="color:#9146FF"></i> TWITCH',
+            'kwai': '<i class="fas fa-video" style="color:#ff8800"></i> KWAI',
+            'facebook': '<i class="fab fa-facebook" style="color:#1877F2"></i> FACEBOOK',
+            'discord': '<i class="fab fa-discord" style="color:#5865F2"></i> DISCORD'
+        };
+        
         document.getElementById('social-title').innerHTML = titleMap[platform] || 'REDES SOCIAIS';
 
         const select = document.getElementById('social-type');
@@ -999,7 +1045,6 @@
         if (!qty || qty < minQty) return alert(`A quantidade mínima para ${serviceName} é ${minQty}.`);
 
         const total = qty * pricePerUnit;
-        
         const productName = `[${currentSocialPlatform.toUpperCase()}] ${serviceName} - Qtd: ${qty} (Link: ${link})`;
 
         addToCart(productName, total);
@@ -1014,6 +1059,7 @@
             updateUserDisplay();
         }
         loadTheme();
+        loadScale();
         if(!EXIBIR_ABA_SECRETA) document.getElementById('btn-secret').classList.add('hidden');
         else document.getElementById('btn-secret').classList.remove('hidden');
         renderCats();
@@ -1055,9 +1101,9 @@
         document.getElementById('btn-secret').classList.add('active');
     }
 
-    function renderCats() {
+function renderCats() {
         const allCats = [...new Set(db.map(i => i.cat))];
-        const homeCats = allCats.filter(c => !secretCats.includes(c));
+        const homeCats = allCats.filter(c => !secretCats.includes(c) && c !== '🚀 Painel SMM');
         const exclusiveCats = allCats.filter(c => secretCats.includes(c));
         document.getElementById('container-cats').innerHTML = homeCats.map(c => `
             <div class="card-cat" onclick="openCat('${c}')"><i class="${icons[c.toLowerCase()] || 'fas fa-gamepad'}"></i><span>${c}</span></div>`).join('');
@@ -1088,34 +1134,12 @@
         const container = document.getElementById('container-prods');
         container.innerHTML = '';
         
-        if (catName === 'Redes Sociais') {
-            const insta = items.filter(i => i.sub === 'insta');
-            const tiktok = items.filter(i => i.sub === 'tiktok');
-            const outros = items.filter(i => i.sub !== 'insta' && i.sub !== 'tiktok');
-
-            if (insta.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fab fa-instagram"></i> INSTAGRAM</div>` + generateProductHTML(insta);
-            if (tiktok.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fab fa-tiktok"></i> TIKTOK</div>` + generateProductHTML(tiktok);
-            if (outros.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-plus"></i> EM BREVE</div>` + generateProductHTML(outros);
-        } else if (catName === 'Jogos') {
+        if (catName === 'Jogos') {
             const keys = items.filter(i => i.sub === 'key');
             const games = items.filter(i => i.sub === 'game');
             if (keys.length > 0) { container.innerHTML += `<div class="subcat-divider"><i class="fas fa-key"></i> KEYS RANDOM & STEAM</div>` + generateProductHTML(keys); }
             if (games.length > 0) { container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-gamepad"></i> JOGOS PC (OFFLINE/CONTA)</div>` + generateProductHTML(games); }
         } 
-        else if (catName === 'Blox Fruits') {
-            const perms = items.filter(i => i.sub === 'perm');
-            const gamepasses = items.filter(i => i.sub === 'gamepass');
-            const accounts = items.filter(i => i.sub === 'account');
-            if (perms.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fas fa-gem"></i> FRUTAS PERMANENTES</div>` + generateProductHTML(perms);
-            if (gamepasses.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-scroll"></i> GAMEPASS & ITENS</div>` + generateProductHTML(gamepasses);
-            if (accounts.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-user-ninja"></i> CONTAS UPADAS</div>` + generateProductHTML(accounts);
-        }
-        else if (catName === 'Brainrots') {
-             const steal = items.filter(i => i.sub === 'steal');
-            const tsunami = items.filter(i => i.sub === 'tsunami');
-            if (steal.length > 0) container.innerHTML += `<div class="subcat-divider"><i class="fas fa-mask"></i> ROUBE UM BRAINROT</div>` + generateProductHTML(steal);
-            if (tsunami.length > 0) container.innerHTML += `<div class="subcat-divider" style="margin-top:40px;"><i class="fas fa-water"></i> TSUNAMI DE BRAINROTS</div>` + generateProductHTML(tsunami);
-        }
         else { container.innerHTML = generateProductHTML(items); }
     }
 
@@ -1124,36 +1148,39 @@
             const isHighlight = p.special === 'highlight' || p.special === 'multi-select';
             const highlightClass = isHighlight ? 'highlight' : '';
             const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
+
             const oldPrice = p.price > 0 ? (p.price * 1.6).toFixed(2) : "---"; 
-            const discountPercent = p.price > 0 ? Math.round(((p.price * 1.6 - p.price) / (p.price * 1.6)) * 100) : 0;
+            const showPrice = p.price > 0 ? `R$ ${p.price.toFixed(2)}` : "A partir de 0.01";
+            
             let btnText = 'ADICIONAR';
             if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
             if(p.special === 'multi-select') btnText = 'Escolher'; 
+            if(p.special === 'social-modal') btnText = 'CONFIGURAR';
+            
             const safeName = p.name.replace(/'/g, "\\'");
             let clickAction = `addToCart('${safeName}', ${p.price})`;
             if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
             else if (p.special === 'multi-select') clickAction = `openMultiSelect('${p.selectKey}')`;
             else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`; 
+            
             return `
             <div class="card-prod ${highlightClass}" onclick="${clickAction}">
                 ${badge}
-                <div class="badge-discount">-${discountPercent}%</div>
                 <div class="prod-img">
-                    ${p.image.includes('http') || p.image.includes('data:image') ? `<img src="${p.image}">` : `<div class="emoji-fallback">${p.image}</div>`}
+                    ${p.image.includes('http') || p.image.includes('data:image') || p.image.includes('</i>') ? (p.image.includes('</i>') ? `<div class="emoji-fallback">${p.image}</div>` : `<img src="${p.image}">`) : `<div class="emoji-fallback">${p.image}</div>`}
                 </div>
                 <div class="prod-body">
                     <div class="prod-title">${p.name}</div>
                     <div class="prod-desc">${p.desc}</div>
                     <div class="price-container">
-                        <span class="price-old">R$ ${oldPrice}</span>
-                        <span class="prod-price">R$ ${p.price.toFixed(2)}</span>
+                        ${p.price > 0 ? `<span class="price-old">R$ ${oldPrice}</span>` : ''}
+                        <span class="prod-price">${showPrice}</span>
                     </div>
                     <button class="btn-buy" onclick="event.stopPropagation(); ${clickAction}">${btnText}</button>
                 </div>
             </div>`;
         }).join('');
     }
-
 
     function doSearch(val) {
         if(!val) return nav('home');
@@ -1213,8 +1240,6 @@
         document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
     }
     
-
-    
     function openCheckout() {
         if(cart.length === 0) return alert("Seu carrinho está vazio!");
         if(!user) return alert("Faça login para continuar!");
@@ -1236,7 +1261,6 @@
         document.getElementById('payment-proof-file').value = "";
         document.getElementById('file-name-display').innerText = "Clique para selecionar o arquivo";
         document.getElementById('terms-check').checked = false; 
-        
         
         openModal('modal-checkout');
     }
@@ -1286,30 +1310,10 @@
     }
     function openMultiSelect(key) {
         selectedAlaCarte = []; 
-        currentSelectList = multiSelectLists[key]; 
-        if(!currentSelectList) return alert("Erro: Lista não encontrada.");
-        const div = document.getElementById('alacarte-options');
-        document.querySelector('#modal-streaming-select h2').innerText = "MONTE SEU PACOTE";
-        div.innerHTML = currentSelectList.map((item, index) => `<div class="checkbox-item" style="justify-content: space-between;"><div style="display:flex; align-items:center; gap:10px;"><input type="checkbox" id="multi-${index}" value="${index}" onchange="updateMultiSelectTotal()"><label for="multi-${index}">${item.name}</label></div><span style="color:var(--success); font-weight:bold;">R$ ${item.price.toFixed(2)}</span></div>`).join('');
-        updateMultiSelectTotal();
-        openModal('modal-streaming-select');
-    }
-    function updateMultiSelectTotal() {
-        let total = 0; selectedAlaCarte = []; 
-        currentSelectList.forEach((item, index) => {
-            const checkbox = document.getElementById(`multi-${index}`);
-            if(checkbox && checkbox.checked) { total += item.price; selectedAlaCarte.push(item); }
-        });
-        document.getElementById('alacarte-total').innerText = `R$ ${total.toFixed(2)}`;
-    }
-    function confirmStreamingSelect() { 
-        if(selectedAlaCarte.length === 0) return alert("Selecione pelo menos um item!");
-        let totalFinal = 0; let names = [];
-        selectedAlaCarte.forEach(i => { totalFinal += i.price; names.push(i.name); });
-        addToCart(`Pack Personalizado (${names.length} itens) [${names.join(' + ')}]`, totalFinal);
-        closeModal('modal-streaming-select');
-    }
 
+        alert('Em breve');
+    }
+    
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
     
@@ -1323,14 +1327,12 @@
         const usersDB = JSON.parse(localStorage.getItem('blackdz_users_db')) || {};
 
         if (usersDB[userInput]) {
-
             if (usersDB[userInput] === passInput) {
                 loginSuccess(userInput);
             } else {
                 alert("Senha incorreta!");
             }
         } else {
-
             usersDB[userInput] = passInput;
             localStorage.setItem('blackdz_users_db', JSON.stringify(usersDB));
             alert("Conta criada com sucesso!");
@@ -1349,12 +1351,9 @@
     function updateUserDisplay() { document.getElementById('user-display').innerText = user; document.getElementById('avatar-letter').innerText = user.charAt(0).toUpperCase(); }
     function logout() { localStorage.removeItem('blackdz_current_user'); location.reload(); }
     
-function toggleSidebar() { 
-
+    function toggleSidebar() { 
         if (window.innerWidth > 768) return;
-
         document.getElementById('sidebar').classList.toggle('active'); 
-
         const overlay = document.querySelector('.sidebar-overlay');
         if (document.getElementById('sidebar').classList.contains('active')) {
             overlay.classList.add('active');
@@ -1411,49 +1410,33 @@ function toggleSidebar() {
         location.reload();
     }
 
-function startSalesNotifications() {
-    const loop = () => {
+    function startSalesNotifications() {
+        const loop = () => {
+            const hour = new Date().getHours();
+            let chance = (hour >= 1 && hour <= 6) ? 0.3 : 0.7;
+            let delay = Math.floor(Math.random() * (600000 - 60000)) + 60000;
 
-        const hour = new Date().getHours();
-
-
-        let chance = (hour >= 1 && hour <= 6) ? 0.3 : 0.7;
-
-
-        let delay = Math.floor(Math.random() * (600000 - 60000)) + 60000;
-
-        setTimeout(() => {
-
-
-            if (Math.random() < chance) {
-                showFakeNotification();
-
-
-                if (Math.random() < 0.2) {
-                    setTimeout(showFakeNotification, 3000);
+            setTimeout(() => {
+                if (Math.random() < chance) {
+                    showFakeNotification();
+                    if (Math.random() < 0.2) setTimeout(showFakeNotification, 3000);
                 }
-            }
-
-            loop();
-        }, delay);
-    };
-
-
-    setTimeout(showFakeNotification, 5000);
-    loop();
-}
+                loop();
+            }, delay);
+        };
+        setTimeout(showFakeNotification, 5000);
+        loop();
+    }
 
     function showFakeNotification() {
         const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-
-        const validProducts = db.filter(p => p.price > 0);
+        const validProducts = db.filter(p => p.price > 0 || p.sub === 'insta' || p.sub === 'tiktok');
         const randomProd = validProducts[Math.floor(Math.random() * validProducts.length)];
         
         const toast = document.getElementById('fake-toast');
         const img = document.getElementById('fake-img');
         const title = document.getElementById('fake-title');
         const text = document.getElementById('fake-text');
-
 
         if(randomProd.image.includes('http')) img.src = randomProd.image;
         else img.src = 'https://i.imgur.com/Ljpes5c.png'; 
@@ -1462,29 +1445,16 @@ function startSalesNotifications() {
         text.innerHTML = `<span>${randomProd.name}</span> acabou de sair!`;
 
         toast.classList.add('show');
-
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 5000);
+        setTimeout(() => { toast.classList.remove('show'); }, 5000);
     }
 
 
-
-// --- VARIÁVEIS GLOBAIS DO CHAT (TEM QUE FICAR NO TOPO DESTA SEÇÃO) ---
-    var chatMode = null;            // Usei 'var' para garantir compatibilidade global
+    var chatMode = null;
     var humanContactSent = false;
     var tempContact = "";
 
-    // --- FUNÇÕES DO CHAT ---
-    function toggleChat() { 
-        document.getElementById('chat-box').classList.toggle('active'); 
-    }
-
-    function handleChat(e) { 
-        if(e.key === 'Enter') sendChatMessage(); 
-    }
-
+    function toggleChat() { document.getElementById('chat-box').classList.toggle('active'); }
+    function handleChat(e) { if(e.key === 'Enter') sendChatMessage(); }
     function resetChat() {
         document.getElementById('chat-mode-select').style.display = 'flex';
         document.getElementById('chat-interface').style.display = 'none';
@@ -1493,9 +1463,8 @@ function startSalesNotifications() {
         humanContactSent = false;
         tempContact = ""; 
     }
-
     function startChatMode(mode) {
-        chatMode = mode; // Agora a variável já existe lá em cima
+        chatMode = mode;
         document.getElementById('chat-mode-select').style.display = 'none';
         document.getElementById('chat-interface').style.display = 'flex';
         const area = document.getElementById('chat-messages');
@@ -1506,7 +1475,6 @@ function startSalesNotifications() {
             area.innerHTML = `<div class="msg bot">👤 <b>Suporte Humano</b><br>Para começar, digite seu <b>Discord ou WhatsApp</b> para que a gente possa te responder depois.</div>`;
         }
     }
-
     function sendChatMessage() {
         const input = document.getElementById('chat-input');
         const txt = input.value.trim();
@@ -1527,16 +1495,13 @@ function startSalesNotifications() {
             }, 1000);
 
         } else if (chatMode === 'human') {
-            
             if(!humanContactSent) {
                 tempContact = txt;
                 humanContactSent = true;
-
                 setTimeout(() => {
                       area.innerHTML += `<div class="msg bot">Certo! Anotei seu contato: <b>${tempContact}</b>.<br>Agora, digite sua dúvida ou o motivo do chamado para eu enviar tudo para o suporte. 👇</div>`;
                       area.scrollTop = area.scrollHeight;
                 }, 600);
-
             } else {
                 const embedPayload = {
                     title: "🔔 NOVO CHAMADO DE SUPORTE",
@@ -1570,130 +1535,70 @@ function startSalesNotifications() {
 
     const BlackDzAI = {
         process: (text, area) => {
-            text = text.toLowerCase().replace(/[áàãâä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i').replace(/[óòõôö]/g, 'o').replace(/[úùûü]/g, 'u').replace(/ç/g, 'c');
-            let response = "";
-
-            const categories = [...new Set(db.map(x => x.cat.toLowerCase()))];
-            let bestCatMatch = { name: null, score: 0 };
+            text = text.toLowerCase();
+            let response = "Não achei esse produto... 😕 Tente outra palavra-chave.";
             
-            categories.forEach(c => {
-                const score = similarity(c, text);
-                if (score > 0.65 && score > bestCatMatch.score) bestCatMatch = { name: c, score: score };
-                if (text.includes(c)) bestCatMatch = { name: c, score: 1 };
-            });
-
-            if (bestCatMatch.score > 0.7 || (text.includes('ir para') && bestCatMatch.name)) {
-                const realCatName = [...new Set(db.map(x => x.cat))].find(x => x.toLowerCase() === bestCatMatch.name);
-                openCat(realCatName);
-                response = `Abri a categoria **${realCatName}** para você! Dá uma olhada nas ofertas. 😎`;
-            }
-            else if (text.includes('cor') || text.includes('tema') || text.includes('muda')) {
-                const colors = { 'azul':'#0000ff', 'vermelho':'#ff0000', 'verde':'#00ff00', 'roxo':'#800080', 'rosa':'#ff00ff', 'amarelo':'#ffff00', 'laranja':'#ffa500', 'preto':'#000000', 'branco':'#ffffff' };
-                let colorFound = null;
-                for (let c in colors) { if (text.includes(c)) colorFound = colors[c]; }
-
-                if (colorFound) {
-                    updateThemeColor(colorFound, 'primary'); updateThemeColor(colorFound, 'aura');
-                    response = `Visual atualizado para **${Object.keys(colors).find(key => colors[key] === colorFound)}**. Ficou top? 🎨`;
-                } else if (text.includes('reset') || text.includes('padrao')) {
-                    resetTheme(); response = "Resetei o tema para o padrão da BlackDz (Vermelho e Preto). 🔴⚫";
-                }
-            }
-            else if (text.includes('comprar') || text.includes('quero') || text.includes('tem') || text.length > 2) {
+            if (text.includes('comprar') || text.includes('quero') || text.includes('tem') || text.length > 2) {
                 let matches = db.map(p => {
-                    const nameScore = similarity(p.name, text);
-                    const descScore = similarity(p.desc || "", text);
-                    const includesBonus = (p.name.toLowerCase().includes(text) || (p.desc && p.desc.toLowerCase().includes(text))) ? 0.3 : 0;
-                    return { product: p, score: Math.max(nameScore, descScore) + includesBonus };
-                }).filter(x => x.score > 0.55).sort((a, b) => b.score - a.score);
+                    const includes = (p.name.toLowerCase().includes(text) || (p.desc && p.desc.toLowerCase().includes(text))) ? 1 : 0;
+                    return { product: p, score: includes };
+                }).filter(x => x.score > 0);
 
                 if (matches.length > 0) {
                     const topMatch = matches[0].product;
-                    if (text.includes('comprar') || text.includes('carrinho')) {
-                        addToCart(topMatch.name, topMatch.price);
-                        response = `Beleza! Adicionei **${topMatch.name}** ao seu carrinho. 🛒`;
-                    } else {
-                        const safeName = topMatch.name.replace(/'/g, "\\'");
-                        const imgHTML = topMatch.image.includes('http') || topMatch.image.includes('data:image') ? `<img src="${topMatch.image}">` : `<div style="font-size:24px;">${topMatch.image}</div>`;
-                        response = `Encontrei: <b>${topMatch.name}</b> por <b>R$ ${topMatch.price.toFixed(2)}</b>.
-                        <div class="product-preview-chat" onclick="addToCart('${safeName}', ${topMatch.price})">
-                            ${imgHTML} <div style="flex:1;"><div style="font-size:12px; font-weight:bold; color:#fff;">${topMatch.name}</div><div style="font-size:11px; color:var(--success);">Clique para adicionar</div></div><i class="fas fa-cart-plus" style="color:#666;"></i>
-                        </div>`;
-                    }
-                } else {
-                    if (text.includes('carrinho')) { toggleCart(); response = "Abri seu carrinho! 🛒"; }
-                    else if (text.includes('oi') || text.includes('ola')) { response = "E aí! 👋 O que você procura hoje?"; }
-                    else { response = "Não achei esse produto... 😕 Tente outra palavra-chave."; }
+                    const safeName = topMatch.name.replace(/'/g, "\\'");
+                    const imgHTML = topMatch.image.includes('http') || topMatch.image.includes('data:image') || topMatch.image.includes('</i>') ? (topMatch.image.includes('</i>') ? `<div style="font-size:30px;">${topMatch.image}</div>` : `<img src="${topMatch.image}">`) : `<div style="font-size:24px;">${topMatch.image}</div>`;
+                    response = `Encontrei: <b>${topMatch.name}</b>.
+                    <div class="product-preview-chat" onclick="addToCart('${safeName}', ${topMatch.price})">
+                        ${imgHTML} <div style="flex:1;"><div style="font-size:12px; font-weight:bold; color:#fff;">${topMatch.name}</div><div style="font-size:11px; color:var(--success);">Clique para adicionar</div></div><i class="fas fa-cart-plus" style="color:#666;"></i>
+                    </div>`;
                 }
             }
             area.innerHTML += `<div class="msg bot">${response}</div>`;
             area.scrollTop = area.scrollHeight;
         }
     };
+    function updateStoreScale(val) {
+        const factor = val / 100; 
+        const root = document.documentElement.style;
+        
 
-    // Função de similaridade simples para a IA
-    function similarity(s1, s2) {
-        let longer = s1; let shorter = s2;
-        if (s1.length < s2.length) { longer = s2; shorter = s1; }
-        let longerLength = longer.length;
-        if (longerLength == 0) return 1.0;
-        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+        document.getElementById('scale-display').innerText = val + '%';
+
+        root.setProperty('--cat-size', (140 * factor) + 'px');
+        root.setProperty('--cat-height', (130 * factor) + 'px');
+        root.setProperty('--icon-size', (32 * factor) + 'px');
+        root.setProperty('--prod-size', (220 * factor) + 'px');
+        
+        localStorage.setItem('blackdz_scale', val);
     }
-    function editDistance(s1, s2) {
-        s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
-        let costs = new Array();
-        for (let i = 0; i <= s1.length; i++) {
-            let lastValue = i;
-            for (let j = 0; j <= s2.length; j++) {
-                if (i == 0) costs[j] = j;
-                else {
-                    if (j > 0) {
-                        let newValue = costs[j - 1];
-                        if (s1.charAt(i - 1) != s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                        costs[j - 1] = lastValue;
-                        lastValue = newValue;
-                    }
-                }
+
+    function loadScale() {
+        const savedScale = localStorage.getItem('blackdz_scale');
+        if(savedScale) {
+            const slider = document.getElementById('size-slider');
+            if(slider) {
+                slider.value = savedScale;
+                updateStoreScale(savedScale);
             }
-            if (i > 0) costs[s2.length] = lastValue;
         }
-        return costs[s2.length];
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const visitasBadge = document.getElementById("visitor-badge");
-        const vendasBadge = document.getElementById("sales-badge");
-        const namespace = 'blackdz-loja-oficial-2026'; 
-
-
-        visitasBadge.innerText = "9.357";
-        vendasBadge.innerText = "453";
-
-        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`).then(r=>r.json()).then(d => visitasBadge.innerText = (d.count + 9357).toLocaleString('pt-BR')).catch(()=>{});
-        fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas`).then(r=>r.json()).then(d => vendasBadge.innerText = (d.count + 453).toLocaleString('pt-BR')).catch(()=>{});
-    });
-
-
-    // --- FUNÇÃO DE SALVAR LOCALMENTE (CORRIGIDA) ---
     function saveOrderLocally(items, total, externalId) {
         if(!user) return;
-        
         const order = {
             id: externalId,
             date: new Date().toLocaleDateString('pt-BR'),
             items: items.map(i => i.name).join(', '),
             total: total
         };
-        
         const key = `blackdz_orders_${user}`;
         let orders = JSON.parse(localStorage.getItem(key)) || [];
         orders.unshift(order);
         localStorage.setItem(key, JSON.stringify(orders));
     }
 
-    // --- FUNÇÃO DE ENVIAR PEDIDO (WEBHOOK) ---
     function submitOrderToWebhook() {
-        // Validações básicas
         const contactInput = document.getElementById('buyer-contact');
         const fileInput = document.getElementById('payment-proof-file');
         const termsCheck = document.getElementById('terms-check');
@@ -1712,7 +1617,6 @@ function startSalesNotifications() {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
         btn.disabled = true;
 
-        // Prepara dados
         const safeCart = (typeof cart !== 'undefined') ? cart : [];
         const safeDiscount = (typeof activeDiscount !== 'undefined') ? activeDiscount : 0;
         const orderId = '#' + Math.floor(Math.random() * 90000 + 10000);
@@ -1722,10 +1626,8 @@ function startSalesNotifications() {
         
         const itemsReceipt = safeCart.map(i => `📦 ${i.name}\n   └─ 💵 R$ ${i.price.toFixed(2)}`).join('\n\n');
 
-        // Salva Localmente
         saveOrderLocally(safeCart, `R$ ${finalTotal.toFixed(2)}`, orderId);
 
-        // Envia Webhook
         const formData = new FormData();
         const payloadJson = {
             username: "BlackDz Sales Bot",
@@ -1761,37 +1663,42 @@ function startSalesNotifications() {
         });
     }
 
-//FUNCOES DE BLOQUEIO BOLADONAS DO MIKE / DZ Taligado?
-window.addEventListener("keydown", e => {
-  const k = e.key.toLowerCase();
+    function openSMMSidebar() {
 
-  if (
-    k === "f12" ||
-    (e.ctrlKey && k === "u") ||
-    (e.ctrlKey && k === "s") ||
-    (e.ctrlKey && k === "p") ||
-    (e.ctrlKey && e.shiftKey && ["i","j","c","k"].includes(k))
-  ) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-});
-setInterval(() => {
-  const threshold = 160;
-  if (
-    window.outerWidth - window.innerWidth > threshold ||
-    window.outerHeight - window.innerHeight > threshold
-  ) {
-    document.documentElement.innerHTML = "";
-    alert("DevTools detectado 👀");
-    location.reload();
-  }
-}, 500);
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        
 
-["contextmenu","selectstart","copy","cut","paste"].forEach(ev =>
-  document.addEventListener(ev, e => e.preventDefault())
-);
+        document.getElementById('btn-smm').classList.add('active');
+
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-secret').classList.add('hidden');
+        document.getElementById('view-orders').classList.add('hidden');
+
+        document.getElementById('view-prods').classList.remove('hidden');
+
+        const title = document.getElementById('cat-title');
+        title.innerHTML = '<i class="fas fa-rocket"></i> PAINEL SMM';
+        title.style.borderLeftColor = "var(--primary)";
+        title.style.color = "#fff";
+
+        const smmItems = db.filter(i => i.cat === "🚀 Painel SMM");
+        renderProducts(smmItems, "🚀 Painel SMM");
+    }
+
+// defesas do dz/mikey
+    window.addEventListener("keydown", e => {
+      const k = e.key.toLowerCase();
+      if (k === "f12" || (e.ctrlKey && k === "u") || (e.ctrlKey && k === "s") || (e.ctrlKey && k === "p") || (e.ctrlKey && e.shiftKey && ["i","j","c","k"].includes(k))) {
+        e.preventDefault(); e.stopPropagation(); return false;
+      }
+    });
+    setInterval(() => {
+      const threshold = 160;
+      if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+        document.documentElement.innerHTML = ""; alert("DevTools detectado 👀"); location.reload();
+      }
+    }, 500);
+    ["contextmenu","selectstart","copy","cut","paste"].forEach(ev => document.addEventListener(ev, e => e.preventDefault()));
 
 </script>
 </body>
