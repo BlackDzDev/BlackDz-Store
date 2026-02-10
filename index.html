@@ -690,15 +690,14 @@
         "CloveSmoke", "VyseThorn", "TeemoSup", "Yasuo0/10", "LeeSinQ", "ZedShadow", "AhriCharm", "LuxUlt"
     ];
 
-    const multiSelectLists = {
+   const multiSelectLists = {
     'streamings': [
-        { name: 'Netflix', price: 1.90 },
-        { name: 'Crunchyroll', price: 1.90 },
-        { name: 'Disney+', price: 1.90 },
-        { name: 'HBO Max', price: 1.90 },
-        { name: 'Prime Video', price: 1.50 },
-        { name: 'Paramount+', price: 1.50 },
-        { name: '+18 (Privacy)', price: 2.20 }
+        { name: 'Crunchyroll', price: 3.90 },
+        { name: 'Disney+', price: 4.90 },
+        { name: 'HBO Max', price: 4.90 },
+        { name: 'Prime Video', price: 4.50 },
+        { name: 'Paramount+', price: 4.50 },
+        { name: '+18 (Privacy)', price: 5.20 }
     ],
     'brainrot_elements': [
         { name: 'Brainrot Normal', price: 14.90 },
@@ -755,16 +754,20 @@
         { name: 'Outro Script (falar com suporte)', price: 5.00 },
     ],
         'robloxacc': [
-        { name: "Conta 2014 VAZIA", price: 3.00 },
-        { name: "Conta 2015 VAZIA", price: 3.80 },
-        { name: "Conta 2016 VAZIA", price: 3.72 },
-        { name: "Conta 2017 VAZIA", price: 3.00 },
-        { name: "Conta 2019 VAZIA", price: 3.00 },
-        { name: "Conta 2020 VAZIA", price: 3.00 },
+        { name: "Conta 2010 VAZIA", price: 5.00 },
+        { name: "Conta 2011 VAZIA", price: 4.00 },
+        { name: "Conta 2012 VAZIA", price: 3.80 },
+        { name: "Conta 2013 VAZIA", price: 3.60 },
+        { name: "Conta 2014 VAZIA", price: 3.40 },
+        { name: "Conta 2015 VAZIA", price: 3.20 },
     ],
         'nitro': [
         { name: "Discord Nitro - 1 Mês", price: 3.90 },
         { name: "Discord Nitro - 3 Meses", price: 7.70 },
+    ],
+        'impulsos': [
+        { name: "2x Impulsos", price: 2.50 },
+        { name: "4x Impulsos", price: 4.20 },
     ],
         'perm1': [
         { name: "KITSUNE PERMANENTE", price: 159.90 },
@@ -814,6 +817,17 @@
         { name: "CONTA CONTROL INV + GDH", price: 37.00 },
         { name: "CONTA GRAVITY + GDH", price: 16.00 },
     ],
+                    'keys': [
+        { name: "Ghost of Tsushima", price: 60.00 },
+        { name: "Forza horizon 5", price: 60.00 },
+        { name: "Detroit", price: 60.00 },
+        { name: "God of War Ragnarok", price: 60.00 },
+        { name: "Spider Man 2", price: 60.00 },
+        { name: "Spider Man Miles Morales", price: 60.00 },
+        { name: "The Last of Us I", price: 60.00 },
+        { name: "The Last of Us II", price: 60.00 },
+        { name: "Silent Hill 2", price: 60.00 },
+    ],
 };
 
     let currentSelectList = [];
@@ -826,38 +840,28 @@
         { id: 9005, name: "Kwai Painel", price: 0.00, image: "<i class='fas fa-video' style='color:#ff8800; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "kwai", special: "social-modal", socialPlatform: "kwai", desc: "Curtidas e Seguidores no Kwai." },
         { id: 9006, name: "Facebook Painel", price: 0.00, image: "<i class='fab fa-facebook' style='color:#1877F2; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "facebook", special: "social-modal", socialPlatform: "facebook", desc: "Seguidores e Likes para Páginas." },
         { id: 9007, name: "Discord Painel", price: 0.00, image: "<i class='fab fa-discord' style='color:#5865F2; font-size:60px;'></i>", cat: "🚀 Painel SMM", sub: "discord", special: "social-modal", socialPlatform: "discord", desc: "Membros Online e Offline para Servidor." },
+        
+        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "assinaturas", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
+        { id: 2, name: "Monte seu Combo 3 Streamings", price: 3.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "assinaturas", tags: "combo, netflix, hbo, disney, barato", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
+        { id: 3, name: "Pacote Completo Streamings", price: 8.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "assinaturas", tags: "tudo liberado, canais, filmes", desc: "Acesso a múltiplas plataformas de streaming" },
+        { id: 7, name: "ChatGpt Plus", price: 8.90, image: "https://e-solution.com/storage/component/24-11/p339emdDWKCYCqc6ffgVleAZNZB1qoCKAYsNEiEC.jpeg", cat: "assinaturas", tags: "ia, gpt, chat, pro", desc: "Use o email no metodo de contato!" },
 
-        { id: 1, name: "Monte seu Pacote de Streamings", price: 0.00, image: "https://i.imgur.com/kovCpNu.png", cat: "Streamings", tags: "netflix, hbo, prime, video, filmes, series", desc: "Escolha quais serviços você quer e pague por unidade!", special: "multi-select", selectKey: "streamings" },
-        { id: 2, name: "Monte seu Combo 3 Streamings", price: 3.99, image: "https://i.imgur.com/g3UddBU.jpeg", cat: "Streamings", tags: "combo, netflix, hbo, disney, barato", desc: "Escolha 3 serviços do combo fechado", special: "streaming-combo" },
-        { id: 3, name: "Pacote Completo Streamings", price: 8.90, image: "https://i.imgur.com/PrsPKQE.jpeg", cat: "Streamings", tags: "tudo liberado, canais, filmes", desc: "Acesso a múltiplas plataformas de streaming" },
         { id: 4, name: "Game Pass Key - 1 Mês (renovacao)", price: 17.90, image: "https://i.imgur.com/sTYDroN.png", cat: "Xbox", tags: "gamepass, microsoft, xcloud, nuvem", desc: "Key de ativacao de Gamepass Premium" },
         { id: 6, name: "Xbox Game Pass PC - 1 Mês (Comp.)", price: 5.90, image: "https://i.imgur.com/J0ZLBf3.png", cat: "Xbox", tags: "key, pc, gamepass, 25 digitos", desc: "Conta da XBOX com gamepass ultimate (compartilhada)" },
-        { id: 200, name: "[KEY] Steam Key Aleatória", price: 1.90, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", tags: "steam, jogo, random, sorte", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
-        { id: 202, name: "[KEY] Steam Key Prata", price: 3.50, image: "https://i.imgur.com/D5R56OL.jpeg", cat: "Jogos", sub: "key", tags: "steam, indie, barato", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
-        { id: 203, name: "[KEY] Steam Key Bronze", price: 4.50, image: "https://i.imgur.com/q7GfRtU.jpeg", cat: "Jogos", sub: "key", tags: "steam, bronze, jogos", desc: "Jogos com análises positivas na Steam." },
-        { id: 203, name: "[KEY] Steam Key Triple A", price: 12.90, image: "https://i.imgur.com/pi3H695.png", cat: "Jogos", sub: "key", tags: "gta, rdr2, elden ring, aaa", desc: "Garantia de jogo Triple A (Grande Produção)." },
-        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 25.00, image: "https://i.imgur.com/fKVG2yp.png", cat: "Jogos", sub: "key", tags: "lançamento, aaa, top", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
-        { id: 205, name: "[KEY] Steam Key Deluxe", price: 20.90, image: "https://i.imgur.com/mdtGEYs.png", cat: "Jogos", sub: "key", tags: "deluxe, gold, premium", desc: "Jogos versões Deluxe ou Gold Editions." },
-        { id: 1001, name: "Elden Ring (Steam Offline)", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", cat: "Jogos", sub: "game", tags: "souls, rpg, fromsoftware", desc: "Conta Steam Offline com Elden Ring." },
-        { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 14.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", tags: "kratos, sony, playstation", desc: "Conta Steam Offline com GoW Ragnarok." },
-        { id: 1003, name: "Spider-Man 2 (Steam Offline)", price: 19.99, image: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/2028edeaf4c0b60142550a3d6e024b6009853ceb9f51591e.jpg", cat: "Jogos", sub: "game", tags: "marvel, aranha, peter parker", desc: "Conta Steam Offline com Spider-Man 2." },
-        { id: 1004, name: "The Last of Us Part I", price: 13.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", tags: "zumbi, tlou, ellie", desc: "Conta Steam Offline TLOU Part I." },
-        { id: 1005, name: "Black Myth: Wukong", price: 24.00, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg", cat: "Jogos", sub: "game", tags: "macaco, wukong, souls", desc: "O jogo do macaco! Conta Offline." },
-        { id: 1006, name: "Mortal Kombat 1", price: 84.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/header.jpg", cat: "Jogos", sub: "game", tags: "luta, mk1, fatality", desc: "Conta Steam Offline MK1." },
-        { id: 1007, name: "Hogwarts Legacy", price: 74.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", cat: "Jogos", sub: "game", tags: "harry potter, magia, bruxo", desc: "Conta Steam Offline Hogwarts Legacy." },
-        { id: 1008, name: "Batman: Arkham Knight", price: 24.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/208650/header.jpg", cat: "Jogos", sub: "game", tags: "heroi, dc, morcego", desc: "Versão Premium Edition." },
-        { id: 1009, name: "Injustice 2 Legendary", price: 29.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg", cat: "Jogos", sub: "game", tags: "dc, luta, superman", desc: "Edição Lendária completa." },
-        { id: 1010, name: "Resident Evil 4 Remake", price: 13.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg", cat: "Jogos", sub: "game", tags: "terror, zumbi, leon", desc: "Remake aclamado. Conta Offline." },
-        { id: 1011, name: "Cyberpunk 2077", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", tags: "futuro, rpg, keanu", desc: "Versão atualizada. Conta Offline." },
-        { id: 1012, name: "Red Dead Redemption 2", price: 19.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg", cat: "Jogos", sub: "game", tags: "cowboy, velho oeste, rockstar", desc: "Ultimate Edition. Conta Offline." },
-        { id: 1013, name: "GTA V (Grand Theft Auto V)", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", cat: "Jogos", sub: "game", tags: "gta 5, rockstar, crime", desc: "Modo história e online (depende da conta)." },
-        { id: 1014, name: "Sekiro: Shadows Die Twice", price: 14.90, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg", cat: "Jogos", sub: "game", tags: "ninja, souls, dificil", desc: "Jogo do ano. Conta Offline." },
-        { id: 1015, name: "Forza Horizon 5", price: 10.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg", cat: "Jogos", sub: "game", tags: "carro, corrida, mundo aberto", desc: "Corrida mundo aberto. Conta Offline." },
-        { id: 1016, name: "Dark Souls III", price: 14.99, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg", cat: "Jogos", sub: "game", tags: "rpg, souls, boss", desc: "Obra prima da FromSoftware." },
+        { id: 206, name: "[KEY] Steam Key Un-Check", price: 0.10, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", tags: "steam, jogo, random, sorte", desc: "Key Steam Un-Chek - Nao garantimos que ira funcionar por ser Un-Check!" },
+        { id: 200, name: "[KEY] Steam Key Aleatória", price: 1.99, image: "https://i.imgur.com/V0mrc61.jpeg", cat: "Jogos", sub: "key", tags: "steam, jogo, random, sorte", desc: "Key aleatória de jogos. Aumentado a chance de jogos bons." },
+        { id: 202, name: "[KEY] Steam Key Prata", price: 4.90, image: "https://i.imgur.com/D5R56OL.jpeg", cat: "Jogos", sub: "key", tags: "steam, indie, barato", desc: "Jogos Indie ou casuais. Chance baixa de Triple A." },
+        { id: 203, name: "[KEY] Steam Key Bronze", price: 5.50, image: "https://i.imgur.com/q7GfRtU.jpeg", cat: "Jogos", sub: "key", tags: "steam, bronze, jogos", desc: "Jogos com análises positivas na Steam." },
+        { id: 203, name: "[KEY] Steam Key Тriple A / АА", price: 14.90, image: "https://i.imgur.com/pi3H695.png", cat: "Jogos", sub: "key", tags: "gta, rdr2, elden ring, aaa", desc: "Garantia de jogo Triple A (Grande Produção)." },
+        { id: 204, name: "[KEY] Steam Key Triple AAA+", price: 29.90, image: "https://i.imgur.com/fKVG2yp.png", cat: "Jogos", sub: "key", tags: "lançamento, aaa, top", desc: "Jogos Triple AAA+ Lançamentos ou Best Sellers." },
+        { id: 205, name: "[KEY] Steam Key Deluxe", price: 24.90, image: "https://i.imgur.com/mdtGEYs.png", cat: "Jogos", sub: "key", tags: "deluxe, gold, premium", desc: "Jogos versões Deluxe ou Gold Editions." },
+        { id: 207, name: "[KEY] Escolha sua Steam Key", price: 0.00, image: "https://www.maizup.com.br/assets/images/anuncios/ab36cc0aefe2d85403ba431354c6db0e.png", cat: "Jogos", sub: "key", tags: "key, jogo, steam, escolher", desc: "Escolha qual steam key de qual jogo quer!", special: "multi-select", selectKey: "keys" },
+        { id: 1002, name: "God of War Ragnarok (Steam Offline)", price: 2.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg", cat: "Jogos", sub: "game", tags: "kratos, sony, playstation", desc: "Conta Steam Offline com God of War Ragnarok." },
+        { id: 1004, name: "The Last of Us Part II (Steam Offline)", price: 2.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg", cat: "Jogos", sub: "game", tags: "zumbi, tlou, ellie", desc: "Conta Steam Offline com The last of US Part II." },
+        { id: 1011, name: "Cyberpunk 2077 (Steam Offline)", price: 2.80, image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", cat: "Jogos", sub: "game", tags: "futuro, rpg, keanu", desc: "Conta Steam Offline com CyberPunk 2077." },
         { id: 101, name: "Discord Nitro", price: 0.00, image: "https://i.imgur.com/nbhV6d1.jpeg", cat: "Discord", tags: "nitro, boost, chat", special: "multi-select", selectKey: "nitro", desc: "Nitro para quem não teve nos últimos 12 meses, nao oferecemos reembolso do Produto!" },
         { id: 102, name: "Decoração Discord Aleatória", price: 35.00, image: "https://i.imgur.com/P7gwnty.jpeg", cat: "Discord", tags: "perfil, avatar, efeito", desc: "Decoração aleatória para seu perfil" },
-        { id: 103, name: "2x Impulsos Server (1 mes)", price: 2.50, image: "https://i.imgur.com/pbPpKgX.jpeg", cat: "Discord", tags: "boost, servidor, nivel", desc: "2 impulsos no servidor por 1 mes" },
-        { id: 103, name: "4x Impulsos Server (1 mes)", price: 4.20, image: "https://i.imgur.com/pbPpKgX.jpeg", cat: "Discord", tags: "boost, servidor, nivel", desc: "4 impulsos no servidor por 1 mes" },
+        { id: 103, name: "Impulsos Server (1 mes)", price: 0.00, image: "https://i.imgur.com/e5TADSQ.png", cat: "Discord", tags: "boost, servidor, nivel, impulso", special: "multi-select", selectKey: "impulsos", desc: "impulsos no servidor por 1 mes" },
         { id: 300, name: "Conta Roblox Antiga Vazia", price: 0.00, image: "https://i.imgur.com/exknpz9.png", cat: "Roblox", tags: "conta, velha, 2010", special: "multi-select", selectKey: "robloxacc", desc: "Contas antigas sem itens" },
         { id: 400, name: "2x Money", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/c/cf/BadgeMoneyx2.png", cat: "Blox Fruits", sub: "gamepass", tags: "dinheiro, beli, dobro", desc: "Gamepass: dinheiro em dobro" },
         { id: 401, name: "2x Mastery", price: 25.00, image: "https://static.wikia.nocookie.net/roblox-blox-piece/images/1/16/BadgeMasteryx2.png", cat: "Blox Fruits", sub: "gamepass", tags: "maestria, xp, upar", desc: "Gamepass: maestria em dobro" },
@@ -870,22 +874,10 @@
         { id: 500, name: "Frutas Permanentes [part1]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm", tags: "kitsune, dragon, perm", special: "multi-select", selectKey: "perm1", desc: "Frutas Permanentes [pagina 1]" },
         { id: 501, name: "Frutas Permanentes [part2]", price: 0.00, image: "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/678b8c8976e4ea001d22c8ac.jpg", cat: "Blox Fruits", sub: "perm", tags: "buddha, portal, perm", special: "multi-select", selectKey: "perm2", desc: "Frutas Permanentes [pagina 2]" },
         { id: 600, name: "RAÇAS V4", price: 0.00, image: "https://preview.redd.it/what-race-should-i-get-to-v4-v0-5h46zqr3geoe1.jpeg?auto=webp&s=a094515443326872f991b83dddf72c9e85581023", cat: "Blox Fruits", tags: "v4, race, shark, angel, ghoul", special:"multi-select", sub: "account", selectKey: "v4", desc: "Contas com raças V4 e outros items e frutas" },
-        { id: 601, name: "PROMOÇAO PRECINHO", price: 2.00, image: "💰", cat: "Blox Fruits", special:"highlight", sub: "account", tags: "barato, conta, random", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
+        { id: 601, name: "PROMOÇAO PRECINHO", price: 2.75, image: "💰", cat: "Blox Fruits", special:"highlight", sub: "account", tags: "barato, conta, random", desc: "level entre 1500 e 2650, frutas, estilos de luta e pode vir cdk, soul guitar e godhuman" },
         { id: 602, name: "FRUTAS INV", price: 0.00, image: "https://i.pinimg.com/564x/54/2e/31/542e31005a49c7faad80d706cef51816.jpg", cat: "Blox Fruits", special:"multi-select", sub: "account", tags: "inventario, frutas, contas", selectKey: "frutasinv", desc: "level max, estilos de luta e pode vir cdk, soul guitar e godhuman" },
         { id: 700, name: "JavaScripts DBC", price: 0.00, image: "https://i.ytimg.com/vi/k7sv0SOL8tM/maxresdefault.jpg", cat: "Scripts", tags: "dragon block c, minecraft, mod", special: "multi-select", selectKey: "dbc", desc: "Para Dragon Block C [1.7.10]." },
         { id: 701, name: "Scripts ROBLOX", price: 0.00, image: "https://i.gruposwhats.app/6411167d02570.jpg", cat: "Scripts", tags: "hack, cheat, executor", special: "multi-select", selectKey: "script", desc: "Scripts para voce usar no Roblox." },
-        { id: 800, name: "Lisa Rockstar + 1000 VBucks", price: 35.10, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, skin, lisa", desc: "1000 Vbucks + Passe Musical Lisa (Clube 1 mês)" },
-        { id: 801, name: "Lisa Rockstar + 2000 VBucks", price: 55.40, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, clube", desc: "2000 Vbucks + Passe Musical (Clube 2 meses)" },
-        { id: 802, name: "6000 VBucks + 6 Meses Clube", price: 94.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, muito", desc: "1000 iniciais + 5000 mensais com clube" },
-        { id: 803, name: "Conta 13.500 VBucks", price: 279.90, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "vbucks, conta", desc: "Conta com 13.500 Vbucks" },
-        { id: 804, name: "Conta Skin Gatalina", price: 5.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "gato, skin, barata", desc: "Conta simples com skin Gatalina" },
-        { id: 805, name: "Conta 22-23 Skins", price: 50.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "skins, conta", desc: "Com Indiana Jones e outras skins" },
-        { id: 806, name: "Conta 20 Skins", price: 60.00, image: "https://cms-assets.unrealengine.com/cm6l5gfpm05kr07my04cqgy2x/cm9wwjg2r2n9e08n4hrfeouns", cat: "Fortnite", tags: "skins, ice spice", desc: "Com Ice Spice e outras skins" },
-        { id: 900, name: "Valorant Bronze (1-3)", price: 47.90, image: "https://images.cults3d.com/1XKNUP5VYQneFfh1tFPEa3acxQo=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/40618961/illustration-file/96c7b575-c025-43af-9b2b-02251840b512/BRONZE.png", cat: "Valorant", tags: "low elo, smurf, rank", desc: "Conta Bronze aleatória" },
-        { id: 901, name: "Valorant Diamante (1-3)", price: 96.00, image: "https://cdn.ligadosgames.com/imagens/diamante-3-elos-valorant.jpg?class=article", cat: "Valorant", tags: "high elo, rank", desc: "Conta Diamante aleatória" },
-        { id: 902, name: "Valorant Ascendente (1-3)", price: 145.00, image: "https://cdn.ggmax.com.br/images/abbb8bc86414903ef6631bbcc65ca310.sm.jpg", cat: "Valorant", tags: "high elo, rank, top", desc: "Conta Ascendente aleatória" },
-        { id: 903, name: "Valorant Nível 20 Full", price: 69.90, image: "https://coldharbourmarine.com/wp-content/uploads/2024/06/5.webp", cat: "Valorant", tags: "ranked ready, smurf", desc: "Upada à mão, com dados de criação" },
-        { id: 904, name: "Valorant Nível 1 (Range)", price: 5.90, image: "https://s2-techtudo.glbimg.com/lQJUBONYmHh-ZGS-5XW691qzIcQ=/0x0:1920x1080/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/M/u/eC4lJfQ5ikL9p59aZN1A/sem-titulo.png", cat: "Valorant", tags: "nova, conta, riot", desc: "Conta Nível 1 com Range feito" },
         { id: 1000, name: "Minecraft Java + Bedrock Full", price: 64.99, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", tags: "mojang, original, capa", desc: "Full Acesso. Altera tudo. Java e Bedrock" },
         { id: 1001, name: "Minecraft Gamepass (30 dias)", price: 9.90, image: "https://i.imgur.com/NDDtMdB.png", cat: "Minecraft", tags: "gamepass, aluguel", desc: "Acesso via Gamepass PC" },
         { id: 1100, name: "Conta Rockstar (FiveM Licenciado)", price: 6.99, image: "https://cdn.dfg.com.br/itemimages/900627644-promocao-conta-rockstar-fivem-gta-envio-automatico-5FIB.webp", cat: "GTA V", tags: "fivem, roleplay, rp", desc: "Licenciada para FiveM" },
@@ -898,7 +890,6 @@
         { id: 1206, name: "Custom Ki Color", price: 6.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/2/2d/CustomKiColor.png", cat: "DB Rage", tags: "cor, ki", desc: "Mude a cor do seu Ki" },
         { id: 1207, name: "Omega SSJ", price: 5.00, image: "https://static.wikia.nocookie.net/dragon-ball-rage-roblox/images/e/eb/OmegaSSJ.png", cat: "DB Rage", tags: "transformacao, ssj", desc: "Transformação Omega" },
         { id: 1400, name: "All Games Steam", price: 19.99, image: "https://i.imgur.com/eukS9Yy.jpeg", cat: "Jogos", tags: "metodo, steam, jogos", desc: "Te ensinamos como ter qualquer jogo na Steam Sem precisar pagar por ele!!" },
-        
         { id: 1600, name: "Método IPTV Premium", price: 5.90, image: "📺", cat: "Tudo por 5,90", tags: "tv, canais, futebol", desc: "Aprenda a ter todos os canais liberados" },
         { id: 1601, name: "Método Brainrots", price: 5.90, image: "🧠", cat: "Tudo por 5,90", tags: "tiktok, monetizacao", desc: "Como criar e monetizar vídeos Brainrot" },
         { id: 1602, name: "Método Internet Ilimitada", price: 5.90, image: "🌐", cat: "Tudo por 5,90", tags: "4g, vpn, dados", desc: "Tenha internet em qualquer lugar" },
@@ -915,20 +906,21 @@
         { id: 2102, name: "Curso de Inglês Rápido", price: 1.90, image: "🇺🇸", cat: "Cursos", tags: "idioma, aprender", desc: "Aprenda a falar o básico do ingles." },
         { id: 2103, name: "Curso Python", price: 1.90, image: "🐍", cat: "Cursos", tags: "programacao, python", desc: "Curso Phyton do ZERO." },
         { id: 2104, name: "PACK 1K DE CURSOS", price: 19.90, image: "📚", cat: "Cursos", tags: "pack, pirata", desc: "Acesso a um pack com mais de 1000 cursos variados!", special: "highlight" },
-        { id: 3051, name: "PACK 4x Esok Skolah", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469729047810089/AOI_d_-GPHxpioch7PEDYNos5aBTEP0xpXP_a0uBvpuCOGMWmTUicfMl4C1pGr8xTNC1uzYrfyvaYm_owAolvcNFC1Dc9p9tv0HNrCTOc0xvXRf8pU6nQv0bumRcYAlr4WR6xdlrCTuwTJwevvJRwEvw39r3J1wDLSeihrSlsBCjWcq0gF5h3gs1024-rj.png?ex=697cdbdd&is=697b8a5d&hm=5001a1d7cf2ae1faddc0e54c7a11487199c0999b8a62ba94aee85385aa4bea02&", cat: "Brainrots", sub: "tsunami", special: "multi-select", selectKey: "esok", desc: "Promoção: 4 unidades por R$ 1,00 cada." },
+        { id: 3051, name: "Esok Skolah", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469729047810089/AOI_d_-GPHxpioch7PEDYNos5aBTEP0xpXP_a0uBvpuCOGMWmTUicfMl4C1pGr8xTNC1uzYrfyvaYm_owAolvcNFC1Dc9p9tv0HNrCTOc0xvXRf8pU6nQv0bumRcYAlr4WR6xdlrCTuwTJwevvJRwEvw39r3J1wDLSeihrSlsBCjWcq0gF5h3gs1024-rj.png?ex=697cdbdd&is=697b8a5d&hm=5001a1d7cf2ae1faddc0e54c7a11487199c0999b8a62ba94aee85385aa4bea02&", cat: "Brainrots", sub: "tsunami", special: "multi-select", selectKey: "esok", desc: "Esok Sekolah por R$ 1,00 cada." },
         { id: 3090, name: "BRAINROTS COM EVENTOS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466469002523054317/AOI_d_8Q81vFOBEMVT_68IasDigB3N9VEtDoJUDnh3ZBK8x08Zdg2snNDxc2ytxZ40J7sENBAqh9mbeCBmkhzv8famjpRNEV7bn9I8OH2fCwyhTDZVMb90ndC-qx_PZqMXxdaV9QmCRYVeoIb07sxO5cOPmmoBbIdhP95oUGvNWHQQQh5Lm3TAs1024-rj.png?ex=697cdb2f&is=697b89af&hm=6a0a71ce68b4f268604c3aac8ee54d0de17fd1a7e2aeaee382e8b4c0abae39fb&",  cat: "Brainrots", sub: "steal",desc: "Escolha quais Brainrots (aleatorio) com evento você quer?", special: "multi-select",selectKey: "brainrot_elements"},
         { id: 3091, name: "LUCKY BLOCKS", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466466917618422074/AOI_d__lDQUX0fL_7vYUAuUJMvyObwYw_q1hkEGeHXKNnECvWLA9sVZCKwjQCSslTd1xvCIS5-6Ro_KsZ_cN5khU9xE9Clk8heccgVMlNygcmwnEWhsBuszVYkBk1Y1PnSFxJI0TuKmfV3L5miHwibeV-Uxg1IQ6t_GD_88jEvsNdpt1kB1ioAs1024-rj.png?ex=697cd93e&is=697b87be&hm=663e1297b6a48093b6c77242b32a6d3bc73a1d4c0a6456168475ae1bc415c36d&", cat: "Brainrots", sub: "steal",desc: "Varios Tipo de Lucky Blocks!.", special: "multi-select",selectKey: "lucky_blocks"},
         { id: 3092, name: "BRAINROTS [50M a 1B]", price: 0.00, image: "https://cdn.discordapp.com/attachments/1347006465143083098/1466468341089570979/AOI_d_-kPBTLMohPzPrV_O8LYla59R-UDmcfvj9NuPu54u4MAGVp1gKWC00_0UmzSoPyckGHbrrDhhIOsZcmFJ0bbRXkSlYVKcjwTStviVYY4fbGV5wMhyXsk_bO4-Wd0PdH4_DUODJ-AhXeo5Fz1KqwYXdiWAQj-XWfoYQr-rYuMh2C8PR-Ags1024-rj.png?ex=697cda92&is=697b8912&hm=a1af8e10d7d9890885f4d12689f82f9f79bfe1cc521fb181cfbc03f71fddfc41&", cat: "Brainrots", sub: "steal",desc: "Selecione a quatia que quer que o brainrot (radom) venha! (50M até 1B).", special: "multi-select",selectKey: "high_power"},
 
         { id: 11110, name: "CAIXA DA SORTE", price: 2.50, image: "📦", cat: "on ate 10 / 02", tags: "sorte", desc: "Compre e teste sua sorte, ganhe qualquer coisa da loja garantido nao fica sem nada!" },
         { id: 11111, name: "CAIXA PIX BRONZE", price: 1.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "Compre e teste sua sorte, premios de 0 reais ate 10 reais" },
-        { id: 11112, name: "CAIXA PIX PRATA", price: 3.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "Compre e teste sua sorte, premios de 0 reais ate 50 reais" },
-        { id: 11113, name: "CAIXA PIX GOLD", price: 5.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "Compre e teste sua sorte, premios de 0 reais ate 100 reais" },
-        { id: 11114, name: "CAIXA PIX DELUX", price: 9.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "Compre e teste sua sorte, premios de 0 reais ate 300 reais" },
+        { id: 11112, name: "CAIXA PIX PRATA - OFF", price: 3.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "OFF" },
+        { id: 11113, name: "CAIXA PIX GOLD - OFF", price: 5.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "OFF" },
+        { id: 11114, name: "CAIXA PIX DELUXE - OFF", price: 9.50, image: "📦", cat: "on ate 10 / 02", tags: "pix", desc: "OFF" },
+
     ];
 
     const icons = {
-        "streamings": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
+        "assinaturas": "fas fa-play-circle", "xbox": "fab fa-xbox", "discord": "fab fa-discord",
         "jogos": "fab fa-steam", "roblox": "fas fa-square\" style=\"transform: rotate(15deg)", "blox fruits": "fas fa-dragon",
         "brainrots": "fas fa-brain","scripts": "fas fa-code",
         "fortnite": "fas fa-crosshairs", "valorant": "fas fa-bullseye", "minecraft": "fas fa-cube",
@@ -1745,8 +1737,8 @@ function startSalesNotifications() {
         const namespace = 'blackdz-loja-oficial-2026'; 
 
 
-        visitasBadge.innerText = "3.357 - Deu reset";
-        vendasBadge.innerText = "253 - Deu reset";
+        visitasBadge.innerText = "3.357";
+        vendasBadge.innerText = "323";
 
         fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`).then(r=>r.json()).then(d => visitasBadge.innerText = (d.count + 9357).toLocaleString('pt-BR')).catch(()=>{});
         fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas`).then(r=>r.json()).then(d => vendasBadge.innerText = (d.count + 453).toLocaleString('pt-BR')).catch(()=>{});
