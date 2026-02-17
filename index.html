@@ -247,11 +247,22 @@
             align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px;
         }
         .modal-wrapper.active { display: flex; animation: fadeIn 0.2s; }
-        .modal-content {
-            background: #111; border: 2px solid var(--aura); padding: 30px;
-            border-radius: 15px; width: 450px; max-width: 100%; position: relative;
-            box-shadow: 0 0 50px var(--aura); text-align: left;
-        }
+.modal-content {
+    background: #111; 
+    border: 2px solid var(--aura); 
+    padding: 30px;
+    border-radius: 15px; 
+    width: 450px; 
+    max-width: 95%; 
+    position: relative;
+    box-shadow: 0 0 50px var(--aura); 
+    text-align: left;
+    
+    max-height: 85vh;   
+    overflow-y: auto;     
+    display: flex;        
+    flex-direction: column; 
+}
         .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 20px; color: #666; transition: 0.2s; }
         .modal-close:hover { color: var(--primary); }
         .input-box {
@@ -977,16 +988,16 @@
             { id: 'dc_off', name: 'Membros Offline', price: 0.020, min: 50 },
             { id: 'dc_on', name: 'Membros Online', price: 0.030, min: 50 },
             { id: 'dc_on_br', name: 'Membros Online - Perfis BR', price: 0.040, min: 50 },
+            { id: 'dc_real_100', name: 'PACOTE: 100 Membros Reais', price: 2.50, min: 1, max: 2 },
         ]
     };
 
     let currentSocialPlatform = '';
 
-    function openSocialModal(platform) {
+function openSocialModal(platform) {
         currentSocialPlatform = platform;
         const services = socialConfig[platform];
         if(!services) return alert("Em manutenção.");
-
         const titleMap = { 
             'instagram': '<i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM', 
             'tiktok': '<i class="fab fa-tiktok" style="color:#00f2ea"></i> TIKTOK',
@@ -1000,29 +1011,50 @@
         document.getElementById('social-title').innerHTML = titleMap[platform] || 'REDES SOCIAIS';
 
         const select = document.getElementById('social-type');
-        select.innerHTML = services.map((s, index) => 
-            `<option value="${index}" data-price="${s.price}" data-min="${s.min}">${s.name} (R$ ${s.price.toFixed(3)}/uni)</option>`
-        ).join('');
+        
+        select.innerHTML = services.map((s, index) => {
+            const formattedPrice = s.price >= 1 ? s.price.toFixed(2) : s.price.toFixed(3);
+            const maxLimit = s.max ? s.max : 100000; 
+            
+            return `<option value="${index}" data-price="${s.price}" data-min="${s.min}" data-max="${maxLimit}">${s.name} (R$ ${formattedPrice}/uni)</option>`;
+        }).join('');
 
         document.getElementById('social-link').value = '';
-        document.getElementById('social-qtd').value = '';
-        updateSocialTotal();
+        document.getElementById('social-qtd').value = ''; 
+        document.getElementById('social-total').innerText = "R$ 0.00";
+        document.getElementById('social-min-feedback').innerText = "";
 
         openModal('modal-social');
+        updateSocialTotal();
     }
 
-    function updateSocialTotal() {
+ function updateSocialTotal() {
         const select = document.getElementById('social-type');
         const option = select.options[select.selectedIndex];
         
         const pricePerUnit = parseFloat(option.getAttribute('data-price'));
         const minQty = parseInt(option.getAttribute('data-min'));
+        const maxQty = parseInt(option.getAttribute('data-max')); 
         
         const qtyInput = document.getElementById('social-qtd');
         let qty = parseInt(qtyInput.value);
-
-        document.getElementById('social-min-feedback').innerText = `Mínimo permitido: ${minQty}`;
         
+        const feedback = document.getElementById('social-min-feedback');
+        if (qty > maxQty) {
+            qty = maxQty; 
+            qtyInput.value = maxQty; 
+            feedback.innerText = `Limite atingido! Máximo permitido: ${maxQty}`;
+            feedback.style.color = "red";
+        } 
+        else if (option.text.includes('PACOTE')) {
+             feedback.innerText = `Pacote Fechado. Mín: ${minQty} | Máx: ${maxQty}`;
+             feedback.style.color = "var(--primary)";
+        } 
+        else {
+            feedback.innerText = `Mínimo permitido: ${minQty}`;
+            feedback.style.color = "#666";
+        }
+
         if (!qty || qty < 0) qty = 0;
         
         const total = qty * pricePerUnit;
@@ -1182,64 +1214,82 @@
     }
 
 function generateProductHTML(items) {
-        return items.map(p => {
-            const isHighlight = p.special === 'highlight' || p.special === 'multi-select';
-            const highlightClass = isHighlight ? 'highlight' : '';
-            const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
-            
-            let displayPrice, oldPriceHtml, discountBadge;
+    return items.map(p => {
+        const isHighlight = p.special === 'highlight' || p.special === 'multi-select';
+        const highlightClass = isHighlight ? 'highlight' : '';
+        const badge = isHighlight ? '<div class="badge-highlight">🔥 DESTAQUE</div>' : '';
+        
+        let displayPrice, oldPriceHtml, discountBadge;
 
-            if (p.price <= 0) {
+        if (p.price <= 0) {
+            displayPrice = `<span style="font-size: 13px; text-transform: uppercase;">SELECIONE SEU (s) PRODUTO EM "ESCOLHER" ABAIXO</span>`; 
+            oldPriceHtml = ""; 
+            discountBadge = ""; 
+        } else {
+            displayPrice = `R$ ${p.price.toFixed(2)}`;
+            const chaoticSeed = Math.abs(Math.sin(p.id * 9999));
+            const randomPercent = Math.floor(chaoticSeed * 61) + 20; 
+            const calcOldPrice = p.price / (1 - (randomPercent / 100));
+            oldPriceHtml = `<span class="price-old">R$ ${calcOldPrice.toFixed(2)}</span>`;
+            discountBadge = `<div class="badge-discount">-${randomPercent}%</div>`;
+        }
 
-                displayPrice = `<span style="font-size: 13px; text-transform: uppercase;">SELECIONE SEU (s) PRODUTO EM "ESCOLHER" ABAIXO</span>`; 
-                oldPriceHtml = ""; 
-                discountBadge = ""; 
-            } else {
+        let btnText = 'ADICIONAR';
+        let qtdInputHtml = '';
 
-                displayPrice = `R$ ${p.price.toFixed(2)}`;
 
-                const chaoticSeed = Math.abs(Math.sin(p.id * 9999));
+        if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
+        if(p.special === 'multi-select') btnText = 'Escolher'; 
+        if(p.special === 'social-modal') btnText = 'CONFIGURAR';
 
-                const randomPercent = Math.floor(chaoticSeed * 61) + 20; 
+        const safeName = p.name.replace(/'/g, "\\'");
+        let clickAction = "";
 
-                const calcOldPrice = p.price / (1 - (randomPercent / 100));
-                
-                oldPriceHtml = `<span class="price-old">R$ ${calcOldPrice.toFixed(2)}</span>`;
-                discountBadge = `<div class="badge-discount">-${randomPercent}%</div>`;
-            }
 
-            let btnText = 'ADICIONAR';
-            if(p.special === 'streaming-combo') btnText = 'ESCOLHER 3';
-            if(p.special === 'multi-select') btnText = 'Escolher'; 
-            if(p.special === 'social-modal') btnText = 'CONFIGURAR';
+        if (p.price > 0 && !p.special) {
 
-            const safeName = p.name.replace(/'/g, "\\'");
-            let clickAction = `addToCart('${safeName}', ${p.price})`;
+            qtdInputHtml = `
+                <div style="margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
+                    <span style="font-size: 11px; color: #888;">Qtd:</span>
+                    <input type="number" id="qtd-${p.id}" value="1" min="1" 
+                        style="width: 50px; background: #000; border: 1px solid #333; color: #fff; border-radius: 4px; padding: 5px; text-align: center;"
+                        onclick="event.stopPropagation();">
+                </div>
+            `;
+
+            clickAction = `addToCart('${safeName}', ${p.price}, 'qtd-${p.id}')`;
+        } else {
+
             if (p.special === 'streaming-combo') clickAction = 'openStreamingCombo()';
             else if (p.special === 'multi-select') clickAction = `openMultiSelect('${p.selectKey}')`;
-            else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`; 
-            
-            const imgHTML = p.image.includes('http') || p.image.includes('data:image') || p.image.includes('</i>') ? (p.image.includes('</i>') ? `<div class="emoji-fallback">${p.image}</div>` : `<img src="${p.image}">`) : `<div class="emoji-fallback">${p.image}</div>`;
+            else if (p.special === 'social-modal') clickAction = `openSocialModal('${p.socialPlatform}')`;
+            else clickAction = `addToCart('${safeName}', ${p.price})`;
+        }
+        
+        const imgHTML = p.image.includes('http') || p.image.includes('data:image') || p.image.includes('</i>') ? (p.image.includes('</i>') ? `<div class="emoji-fallback">${p.image}</div>` : `<img src="${p.image}">`) : `<div class="emoji-fallback">${p.image}</div>`;
 
-            return `
-            <div class="card-prod ${highlightClass}" onclick="${clickAction}">
-                ${badge}
-                ${discountBadge}
-                <div class="prod-img">
-                    ${imgHTML}
+        return `
+        <div class="card-prod ${highlightClass}" onclick="${clickAction}">
+            ${badge}
+            ${discountBadge}
+            <div class="prod-img">
+                ${imgHTML}
+            </div>
+            <div class="prod-body">
+                <div class="prod-title">${p.name}</div>
+                <div class="prod-desc">${p.desc}</div>
+                <div class="price-container">
+                    ${oldPriceHtml}
+                    <span class="prod-price">${displayPrice}</span>
                 </div>
-                <div class="prod-body">
-                    <div class="prod-title">${p.name}</div>
-                    <div class="prod-desc">${p.desc}</div>
-                    <div class="price-container">
-                        ${oldPriceHtml}
-                        <span class="prod-price">${displayPrice}</span>
-                    </div>
-                    <button class="btn-buy" onclick="event.stopPropagation(); ${clickAction}">${btnText}</button>
-                </div>
-            </div>`;
-        }).join('');
-    }
+                
+                ${qtdInputHtml}
+
+                <button class="btn-buy" onclick="event.stopPropagation(); ${clickAction}">${btnText}</button>
+            </div>
+        </div>`;
+    }).join('');
+}
 
     function doSearch(val) {
         if(!val) return nav('home');
@@ -1262,12 +1312,24 @@ function generateProductHTML(items) {
     }
 
     function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
-    function addToCart(name, price) {
-        cart.push({name, price});
-        updateCartUI();
-        const drawer = document.getElementById('cart-drawer');
-        if(!drawer.classList.contains('active')) drawer.classList.add('active');
+    function addToCart(name, price, qtyInputId = null) {
+    let quantity = 1;
+
+    if (qtyInputId) {
+        const input = document.getElementById(qtyInputId);
+        if (input) {
+            quantity = parseInt(input.value);
+            if (quantity < 1 || isNaN(quantity)) quantity = 1;
+        }
     }
+    for (let i = 0; i < quantity; i++) {
+        cart.push({name, price});
+    }
+
+    updateCartUI();
+    const drawer = document.getElementById('cart-drawer');
+    if(!drawer.classList.contains('active')) drawer.classList.add('active');
+}
     function applyCoupon() {
         const code = document.getElementById('coupon-code').value.toUpperCase();
         const feedback = document.getElementById('coupon-feedback');
@@ -1773,7 +1835,7 @@ function startSalesNotifications() {
         localStorage.setItem(key, JSON.stringify(orders));
     }
 
-    function submitOrderToWebhook() {
+function submitOrderToWebhook() {
         const contactInput = document.getElementById('buyer-contact');
         const fileInput = document.getElementById('payment-proof-file');
         const termsCheck = document.getElementById('terms-check');
@@ -1826,6 +1888,15 @@ function startSalesNotifications() {
         fetch(WEBHOOK_URL, { method: "POST", body: formData })
         .then(res => {
             if(res.ok) {
+
+                const salesBadge = document.getElementById('sales-badge');
+                
+                let currentSales = parseInt(salesBadge.innerText.replace(/\./g, '')) || 0;
+                
+                currentSales += safeCart.length;
+                
+                salesBadge.innerText = currentSales.toLocaleString('pt-BR');
+
                 closeModal('modal-checkout');
                 if(typeof cart !== 'undefined') cart = [];
                 updateCartUI();
@@ -1837,7 +1908,6 @@ function startSalesNotifications() {
             btn.disabled = false;
         });
     }
-
 //FUNCOES DE BLOQUEIO BOLADONAS DO MIKEY / DZ Taligado?
 window.addEventListener("keydown", e => {
   const k = e.key.toLowerCase();
