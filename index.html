@@ -1805,19 +1805,29 @@ function startSalesNotifications() {
         return costs[s2.length];
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
         const visitasBadge = document.getElementById("visitor-badge");
         const vendasBadge = document.getElementById("sales-badge");
+        
         const namespace = 'blackdz-loja-oficial-2026'; 
 
+        visitasBadge.innerText = "...";
+        vendasBadge.innerText = "...";
 
-        visitasBadge.innerText = "3.357";
-        vendasBadge.innerText = "323";
+        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`)
+            .then(r => r.json())
+            .then(d => {
+                visitasBadge.innerText = (d.count + 9357).toLocaleString('pt-BR');
+            })
+            .catch(() => { visitasBadge.innerText = "3.357"; }); 
 
-        fetch(`https://api.counterapi.dev/v1/${namespace}/hits/up`).then(r=>r.json()).then(d => visitasBadge.innerText = (d.count + 9357).toLocaleString('pt-BR')).catch(()=>{});
-        fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas`).then(r=>r.json()).then(d => vendasBadge.innerText = (d.count + 453).toLocaleString('pt-BR')).catch(()=>{});
+        fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas?t=${Date.now()}`)
+            .then(r => r.json())
+            .then(d => {
+                vendasBadge.innerText = (d.count + 453).toLocaleString('pt-BR');
+            })
+            .catch(() => { vendasBadge.innerText = "323"; }); 
     });
-
 
     function saveOrderLocally(items, total, externalId) {
         if(!user) return;
@@ -1892,10 +1902,17 @@ function submitOrderToWebhook() {
                 const salesBadge = document.getElementById('sales-badge');
                 
                 let currentSales = parseInt(salesBadge.innerText.replace(/\./g, '')) || 0;
-                
                 currentSales += safeCart.length;
-                
                 salesBadge.innerText = currentSales.toLocaleString('pt-BR');
+
+                const namespace = 'blackdz-loja-oficial-2026'; 
+                
+                safeCart.forEach((item, index) => {
+                    setTimeout(() => {
+                        fetch(`https://api.counterapi.dev/v1/${namespace}/vendas_realizadas/up`)
+                            .catch(e => console.error("Erro ao salvar venda", e));
+                    }, index * 200);
+                });
 
                 closeModal('modal-checkout');
                 if(typeof cart !== 'undefined') cart = [];
