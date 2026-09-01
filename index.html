@@ -1860,6 +1860,38 @@ function startChatPolling(idPrefix, orderId){
 }
 
 /* ============ COMPROVANTE DE PAGAMENTO (cliente anexa pra agilizar a confirmação) ============ */
+const PIX_KEY = "dd17e932-f294-478f-9abf-fff070abcf91";
+
+function buildPixBoxHTML(order){
+  return `
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="panel-head"><h3>Pagar com Pix</h3></div>
+      <div style="padding:20px;">
+        <p class="hint" style="margin-bottom:14px;">
+          Pague <b>${money(order.total)}</b> usando a chave Pix abaixo (tipo aleatória) e depois envie o comprovante logo em seguida.
+        </p>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input id="pixKeyField" type="text" readonly value="${PIX_KEY}" style="flex:1;font-family:var(--font-mono);font-size:13px;">
+          <button class="btn ghost" id="pixKeyCopyBtn" type="button" style="flex-shrink:0;">Copiar chave</button>
+        </div>
+      </div>
+    </div>`;
+}
+function wirePixBox(){
+  const btn = document.getElementById('pixKeyCopyBtn');
+  if(!btn) return;
+  btn.addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(PIX_KEY);
+      showToast("Chave Pix copiada!");
+    }catch(err){
+      const field = document.getElementById('pixKeyField');
+      field.select();
+      document.execCommand('copy');
+      showToast("Chave Pix copiada!");
+    }
+  });
+}
 function buildProofBoxHTML(order){
   const already = order.paymentProof;
   const isPdf = already && already.startsWith('data:application/pdf');
@@ -1968,9 +2000,10 @@ async function renderOrderStatus(orderId){
       titleEl.textContent = "Aguardando confirmação do pagamento";
       descEl.textContent = order.paymentProof
         ? "Recebemos seu comprovante — assim que conferirmos, o chat do pedido aparece aqui automaticamente."
-        : "Já pagou? Envie o comprovante abaixo para agilizar a confirmação manual da nossa equipe.";
+        : "Pague pelo Pix abaixo e envie o comprovante para agilizar a confirmação manual da nossa equipe.";
       if(!document.getElementById('orderProofBox')){
-        bodyEl.innerHTML = buildProofBoxHTML(order);
+        bodyEl.innerHTML = buildPixBoxHTML(order) + buildProofBoxHTML(order);
+        wirePixBox();
         wireProofBox(orderId);
       }
       if(attempts < 8){
